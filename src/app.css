@@ -1,2 +1,87 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/typography';
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+	--font-sans: InterVariable, ui-sans-serif, sans-serif;
+
+	--color-off-white: oklch(0.9578 0.0095 93.57);
+	--color-off-black: oklch(0.2418 0 0);
+
+	--color-aloe-50: oklch(96.06% 0.076 126.22);
+	--color-aloe-100: oklch(91.17% 0.146 125.32);
+	--color-aloe-200: oklch(84.32% 0.134 125.28);
+	--color-aloe-300: oklch(76.63% 0.123 125.7);
+	--color-aloe-400: oklch(69.76% 0.112 125.53);
+	--color-aloe-500: oklch(60.52% 0.097 125.36);
+	--color-aloe-600: oklch(51.19% 0.082 125.83);
+	--color-aloe-700: oklch(41.83% 0.067 125.3);
+	--color-aloe-800: oklch(32.22% 0.051 125.65);
+	--color-aloe-900: oklch(23.04% 0.037 125.02);
+	--color-aloe-950: oklch(17.56% 0.03 127.14);
+
+	--color-denim-50: oklch(95.67% 0.012 259.84);
+	--color-denim-100: oklch(92.15% 0.022 256.74);
+	--color-denim-200: oklch(84.47% 0.045 255.64);
+	--color-denim-300: oklch(76.6% 0.073 253.84);
+	--color-denim-400: oklch(68.79% 0.092 250.24);
+	--color-denim-500: oklch(60.73% 0.082 250.4);
+	--color-denim-600: oklch(51.66% 0.07 249.98);
+	--color-denim-700: oklch(42.22% 0.057 250.17);
+	--color-denim-800: oklch(32.67% 0.045 251.68);
+	--color-denim-900: oklch(23.11% 0.032 252.93);
+	--color-denim-950: oklch(17.82% 0.023 249.15);
+
+	--color-peach-50: oklch(96.73% 0.011 39.55);
+	--color-peach-100: oklch(93.25% 0.022 38.38);
+	--color-peach-200: oklch(86.67% 0.047 43.3);
+	--color-peach-300: oklch(79.92% 0.078 44.84);
+	--color-peach-400: oklch(73.63% 0.115 48.83);
+	--color-peach-500: oklch(63.84% 0.099 49.23);
+	--color-peach-600: oklch(54.25% 0.084 48.93);
+	--color-peach-700: oklch(43.72% 0.068 49.02);
+	--color-peach-800: oklch(33.94% 0.053 47.69);
+	--color-peach-900: oklch(23.59% 0.036 50.34);
+	--color-peach-950: oklch(19.19% 0.03 48.8);
+
+	--color-plum-50: oklch(96.63% 0.011 348.63);
+	--color-plum-100: oklch(93.44% 0.021 350.66);
+	--color-plum-200: oklch(85.97% 0.047 350.28);
+	--color-plum-300: oklch(79.49% 0.074 350.9);
+	--color-plum-400: oklch(72.85% 0.106 350.5);
+	--color-plum-500: oklch(66.45% 0.141 349.78);
+	--color-plum-600: oklch(58.78% 0.14 350.16);
+	--color-plum-700: oklch(51.71% 0.124 350.07);
+	--color-plum-800: oklch(39.03% 0.094 350.14);
+	--color-plum-900: oklch(26.75% 0.064 350.25);
+	--color-plum-950: oklch(20.39% 0.05 350.12);
+
+	--color-wine-50: oklch(96.62% 0.011 10.51);
+	--color-wine-100: oklch(92.56% 0.025 14.67);
+	--color-wine-200: oklch(85.21% 0.053 13.87);
+	--color-wine-300: oklch(77.8% 0.087 14.78);
+	--color-wine-400: oklch(70.59% 0.127 15.33);
+	--color-wine-500: oklch(64.08% 0.17 16.71);
+	--color-wine-600: oklch(56.32% 0.165 17.15);
+	--color-wine-700: oklch(48.19% 0.141 17.25);
+	--color-wine-800: oklch(36.59% 0.108 17.45);
+	--color-wine-900: oklch(25.89% 0.076 17.14);
+	--color-wine-950: oklch(19.56% 0.058 17.42);
+}
+
+@layer base {
+	* {
+		/* prettier-ignore */
+		font-feature-settings:
+			"calt", /* Contextual alternatives */
+			"cv05", /* Lowercase L with tail */
+			"cv10", /* Capital G with spur */
+			"cv11", /* Single-story a */
+			"liga", /* Standard ligatures */
+			"ss01", /* Open digits */
+			"ss07"; /* Square punctuation */
+	}
+
+	body {
+		font-family: var(--font-sans);
+	}
+}
