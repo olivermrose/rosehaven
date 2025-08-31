@@ -42,6 +42,7 @@
 	},
 	"dependencies": {
 		"lenis": "^1.3.10",
+		"mode-watcher": "^1.1.0",
 		"motion": "^12.23.12"
 	}
 }

@@ -6,6 +6,7 @@
 	import Lenis from "lenis";
 	import { onMount } from "svelte";
 	import { frame } from "motion";
+	import { ModeWatcher } from "mode-watcher";
 
 	let { children } = $props();
 
@@ -21,6 +22,10 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-{@render children?.()}
+<ModeWatcher />
+
+<main class="relative min-h-svh">
+	{@render children?.()}
+</main>
 
 <ScrollProgress />

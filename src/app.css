@@ -68,6 +68,8 @@
 	--color-wine-950: oklch(19.56% 0.058 17.42);
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
 	* {
 		/* prettier-ignore */
