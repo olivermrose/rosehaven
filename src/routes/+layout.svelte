@@ -6,6 +6,8 @@
 	import { onMount } from "svelte";
 	import { frame } from "motion";
 	import { ModeWatcher } from "mode-watcher";
+	import { dev } from "$app/environment";
+	import Breakpoint from "$lib/components/Breakpoint.svelte";
 
 	let { children } = $props();
 
@@ -26,3 +28,7 @@
 <main class="relative min-h-svh">
 	{@render children?.()}
 </main>
+
+{#if dev}
+	<Breakpoint />
+{/if}
