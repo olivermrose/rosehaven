@@ -8,6 +8,7 @@
 	import { ModeWatcher } from "mode-watcher";
 	import { dev } from "$app/environment";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
+	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 
 	let { children } = $props();
 
@@ -25,9 +26,11 @@
 
 <ModeWatcher />
 
-<main class="relative min-h-svh">
-	{@render children?.()}
-</main>
+<LoadingScreen>
+	<main class="relative min-h-svh">
+		{@render children?.()}
+	</main>
+</LoadingScreen>
 
 {#if dev}
 	<Breakpoint />

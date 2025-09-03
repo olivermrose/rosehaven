@@ -1,1 +1,3 @@
-// place files you want to import through the `$lib` alias in this folder.
+import { cubicBezier } from "motion";
+
+export const expoInOut = cubicBezier(0.65, 0.01, 0.05, 1);
