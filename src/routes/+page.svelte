@@ -1,4 +1,5 @@
 <script lang="ts">
+	import About from "$lib/components/About.svelte";
 	import { animate, stagger } from "motion";
 	import { onMount } from "svelte";
 
@@ -28,8 +29,8 @@
 	});
 </script>
 
-<div class="relative h-svh min-h-full">
-	<div class="flex items-center justify-center px-4 pt-48 sm:h-full sm:p-0">
+<div class="relative min-h-full sm:h-svh">
+	<div class="flex items-center justify-center px-4 pt-48 pb-36 sm:h-full sm:p-0">
 		<h1
 			class="m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] tracking-tighter uppercase sm:grid-cols-36"
 		>
@@ -42,3 +43,5 @@
 		</h1>
 	</div>
 </div>
+
+<About />
