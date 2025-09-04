@@ -1,24 +1,12 @@
 <script lang="ts">
-	const size = $state({ width: 0, height: 0 });
-
-	let chip: HTMLElement;
+	import { innerWidth, innerHeight } from "svelte/reactivity/window";
 </script>
-
-<svelte:window
-	onresize={() => {
-		size.width = innerWidth;
-		size.height = innerHeight;
-	}}
-	bind:innerWidth={size.width}
-	bind:innerHeight={size.height}
-/>
 
 <div
 	class="text-foreground fixed bottom-5 left-5 z-9999 flex items-center space-x-2 rounded-full bg-black/20 px-2.5 py-1 font-mono text-xs backdrop-blur-sm select-none dark:bg-white/30"
-	bind:this={chip}
 >
 	<span>
-		{size.width} &times; {size.height}
+		{innerWidth.current} &times; {innerHeight.current}
 	</span>
 
 	<div class="bg-foreground h-4 w-px"></div>
