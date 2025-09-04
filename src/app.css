@@ -82,8 +82,4 @@
 			"ss01", /* Open digits */
 			"ss07"; /* Square punctuation */
 	}
-
-	body {
-		font-family: var(--font-sans);
-	}
 }
