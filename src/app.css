@@ -83,3 +83,9 @@
 			"ss07"; /* Square punctuation */
 	}
 }
+
+@utility blended {
+	background: white;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}

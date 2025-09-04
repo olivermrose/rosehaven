@@ -14,15 +14,15 @@
 
 <header
 	id="site-header"
-	class="fixed inset-x-0 top-0 z-50 p-6 pb-0 text-off-black opacity-0 md:px-10 dark:text-off-white"
+	class="fixed inset-x-0 top-0 z-50 p-6 pb-0 opacity-0 mix-blend-difference md:px-10"
 >
 	<nav class="flex w-full items-center justify-between">
-		<a href="/">oliver rose.</a>
+		<a class="blended" href="/">oliver rose.</a>
 
 		<button id="theme-btn" class="hover:cursor-pointer" type="button" onclick={toggleMode}>
 			<div class="flex h-6 flex-col items-end justify-start overflow-hidden">
-				<span class="label">light.</span>
-				<span class="label">dark.</span>
+				<span class="label blended">light.</span>
+				<span class="label blended">dark.</span>
 			</div>
 		</button>
 	</nav>
