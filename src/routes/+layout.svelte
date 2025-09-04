@@ -30,7 +30,7 @@
 <LoadingScreen>
 	<Header />
 
-	<main class="relative min-h-svh">
+	<main class="relative">
 		{@render children?.()}
 	</main>
 </LoadingScreen>
