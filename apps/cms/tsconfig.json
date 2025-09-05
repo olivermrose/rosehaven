@@ -28,7 +28,10 @@
 			],
 			"@payload-config": [
 				"./payload.config.ts"
-			]
+			],
+			"@collections/*": [
+				"./app/collections/*"
+			],
 		}
 	},
 	"include": [
