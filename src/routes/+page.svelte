@@ -1,6 +1,6 @@
 <script lang="ts">
 	import About from "$lib/components/About.svelte";
-	import { animate, stagger } from "motion";
+	import { animate, scroll, stagger } from "motion";
 	import { onMount } from "svelte";
 
 	const names = [
@@ -18,6 +18,8 @@
 		},
 	];
 
+	let hero = $state<HTMLElement>();
+
 	onMount(() => {
 		const animation = animate(
 			".name",
@@ -25,19 +27,34 @@
 			{ duration: 1.25, ease: [0.7, 0, 0.2, 1], delay: stagger(0.1) },
 		);
 
-		return () => animation.stop();
+		const cancel = scroll(
+			animate([
+				[":nth-child(1 of .row)", { x: "-5%" }],
+				[":nth-child(2 of .row)", { x: "10%" }, { at: "<" }],
+				[":nth-child(3 of .row)", { x: "-15%" }, { at: "<" }],
+			]),
+			{
+				target: hero,
+				offset: ["start start", "end start"],
+			},
+		);
+
+		return () => {
+			animation.stop();
+			cancel();
+		};
 	});
 </script>
 
-<div class="relative min-h-full sm:h-svh">
+<div class="relative min-h-full sm:h-svh" bind:this={hero}>
 	<div class="flex items-center justify-center px-4 pt-48 pb-36 sm:h-full sm:p-0">
 		<h1
 			class="m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] tracking-tighter uppercase sm:grid-cols-36"
 		>
 			<!-- eslint-disable-next-line svelte/require-each-key -->
 			{#each names as name}
-				<span class={["-col-end-1 block overflow-hidden", name.style]}>
-					<span class="name block opacity-0">{name.text}</span>
+				<span class={["row -col-end-1 block overflow-hidden", name.style]}>
+					<span class="name inline-block opacity-0">{name.text}</span>
 				</span>
 			{/each}
 		</h1>
