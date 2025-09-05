@@ -1,0 +1,18 @@
+{
+	"tasks": {
+		"build": {
+			"dependsOn": [
+				"^build"
+			],
+			"outputs": [
+				".svelte-kit/output/**",
+				".next/**",
+				"!.next/cache/**"
+			]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		}
+	}
+}
