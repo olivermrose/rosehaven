@@ -10,6 +10,7 @@
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 	import Header from "$lib/components/Header.svelte";
+	import Petals from "$lib/components/Petals.svelte";
 
 	let { children } = $props();
 
@@ -28,6 +29,7 @@
 <ModeWatcher />
 
 <LoadingScreen>
+	<Petals />
 	<Header />
 
 	<main class="relative">
