@@ -1,5 +1,4 @@
 <script lang="ts">
-	import About from "$lib/components/About.svelte";
 	import Anthology from "$lib/components/Anthology.svelte";
 	import { animate, scroll, stagger } from "motion";
 	import { onMount } from "svelte";
@@ -90,6 +89,5 @@
 	</div>
 </div>
 
-<Anthology posts={data.posts} />
 <Portrait />
-<About />
+<Anthology posts={data.posts} />
