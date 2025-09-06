@@ -11,6 +11,7 @@
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import Petals from "$lib/components/Petals.svelte";
+	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
 
 	let { children } = $props();
 
@@ -35,6 +36,8 @@
 	<main class="relative">
 		{@render children?.()}
 	</main>
+
+	<ScrollProgress />
 </LoadingScreen>
 
 {#if dev}
