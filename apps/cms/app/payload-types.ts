@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    posts: Post;
     quotes: Quote;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
@@ -75,6 +76,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    posts: PostsSelect<false> | PostsSelect<true>;
     quotes: QuotesSelect<false> | QuotesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -112,6 +114,37 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  category: 'dialogue' | 'poetry' | 'prose-poetry' | 'short-story';
+  title: string;
+  excerpt?: string | null;
+  explicit?: boolean | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug?: string | null;
+  slugLock?: boolean | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -157,6 +190,10 @@ export interface User {
 export interface PayloadLockedDocument {
   id: string;
   document?:
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null)
     | ({
         relationTo: 'quotes';
         value: string | Quote;
@@ -206,6 +243,22 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  category?: T;
+  title?: T;
+  excerpt?: T;
+  explicit?: T;
+  content?: T;
+  slug?: T;
+  slugLock?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

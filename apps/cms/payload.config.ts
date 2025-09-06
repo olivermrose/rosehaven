@@ -5,6 +5,7 @@ import { buildConfig } from "payload";
 import { quotes } from "@collections/quotes";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { posts } from "@collections/posts";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -16,11 +17,11 @@ export default buildConfig({
 			importMapFile: path.resolve(dirname, "app", "admin", "importMap.js"),
 		},
 	},
+	collections: [posts, quotes],
+	editor: lexicalEditor(),
 	typescript: {
 		outputFile: path.resolve(dirname, "app", "payload-types.ts"),
 	},
-	editor: lexicalEditor(),
-	collections: [quotes],
 	secret: process.env.PAYLOAD_SECRET ?? "",
 	db: mongooseAdapter({ url: process.env.DATABASE_URL ?? "" }),
 	sharp,
