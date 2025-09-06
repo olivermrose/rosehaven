@@ -29,10 +29,10 @@
 					<ul class="focus grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
 						{#each posts as post (post.id)}
 							<li>
-								<button
+								<a
 									class="-m-4 flex flex-col p-4 text-left"
 									title={post.title + (post.explicit ? " (Explicit)" : "")}
-									onclick={() => {}}
+									href="/writing/{post.slug}"
 								>
 									<div class="flex items-center gap-x-2">
 										<h3 class="text-fluid-base font-medium">
@@ -50,7 +50,7 @@
 									</div>
 
 									<p class="text-fluid-xs mt-1">{post.excerpt}</p>
-								</button>
+								</a>
 							</li>
 						{/each}
 					</ul>

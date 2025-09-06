@@ -26,3 +26,22 @@ export const postSchema = metadata.extend({
 });
 
 export type Post = z.infer<typeof postSchema>;
+
+export async function payloadResponse<T extends z.ZodObject>(response: Response, schema: T) {
+	const body = await response.json();
+
+	const payloadSchema = z.object({
+		docs: z.array(schema),
+		totalDocs: z.number(),
+		limit: z.number(),
+		totalPages: z.number(),
+		page: z.number(),
+		pagingCounter: z.number(),
+		hasPrevPage: z.boolean(),
+		hasNextPage: z.boolean(),
+		prevPage: z.number().nullable(),
+		nextPage: z.number().nullable(),
+	});
+
+	return payloadSchema.parse(body);
+}

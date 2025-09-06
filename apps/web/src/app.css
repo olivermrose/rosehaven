@@ -89,6 +89,21 @@
 	--color-wine-950: oklch(19.56% 0.058 17.42);
 }
 
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+}
+
+:root {
+	--background: var(--color-off-white);
+	--foreground: var(--color-off-black);
+}
+
+.dark {
+	--background: var(--color-off-black);
+	--foreground: var(--color-off-white);
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
