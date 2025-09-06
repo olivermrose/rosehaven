@@ -1,4 +1,5 @@
 import { CollectionConfig } from "payload";
+import { lexicalHTMLField } from "@payloadcms/richtext-lexical";
 import { slugField } from "../fields/slug";
 
 export const posts: CollectionConfig<"posts"> = {
@@ -41,6 +42,10 @@ export const posts: CollectionConfig<"posts"> = {
 			type: "richText",
 			required: true,
 		},
+		lexicalHTMLField({
+			htmlFieldName: "contentHtml",
+			lexicalFieldName: "content",
+		}),
 		...slugField("title"),
 		{
 			name: "publishedAt",

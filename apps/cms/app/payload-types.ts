@@ -140,6 +140,7 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  contentHtml?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   publishedAt?: string | null;
@@ -254,6 +255,7 @@ export interface PostsSelect<T extends boolean = true> {
   excerpt?: T;
   explicit?: T;
   content?: T;
+  contentHtml?: T;
   slug?: T;
   slugLock?: T;
   publishedAt?: T;
