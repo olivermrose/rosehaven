@@ -1,28 +1,6 @@
 import { PUBLIC_CMS_API_URL } from "$env/static/public";
+import { quoteSchema, postSchema } from "$lib/schema";
 import { z } from "zod";
-
-const metadata = z.object({
-	id: z.string(),
-	createdAt: z.iso.datetime(),
-	updatedAt: z.iso.datetime(),
-});
-
-const quoteSchema = metadata.extend({
-	text: z.string(),
-	quotee: z.string(),
-	sourceTitle: z.string(),
-	sourceUrl: z.string().optional(),
-});
-
-const postSchema = metadata.extend({
-	publishedAt: z.iso.datetime().optional(),
-	category: z.enum(["dialogue", "poetry", "prose-poetry", "short-story"]),
-	slug: z.string(),
-	title: z.string(),
-	excerpt: z.string().optional(),
-	explicit: z.boolean(),
-	contentHtml: z.string(),
-});
 
 async function payloadResponse<T extends z.ZodObject>(response: Response, schema: T) {
 	const body = await response.json();

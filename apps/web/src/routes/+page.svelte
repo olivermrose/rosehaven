@@ -1,7 +1,10 @@
 <script lang="ts">
 	import About from "$lib/components/About.svelte";
+	import Anthology from "$lib/components/Anthology.svelte";
 	import { animate, scroll, stagger } from "motion";
 	import { onMount } from "svelte";
+
+	const { data } = $props();
 
 	const names = [
 		{
@@ -62,3 +65,4 @@
 </div>
 
 <About />
+<Anthology posts={data.posts} />
