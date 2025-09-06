@@ -4,6 +4,7 @@
 	import { animate, scroll, stagger } from "motion";
 	import { onMount } from "svelte";
 	import { IsIdle } from "runed";
+	import Portrait from "$lib/components/Portrait.svelte";
 
 	const { data } = $props();
 
@@ -89,5 +90,6 @@
 	</div>
 </div>
 
-<About />
 <Anthology posts={data.posts} />
+<Portrait />
+<About />
