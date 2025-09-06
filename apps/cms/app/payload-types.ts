@@ -123,7 +123,7 @@ export interface Post {
   id: string;
   category: 'dialogue' | 'poetry' | 'prose-poetry' | 'short-story';
   title: string;
-  excerpt?: string | null;
+  excerpt: string;
   explicit?: boolean | null;
   content: {
     root: {

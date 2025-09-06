@@ -29,7 +29,7 @@ export const posts: CollectionConfig<"posts"> = {
 		{
 			name: "excerpt",
 			type: "text",
-			required: false,
+			required: true,
 		},
 		{
 			name: "explicit",
