@@ -47,9 +47,9 @@
 </script>
 
 <div class="relative min-h-full sm:h-svh" bind:this={hero}>
-	<div class="flex items-center justify-center px-4 pt-48 pb-36 sm:h-full sm:p-0">
+	<div class="flex items-center justify-center px-4 pb-36 pt-48 sm:h-full sm:p-0">
 		<h1
-			class="m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] tracking-tighter uppercase sm:grid-cols-36"
+			class="sm:grid-cols-36 m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] uppercase tracking-tighter"
 		>
 			<!-- eslint-disable-next-line svelte/require-each-key -->
 			{#each names as name}
