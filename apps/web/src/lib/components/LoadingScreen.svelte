@@ -21,7 +21,7 @@
 	let loaded = $state(false);
 
 	onMount(async () => {
-		// if (seenLoadingScreen.current) return;
+		if (seenLoadingScreen.current) return;
 
 		// NOTE: Do not await this animate call because it will cause a flash
 		animate("#loading-screen", { visibility: "visible" }, { duration: 0 });
