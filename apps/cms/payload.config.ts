@@ -1,4 +1,3 @@
-import sharp from "sharp";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { buildConfig } from "payload";
@@ -27,5 +26,4 @@ export default buildConfig({
 		url: process.env.DATABASE_URL ?? "",
 		migrationDir: path.resolve(dirname, "app", "migrations"),
 	}),
-	sharp,
 });
