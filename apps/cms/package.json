@@ -1,6 +1,5 @@
 {
-	"name": "cms",
-	"version": "0.1.0",
+	"name": "@rosehaven/cms",
 	"private": true,
 	"type": "module",
 	"scripts": {
