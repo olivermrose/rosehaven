@@ -6,7 +6,7 @@
 	const categories = $derived(Object.groupBy(posts, (post) => post.category));
 </script>
 
-<section id="anthology" class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6">
+<section id="anthology" class="mx-auto max-w-screen-xl px-4 pt-16 sm:px-6">
 	<hgroup class="max-w-prose">
 		<h1 class="text-fluid-3xl/[1.25]">
 			To write is to discover the essence of what remains untold.

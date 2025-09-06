@@ -12,6 +12,7 @@
 	import Header from "$lib/components/Header.svelte";
 	import Petals from "$lib/components/Petals.svelte";
 	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
+	import Footer from "$lib/components/Footer.svelte";
 
 	let { children } = $props();
 
@@ -37,6 +38,7 @@
 		{@render children?.()}
 	</main>
 
+	<Footer />
 	<ScrollProgress />
 </LoadingScreen>
 
