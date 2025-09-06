@@ -2,6 +2,9 @@ import { CollectionConfig } from "payload";
 
 export const quotes: CollectionConfig<"quotes"> = {
 	slug: "quotes",
+	access: {
+		read: () => true,
+	},
 	fields: [
 		{
 			name: "text",
