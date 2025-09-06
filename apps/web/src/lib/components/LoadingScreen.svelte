@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { animate, stagger } from "motion";
-	import type { Snippet } from "svelte";
+	import { onMount, type Snippet } from "svelte";
 	import { expoInOut } from "$lib";
 	import { PersistedState } from "runed";
 
@@ -18,8 +18,10 @@
 		storage: "session",
 	});
 
-	async function load() {
-		if (seenLoadingScreen.current) return;
+	let loaded = $state(false);
+
+	onMount(async () => {
+		// if (seenLoadingScreen.current) return;
 
 		// NOTE: Do not await this animate call because it will cause a flash
 		animate("#loading-screen", { visibility: "visible" }, { duration: 0 });
@@ -44,10 +46,13 @@
 		);
 
 		seenLoadingScreen.current = true;
-	}
+		loaded = true;
+	});
 </script>
 
-{#await load()}
+{#if loaded}
+	{@render children()}
+{:else}
 	<div id="loading-screen" class="invisible">
 		<div class="grid h-svh grid-cols-5 overflow-hidden">
 			{#each { length: 5 }, i}
@@ -62,6 +67,4 @@
 			</div>
 		</div>
 	</div>
-{:then}
-	{@render children()}
-{/await}
+{/if}
