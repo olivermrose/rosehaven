@@ -16,5 +16,11 @@ export async function load({ parent, params }) {
 		// NOTE: Not using .at() to avoid wrapping around
 		prev: categorized[position - 1],
 		next: categorized[position + 1],
+		seo: {
+			path: `/writing/${post.slug}`,
+			title: post.title,
+			description: post.excerpt,
+			article: true,
+		},
 	};
 }

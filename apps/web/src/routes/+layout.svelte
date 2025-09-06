@@ -1,7 +1,6 @@
 <script lang="ts">
 	import "../app.css";
 	import "lenis/dist/lenis.css";
-	import favicon from "$lib/assets/favicon.svg";
 	import Lenis from "lenis";
 	import { onMount } from "svelte";
 	import { frame } from "motion";
@@ -13,8 +12,13 @@
 	import Petals from "$lib/components/Petals.svelte";
 	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
 	import Footer from "$lib/components/Footer.svelte";
+	import { page } from "$app/state";
+	import { SITE_NAME } from "$lib";
 
-	let { children } = $props();
+	const { children } = $props();
+
+	const { seo } = $derived(page.data);
+	const title = $derived(seo.title ? `${seo.title} | ${SITE_NAME}` : SITE_NAME);
 
 	onMount(() => {
 		const lenis = new Lenis();
@@ -25,7 +29,20 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+	<title>{title}</title>
+	<meta name="description" content={seo.description} />
+
+	<meta property="og:site_name" content={SITE_NAME} />
+	<meta property="og:type" content={seo.article ? "article" : "website"} />
+	<meta property="og:url" content="https://olivermrose.com/{seo.path.slice(1)}" />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={seo.description} />
+	<!-- <meta property="og:image" content={seo.image} /> TODO -->
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={seo.description} />
+	<!-- <meta name="twitter:image" content={seo.image} /> TODO -->
 </svelte:head>
 
 <ModeWatcher />

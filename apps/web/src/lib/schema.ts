@@ -20,7 +20,7 @@ export const postSchema = metadata.extend({
 	category: z.enum(["dialogue", "poetry", "prose-poetry", "short-story"]),
 	slug: z.string(),
 	title: z.string(),
-	excerpt: z.string().optional(),
+	excerpt: z.string(),
 	explicit: z.boolean(),
 	contentHtml: z.string(),
 });
