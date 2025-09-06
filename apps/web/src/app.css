@@ -133,6 +133,40 @@
 	}
 }
 
+@layer utilities {
+	[data-content] a {
+		text-decoration: underline dashed var(--color-aloe-500) 1px;
+		text-underline-offset: 2px;
+
+		@variant dark {
+			text-decoration-color: var(--color-neutral-400);
+		}
+	}
+
+	[data-content] p {
+		white-space: normal;
+	}
+
+	[data-category="dialogue"] p {
+		max-width: 60ch;
+
+		&[style*="text-align: right"] {
+			margin-left: auto;
+			color: var(--color-wine-700);
+
+			@variant dark {
+				color: white;
+			}
+		}
+	}
+
+	[data-category="short-story"] {
+		p:not([style*="text-align: center"]) {
+			text-indent: 4ch;
+		}
+	}
+}
+
 @utility blended {
 	background: white;
 	background-clip: text;

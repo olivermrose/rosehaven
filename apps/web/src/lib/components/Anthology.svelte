@@ -30,7 +30,7 @@
 						{#each posts as post (post.id)}
 							<li>
 								<a
-									class="-m-4 flex flex-col p-4 text-left"
+									class="-m-4 flex flex-col p-4"
 									title={post.title + (post.explicit ? " (Explicit)" : "")}
 									href="/writing/{post.slug}"
 								>
