@@ -28,6 +28,7 @@ export const posts: CollectionConfig<"posts"> = {
 			type: "text",
 			required: true,
 			unique: true,
+			index: true,
 		},
 		{
 			name: "excerpt",
