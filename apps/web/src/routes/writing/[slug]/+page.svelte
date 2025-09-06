@@ -3,6 +3,12 @@
 	import dayjs from "dayjs";
 
 	const { data } = $props();
+
+	const content = $derived.by(() => {
+		// Lexical adds leading/trailing whitespace within <a /> (and probably
+		// other inline elements).
+		return data.post.contentHtml.replace(/(<a[^>]*>)\s*(.*?)\s*(<\/a>)/g, "$1$2$3");
+	});
 </script>
 
 <article
@@ -18,7 +24,7 @@
 			</time>
 
 			<a class="group no-underline" href="/#{data.post.category}">
-				<span class="inline-block duration-300 group-hover:-translate-x-1">&larr;</span> Back
+				<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
 			</a>
 		</div>
 
@@ -27,7 +33,9 @@
 		</h1>
 	</header>
 
-	<div>{@html data.post.contentHtml}</div>
+	<div data-content data-category={data.post.category}>
+		{@html content}
+	</div>
 
 	{#if data.prev || data.next}
 		<div class="bg-foreground/50 my-10 h-px w-full" role="separator"></div>
