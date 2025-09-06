@@ -2,6 +2,7 @@
 	import { animate, stagger } from "motion";
 	import type { Snippet } from "svelte";
 	import { expoInOut } from "$lib";
+	import { PersistedState } from "runed";
 
 	const { children }: { children: Snippet } = $props();
 
@@ -13,7 +14,13 @@
 		"dark:bg-neutral-400",
 	];
 
+	const seenLoadingScreen = new PersistedState("seen-ls", false, {
+		storage: "session",
+	});
+
 	async function load() {
+		if (seenLoadingScreen.current) return;
+
 		// NOTE: Do not await this animate call because it will cause a flash
 		animate("#loading-screen", { visibility: "visible" }, { duration: 0 });
 
@@ -35,6 +42,8 @@
 				},
 			},
 		);
+
+		seenLoadingScreen.current = true;
 	}
 </script>
 
@@ -42,11 +51,11 @@
 	<div id="loading-screen" class="invisible">
 		<div class="grid h-svh grid-cols-5 overflow-hidden">
 			{#each { length: 5 }, i}
-				<div class="column h-full bg-wine-600 {darkColumns[i]}"></div>
+				<div class="column bg-wine-600 h-full {darkColumns[i]}"></div>
 			{/each}
 		</div>
 
-		<div class="absolute right-8 bottom-8 overflow-hidden">
+		<div class="absolute bottom-8 right-8 overflow-hidden">
 			<div class="flavor-text text-right">
 				<p>Where silence gathers dust</p>
 				<p>And memories bloom</p>
