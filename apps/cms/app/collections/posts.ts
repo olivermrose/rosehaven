@@ -56,6 +56,7 @@ export const posts: CollectionConfig<"posts"> = {
 			type: "date",
 			admin: {
 				date: {
+					displayFormat: "MMMM d, y",
 					pickerAppearance: "dayOnly",
 				},
 				position: "sidebar",
