@@ -23,6 +23,9 @@ export default buildConfig({
 		outputFile: path.resolve(dirname, "app", "payload-types.ts"),
 	},
 	secret: process.env.PAYLOAD_SECRET ?? "",
-	db: mongooseAdapter({ url: process.env.DATABASE_URL ?? "" }),
+	db: mongooseAdapter({
+		url: process.env.DATABASE_URL ?? "",
+		migrationDir: path.resolve(dirname, "app", "migrations"),
+	}),
 	sharp,
 });

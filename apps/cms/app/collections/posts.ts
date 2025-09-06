@@ -4,6 +4,9 @@ import { slugField } from "../fields/slug";
 
 export const posts: CollectionConfig<"posts"> = {
 	slug: "posts",
+	versions: {
+		drafts: true,
+	},
 	admin: {
 		useAsTitle: "title",
 		defaultColumns: ["title", "slug", "category", "excerpt", "publishedAt"],
