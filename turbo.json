@@ -1,5 +1,8 @@
 {
 	"tasks": {
+		"sync": {
+			"cache": false
+		},
 		"build": {
 			"dependsOn": [
 				"^build"
