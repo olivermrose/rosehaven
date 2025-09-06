@@ -12,7 +12,7 @@
 </script>
 
 <article
-	class="prose dark:prose-invert prose-neutral mx-auto max-w-4xl overflow-auto px-4 pb-20 pt-28 sm:px-6"
+	class="prose dark:prose-invert prose-neutral mx-auto max-w-4xl overflow-auto px-4 pt-28 sm:px-6"
 >
 	<header>
 		<div class="flex items-center justify-between text-sm">
