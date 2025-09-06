@@ -38,7 +38,11 @@
 	<div class="sticky top-0 flex h-svh items-center justify-center">
 		<div class="relative h-full max-h-[75svh] uppercase md:max-h-[85svh]">
 			<div class="tag absolute z-10 overflow-hidden">
-				<div class="left text-fluid-6xl/none opacity-0">Crafting</div>
+				<div class="left text-fluid-6xl/none opacity-0">
+					<span class="font-serif">C</span>raf<span class="font-serif">t</span>in<span
+						class="font-serif">g</span
+					>
+				</div>
 			</div>
 
 			<img
@@ -51,7 +55,9 @@
 			/>
 
 			<div class="tag absolute z-10 overflow-hidden">
-				<div class="right text-fluid-6xl/none opacity-0">Worlds</div>
+				<div class="right text-fluid-6xl/none opacity-0">
+					W<span class="font-serif">o</span>rld<span class="font-serif">s</span>
+				</div>
 			</div>
 		</div>
 	</div>

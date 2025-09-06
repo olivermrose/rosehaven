@@ -1,8 +1,25 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+	font-family: "PP Eiko";
+	font-display: swap;
+	font-style: normal;
+	font-weight: 100 900;
+	src: url("/fonts/PPEiko-Variable.ttf") format(truetype);
+}
+
+@font-face {
+	font-family: "PP Eiko";
+	font-display: swap;
+	font-style: italic;
+	font-weight: 100 900;
+	src: url("/fonts/PPEikoItalic-Variable.ttf") format(truetype);
+}
+
 @theme {
 	--font-sans: InterVariable, ui-sans-serif, sans-serif;
+	--font-serif: "PP Eiko", ui-serif, serif;
 
 	/*
 	 * Values generated from https://www.fluid-type-scale.com/
