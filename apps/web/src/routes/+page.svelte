@@ -3,6 +3,7 @@
 	import Anthology from "$lib/components/Anthology.svelte";
 	import { animate, scroll, stagger } from "motion";
 	import { onMount } from "svelte";
+	import { IsIdle } from "runed";
 
 	const { data } = $props();
 
@@ -21,13 +22,22 @@
 		},
 	];
 
+	const idle = new IsIdle({ timeout: 3000 });
+
 	let hero = $state<HTMLElement>();
 
 	onMount(() => {
 		const animation = animate(
-			".name",
-			{ y: ["100%", "0%"], opacity: 1 },
-			{ duration: 1.25, ease: [0.7, 0, 0.2, 1], delay: stagger(0.1) },
+			[
+				[".name", { y: ["100%", "0%"], opacity: 1 }, { delay: stagger(0.1) }],
+				["#scroll-hint", { y: [15, 0], opacity: 1 }, { at: "<0.5" }],
+			],
+			{
+				defaultTransition: {
+					duration: 1.25,
+					ease: [0.7, 0, 0.2, 1],
+				},
+			},
 		);
 
 		const cancel = scroll(
@@ -61,6 +71,25 @@
 				</span>
 			{/each}
 		</h1>
+	</div>
+
+	<div class="absolute bottom-12 right-10">
+		<div
+			id="scroll-hint"
+			class={["flex items-center gap-x-1 opacity-0", idle.current && "animate-bounce"]}
+		>
+			<span class="text-sm">Scroll</span>
+
+			<svg class="text-peach-400 mt-1 size-4" viewBox="0 0 24 24">
+				<path
+					fill="currentColor"
+					fill-rule="evenodd"
+					d="M1.2 8h21.6V5.5H1.2V8Zm21.6 9V8h-2.5v9h2.5Z"
+					clip-rule="evenodd"
+				>
+				</path>
+			</svg>
+		</div>
 	</div>
 </div>
 

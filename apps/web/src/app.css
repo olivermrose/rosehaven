@@ -87,6 +87,19 @@
 	--color-wine-800: oklch(36.59% 0.108 17.45);
 	--color-wine-900: oklch(25.89% 0.076 17.14);
 	--color-wine-950: oklch(19.56% 0.058 17.42);
+
+	@keyframes bounce {
+		0%,
+		100% {
+			transform: translateY(0);
+			animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+		}
+
+		50% {
+			transform: translateY(-25%);
+			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+		}
+	}
 }
 
 @theme inline {
