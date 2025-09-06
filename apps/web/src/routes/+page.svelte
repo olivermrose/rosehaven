@@ -26,8 +26,8 @@
 
 	let hero = $state<HTMLElement>();
 
-	onMount(() => {
-		const animation = animate(
+	onMount(async () => {
+		await animate(
 			[
 				[".name", { y: ["100%", "0%"], opacity: 1 }, { delay: stagger(0.1) }],
 				["#scroll-hint", { y: [15, 0], opacity: 1 }, { at: "<0.5" }],
@@ -40,22 +40,18 @@
 			},
 		);
 
-		const cancel = scroll(
+		scroll(
 			animate([
 				[":nth-child(1 of .row)", { x: "-5%" }],
 				[":nth-child(2 of .row)", { x: "10%" }, { at: "<" }],
 				[":nth-child(3 of .row)", { x: "-15%" }, { at: "<" }],
+				["#scroll-hint", { opacity: 0 }, { at: "<" }],
 			]),
 			{
 				target: hero,
 				offset: ["start start", "end start"],
 			},
 		);
-
-		return () => {
-			animation.stop();
-			cancel();
-		};
 	});
 </script>
 
