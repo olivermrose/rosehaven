@@ -39,7 +39,7 @@
 <div class="relative h-[400svh] px-4 sm:px-6" bind:this={container}>
 	<div class="sticky top-0 flex h-svh items-center justify-center">
 		<div class="relative h-full max-h-[75svh] uppercase md:max-h-[85svh]">
-			<div class="tag absolute z-10 overflow-hidden">
+			<div class="tag">
 				<div class="left text-fluid-6xl/none opacity-0">
 					<span class="font-serif">C</span>raf<span class="font-serif">t</span>in<span
 						class="font-serif">g</span
@@ -53,7 +53,7 @@
 				</Canvas>
 			</div>
 
-			<div class="tag absolute z-10 overflow-hidden">
+			<div class="tag">
 				<div class="right text-fluid-6xl/none opacity-0">
 					W<span class="font-serif italic">o</span>rld<span class="font-serif">s</span>
 				</div>
@@ -69,6 +69,13 @@
 		--clip-x: 50%;
 		--clip-y: 0%;
 		clip-path: inset(var(--clip-y) var(--clip-x));
+	}
+
+	.tag {
+		position: absolute;
+		overflow: hidden;
+		z-index: 10;
+		pointer-events: none;
 	}
 
 	:nth-child(1 of .tag) {
