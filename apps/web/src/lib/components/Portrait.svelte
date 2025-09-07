@@ -28,7 +28,7 @@
 			),
 			{
 				target: container,
-				offset: ["start start", "end center"],
+				offset: ["start 0.65", "end center"],
 			},
 		);
 
