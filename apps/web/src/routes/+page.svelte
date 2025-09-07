@@ -3,6 +3,7 @@
 	import { IsIdle } from "runed";
 	import { onMount } from "svelte";
 	import Anthology from "$lib/components/Anthology.svelte";
+	import Footer from "$lib/components/Footer.svelte";
 	import Portrait from "$lib/components/Portrait.svelte";
 
 	const { data } = $props();
@@ -91,3 +92,5 @@
 
 <Portrait />
 <Anthology posts={data.posts} />
+
+<Footer />

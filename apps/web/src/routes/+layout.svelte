@@ -9,7 +9,6 @@
 	import { dev } from "$app/environment";
 	import { page } from "$app/state";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
-	import Footer from "$lib/components/Footer.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 	import Petals from "$lib/components/Petals.svelte";
@@ -55,7 +54,6 @@
 		{@render children?.()}
 	</main>
 
-	<Footer />
 	<ScrollProgress />
 </LoadingScreen>
 
