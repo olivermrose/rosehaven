@@ -64,22 +64,17 @@ export const posts: CollectionConfig<"posts"> = {
 				},
 				position: "sidebar",
 			},
+			hooks: {
+				beforeChange: [
+					({ siblingData, value }) => {
+						if (siblingData._status === "published" && !value) {
+							return new Date();
+						}
+
+						return value;
+					},
+				],
+			},
 		},
 	],
-	hooks: {
-		beforeChange: [
-			({ data, operation, req }) => {
-				if (operation === "create" || operation === "update") {
-					if (req.data && !req.data.publishedAt) {
-						return {
-							...data,
-							publishedAt: new Date(),
-						};
-					}
-				}
-
-				return data;
-			},
-		],
-	},
 };
