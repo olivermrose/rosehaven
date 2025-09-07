@@ -9,7 +9,7 @@ export const posts: CollectionConfig<"posts"> = {
 	},
 	admin: {
 		useAsTitle: "title",
-		defaultColumns: ["title", "slug", "category", "excerpt", "publishedAt"],
+		defaultColumns: ["category", "title", "slug", "excerpt", "publishedAt"],
 	},
 	access: {
 		read: () => true,
