@@ -3,7 +3,7 @@
 
 	const { posts }: { posts: Post[] } = $props();
 
-	const categories = $derived(Object.groupBy(posts, (post) => post.category));
+	const categories = Object.groupBy(posts, (post) => post.category);
 </script>
 
 <section id="anthology" class="mx-auto max-w-screen-xl px-4 pt-16 sm:px-6">
