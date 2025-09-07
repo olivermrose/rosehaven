@@ -1,5 +1,5 @@
-import { CollectionConfig } from "payload";
 import { lexicalHTMLField } from "@payloadcms/richtext-lexical";
+import type { CollectionConfig } from "payload";
 import { slugField } from "../fields/slug";
 
 export const posts: CollectionConfig<"posts"> = {

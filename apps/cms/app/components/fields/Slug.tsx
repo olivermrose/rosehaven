@@ -1,8 +1,8 @@
 "use client";
 
+import { Button, FieldLabel, TextInput, useField, useForm, useFormFields } from "@payloadcms/ui";
+import type { TextFieldClientProps } from "payload";
 import React, { useCallback, useEffect } from "react";
-import { TextFieldClientProps } from "payload";
-import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from "@payloadcms/ui";
 import { slugify } from "@/app/util";
 
 interface Props extends TextFieldClientProps {

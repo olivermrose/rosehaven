@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { frame, cancelFrame, animate } from "motion";
-	import { onMount } from "svelte";
 	import chroma from "chroma-js";
 	import dayjs from "dayjs";
+	import { animate, cancelFrame, frame } from "motion";
+	import { onMount } from "svelte";
 
 	const seasons = [
 		["#FFE438", "#88C924"], // Spring
@@ -112,7 +112,7 @@
 		{@const [main, anti] = generateDiagonals()}
 
 		<div
-			class="petal absolute size-3 bg-linear-to-br/oklch from-(--petal-shade-1) to-(--petal-shade-2)"
+			class="petal bg-linear-to-br/oklch from-(--petal-shade-1) to-(--petal-shade-2) absolute size-3"
 			style:border-radius="{main}px {anti}px"
 			style:--petal-shade-1={shade1}
 			style:--petal-shade-2={shade2}

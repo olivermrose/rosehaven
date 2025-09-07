@@ -1,10 +1,11 @@
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import { buildConfig } from "payload";
-import { quotes } from "@collections/quotes";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
 import { posts } from "@collections/posts";
+import { quotes } from "@collections/quotes";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { buildConfig } from "payload";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

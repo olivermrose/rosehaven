@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Anthology from "$lib/components/Anthology.svelte";
 	import { animate, scroll, stagger } from "motion";
-	import { onMount } from "svelte";
 	import { IsIdle } from "runed";
+	import { onMount } from "svelte";
+	import Anthology from "$lib/components/Anthology.svelte";
 	import Portrait from "$lib/components/Portrait.svelte";
 
 	const { data } = $props();

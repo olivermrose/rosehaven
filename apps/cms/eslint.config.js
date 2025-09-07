@@ -2,10 +2,9 @@ import antfu from "@antfu/eslint-config";
 
 export default antfu({
 	stylistic: false,
-	svelte: true,
+	react: true,
+	nextjs: true,
 	rules: {
-		"no-console": "off",
-		"no-unused-vars": "warn",
 		"import/order": "off",
 		"perfectionist/sort-imports": [
 			"error",
@@ -16,7 +15,6 @@ export default antfu({
 					"side-effect-style",
 					"builtin",
 					"external",
-					"sveltekit",
 					["internal", "internal-type"],
 					["parent", "parent-type"],
 					["sibling", "sibling-type"],
@@ -24,15 +22,8 @@ export default antfu({
 					"object",
 					"unknown",
 				],
-				customGroups: {
-					value: {
-						sveltekit: ["\\$app/.+", "\\$env/.+", "\\$lib/.+"],
-					},
-				},
 			},
 		],
-		"unused-imports/no-unused-imports": "warn",
-		"unused-imports/no-unused-vars": "off",
-		"svelte/no-at-html-tags": "off",
 	},
+	ignores: ["app/payload-types.ts", "app/admin/importMap.js"],
 });

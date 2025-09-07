@@ -1,19 +1,19 @@
 <script lang="ts">
 	import "../app.css";
 	import "lenis/dist/lenis.css";
+	import { SITE_NAME } from "$lib";
 	import Lenis from "lenis";
-	import { onMount } from "svelte";
-	import { frame } from "motion";
 	import { ModeWatcher } from "mode-watcher";
+	import { frame } from "motion";
+	import { onMount } from "svelte";
 	import { dev } from "$app/environment";
+	import { page } from "$app/state";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
-	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
+	import Footer from "$lib/components/Footer.svelte";
 	import Header from "$lib/components/Header.svelte";
+	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 	import Petals from "$lib/components/Petals.svelte";
 	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
-	import Footer from "$lib/components/Footer.svelte";
-	import { page } from "$app/state";
-	import { SITE_NAME } from "$lib";
 
 	const { children } = $props();
 

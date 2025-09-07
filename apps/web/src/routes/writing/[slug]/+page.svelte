@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Post } from "$lib/schema";
 	import dayjs from "dayjs";
+	import type { Post } from "$lib/schema";
 
 	const { data } = $props();
 

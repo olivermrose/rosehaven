@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { innerWidth, innerHeight } from "svelte/reactivity/window";
+	import { innerHeight, innerWidth } from "svelte/reactivity/window";
 </script>
 
 <div
-	class="text-foreground fixed bottom-5 left-5 z-9999 flex items-center space-x-2 rounded-full bg-black/20 px-2.5 py-1 font-mono text-xs backdrop-blur-sm select-none dark:bg-white/30"
+	class="text-foreground z-9999 fixed bottom-5 left-5 flex select-none items-center space-x-2 rounded-full bg-black/20 px-2.5 py-1 font-mono text-xs backdrop-blur-sm dark:bg-white/30"
 >
 	<span>
 		{innerWidth.current} &times; {innerHeight.current}
