@@ -9,9 +9,10 @@
 				"^build"
 			],
 			"outputs": [
-				".svelte-kit/output/**",
 				".next/**",
-				"!.next/cache/**"
+				"!.next/cache/**",
+				".svelte-kit/**",
+				".vercel/**"
 			]
 		},
 		"dev": {
