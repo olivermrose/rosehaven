@@ -5,6 +5,7 @@ export default antfu({
 	react: true,
 	nextjs: true,
 	rules: {
+		"no-unused-vars": "warn",
 		"import/order": "off",
 		"perfectionist/sort-imports": [
 			"error",
@@ -24,6 +25,7 @@ export default antfu({
 				],
 			},
 		],
+		"unused-imports/no-unused-vars": "off",
 	},
 	ignores: ["app/payload-types.ts", "app/admin/importMap.js"],
 });
