@@ -29,7 +29,7 @@
 	</div>
 
 	<div
-		class="right bg-denim-500 absolute right-0 h-full w-1/5 origin-right dark:bg-neutral-500"
+		class="right bg-plum-600 absolute right-0 h-full w-1/5 origin-right dark:bg-neutral-500"
 	></div>
 </div>
 

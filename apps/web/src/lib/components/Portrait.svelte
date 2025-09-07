@@ -56,7 +56,7 @@
 
 			<div class="tag absolute z-10 overflow-hidden">
 				<div class="right text-fluid-6xl/none opacity-0">
-					W<span class="font-serif">o</span>rld<span class="font-serif">s</span>
+					W<span class="font-serif italic">o</span>rld<span class="font-serif">s</span>
 				</div>
 			</div>
 		</div>
