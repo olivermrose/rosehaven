@@ -7,6 +7,7 @@
 	const content = $derived.by(() => {
 		// Lexical adds leading/trailing whitespace within <a /> (and probably
 		// other inline elements).
+		// eslint-disable-next-line regexp/no-super-linear-backtracking
 		return data.post.contentHtml.replace(/(<a[^>]*>)\s*(.*?)\s*(<\/a>)/g, "$1$2$3");
 	});
 </script>
@@ -56,7 +57,7 @@
 				&lbrace; {type} &rbrace;
 			</span>
 
-			<a class="text-fluid-2xl/none not-prose mt-2 font-light" href="/writing/{post.slug}">
+			<a class="text-fluid-2xl/[1.25] not-prose mt-2 font-light" href="/writing/{post.slug}">
 				<span
 					class="group-hover:text-plum-500 transition-colors duration-300 dark:group-hover:text-white"
 				>
