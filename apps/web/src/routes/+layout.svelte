@@ -1,13 +1,13 @@
 <script lang="ts">
 	import "../app.css";
 	import "lenis/dist/lenis.css";
-	import { SITE_NAME } from "$lib";
 	import Lenis from "lenis";
 	import { ModeWatcher } from "mode-watcher";
 	import { frame } from "motion";
 	import { onMount } from "svelte";
 	import { dev } from "$app/environment";
 	import { page } from "$app/state";
+	import { SITE_NAME } from "$lib";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";

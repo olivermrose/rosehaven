@@ -26,7 +26,7 @@ export default antfu({
 				],
 				customGroups: {
 					value: {
-						sveltekit: ["\\$app/.+", "\\$env/.+", "\\$lib/.+"],
+						sveltekit: ["\\$app/.+", "\\$env/.+", "\\$lib/.+", "\\$lib"],
 					},
 				},
 			},

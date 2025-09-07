@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { expoInOut } from "$lib";
+	import { Canvas } from "@threlte/core";
 	import { animate, scroll } from "motion";
 	import { onMount } from "svelte";
+	import { expoInOut } from "$lib";
+	import Distortion from "./Distortion.svelte";
 
 	let container = $state<HTMLElement>();
 
@@ -45,14 +47,11 @@
 				</div>
 			</div>
 
-			<img
-				id="portrait"
-				class="rounded-tr-4xl rounded-bl-4xl size-full object-cover"
-				src="https://r2.olivermrose.com/self.jpg"
-				alt="Portrait of Oliver Rose"
-				decoding="async"
-				loading="lazy"
-			/>
+			<div id="portrait" class="rounded-bl-4xl rounded-tr-4xl aspect-[3/4] h-full overflow-hidden">
+				<Canvas>
+					<Distortion src="https://r2.olivermrose.com/self.jpg" />
+				</Canvas>
+			</div>
 
 			<div class="tag absolute z-10 overflow-hidden">
 				<div class="right text-fluid-6xl/none opacity-0">

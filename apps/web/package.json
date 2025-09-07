@@ -14,12 +14,14 @@
 		"lint": "prettier --check src/**/* && eslint --fix"
 	},
 	"dependencies": {
+		"@threlte/core": "^8.1.5",
 		"chroma-js": "^3.1.2",
 		"dayjs": "^1.11.18",
 		"lenis": "^1.3.10",
 		"mode-watcher": "^1.1.0",
 		"motion": "^12.23.12",
 		"runed": "^0.31.1",
+		"three": "^0.180.0",
 		"zod": "^4.1.5"
 	},
 	"devDependencies": {
@@ -30,6 +32,7 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/chroma-js": "^3.1.1",
+		"@types/three": "^0.180.0",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",

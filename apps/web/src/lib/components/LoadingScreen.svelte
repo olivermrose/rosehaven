@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { expoInOut } from "$lib";
 	import { animate, stagger } from "motion";
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
 	import type { Snippet } from "svelte";
+	import { expoInOut } from "$lib";
 
 	const { children }: { children: Snippet } = $props();
 

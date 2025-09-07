@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { SITE_NAME } from "$lib";
 	import { mode, toggleMode } from "mode-watcher";
 	import { animate } from "motion";
 	import { onMount } from "svelte";
+	import { SITE_NAME } from "$lib";
 
 	onMount(() => {
 		animate("#site-header", { opacity: 1 }, { duration: 0.75 });
