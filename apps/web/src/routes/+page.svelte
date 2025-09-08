@@ -56,7 +56,7 @@
 	});
 </script>
 
-<div class="relative min-h-full overflow-hidden sm:h-svh" bind:this={hero}>
+<div class="relative min-h-full overflow-hidden sm:h-dvh" bind:this={hero}>
 	<div class="flex items-center justify-center px-4 pb-36 pt-48 sm:h-full sm:p-0">
 		<h1
 			class="sm:grid-cols-36 m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] uppercase tracking-tighter"

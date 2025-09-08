@@ -36,9 +36,9 @@
 	});
 </script>
 
-<div class="relative h-[400svh] px-4 sm:px-6" bind:this={container}>
-	<div class="sticky top-0 flex h-svh items-center justify-center">
-		<div class="relative h-full max-h-[75svh] uppercase md:max-h-[85svh]">
+<div class="relative h-[400dvh] px-4 sm:px-6" bind:this={container}>
+	<div class="sticky top-0 flex h-dvh items-center justify-center">
+		<div class="relative h-full max-h-[75dvh] uppercase md:max-h-[85dvh]">
 			<div class="tag">
 				<div class="left text-fluid-6xl/none opacity-0">
 					<span class="font-serif">C</span>raf<span class="font-serif">t</span>in<span

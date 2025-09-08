@@ -58,7 +58,7 @@
 	{@render children()}
 {:else}
 	<div id="loading-screen" class="invisible">
-		<div class="grid h-svh grid-cols-5 overflow-hidden">
+		<div class="grid h-dvh grid-cols-5 overflow-hidden">
 			{#each { length: 5 }, i}
 				<div class="column bg-wine-600 h-full {darkColumns[i]}"></div>
 			{/each}
