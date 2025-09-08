@@ -40,7 +40,7 @@
 	<div class="sticky top-0 flex h-dvh items-center justify-center">
 		<div class="relative h-full max-h-[75dvh] uppercase md:max-h-[85dvh]">
 			<div class="tag">
-				<div class="left text-fluid-6xl/none opacity-0">
+				<div class="left text-fluid-7xl/none opacity-0">
 					<span class="font-serif">C</span>raf<span class="font-serif">t</span>in<span
 						class="font-serif">g</span
 					>
@@ -54,7 +54,7 @@
 			</div>
 
 			<div class="tag">
-				<div class="right text-fluid-6xl/none opacity-0">
+				<div class="right text-fluid-7xl/none opacity-0">
 					W<span class="font-serif italic">o</span>rld<span class="font-serif">s</span>
 				</div>
 			</div>
@@ -82,9 +82,9 @@
 		top: 0.75rem;
 		left: 0.75rem;
 
-		@variant md {
+		@variant lg {
 			top: 20%;
-			left: -50%;
+			left: -65%;
 			translate: 50% -50%;
 		}
 	}
@@ -93,9 +93,9 @@
 		bottom: 0.75rem;
 		right: 0.75rem;
 
-		@variant md {
+		@variant lg {
 			bottom: 20%;
-			right: -50%;
+			right: -55%;
 			translate: -50% 50%;
 		}
 	}
