@@ -38,7 +38,7 @@
 
 <div class="relative h-[400dvh] px-4 sm:px-6" bind:this={container}>
 	<div class="sticky top-0 flex h-dvh items-center justify-center">
-		<div class="relative h-full max-h-[75dvh] uppercase md:max-h-[85dvh]">
+		<div class="relative mx-auto h-full max-h-[75dvh] max-w-full uppercase md:max-h-[85dvh]">
 			<div class="tag">
 				<div class="left text-fluid-7xl/none opacity-0">
 					<span class="font-serif">C</span>raf<span class="font-serif">t</span>in<span
@@ -47,7 +47,10 @@
 				</div>
 			</div>
 
-			<div id="portrait" class="rounded-bl-4xl rounded-tr-4xl aspect-[3/4] h-full overflow-hidden">
+			<div
+				id="portrait"
+				class="rounded-bl-4xl rounded-tr-4xl mx-auto aspect-[3/4] size-full overflow-hidden"
+			>
 				<Canvas>
 					<Distortion src="https://r2.olivermrose.com/self.jpg" />
 				</Canvas>
