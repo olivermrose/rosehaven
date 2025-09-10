@@ -5,7 +5,7 @@ interface Seo {
 	path: string;
 	title: string | null;
 	description: string;
-	// image: string; TODO
+	image?: string;
 	article?: boolean;
 }
 

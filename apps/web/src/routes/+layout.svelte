@@ -1,12 +1,13 @@
 <script lang="ts">
-	import "../app.css";
 	import "lenis/dist/lenis.css";
+	import "../app.css";
 	import Lenis from "lenis";
 	import { ModeWatcher } from "mode-watcher";
 	import { frame } from "motion";
 	import { onMount } from "svelte";
 	import { dev } from "$app/environment";
 	import { page } from "$app/state";
+	import { PUBLIC_BASE_URL } from "$env/static/public";
 	import { SITE_NAME } from "$lib";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
 	import Header from "$lib/components/Header.svelte";
@@ -18,6 +19,7 @@
 
 	const { seo } = $derived(page.data);
 	const title = $derived(seo.title ? `${seo.title} | ${SITE_NAME}` : SITE_NAME);
+	const image = $derived(seo.image ? PUBLIC_BASE_URL + seo.image : null);
 
 	onMount(() => {
 		const lenis = new Lenis();
@@ -36,12 +38,15 @@
 	<meta property="og:url" content="https://olivermrose.com/{seo.path.slice(1)}" />
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={seo.description} />
-	<!-- <meta property="og:image" content={seo.image} /> TODO -->
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={seo.description} />
-	<!-- <meta name="twitter:image" content={seo.image} /> TODO -->
+
+	{#if image}
+		<meta property="og:image" content={image} />
+		<meta name="twitter:image" content={image} />
+	{/if}
 </svelte:head>
 
 <ModeWatcher />

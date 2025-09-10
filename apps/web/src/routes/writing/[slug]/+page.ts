@@ -11,6 +11,8 @@ export async function load({ parent, params }) {
 	const categorized = posts.filter((p) => p.category === post.category);
 	const position = categorized.indexOf(post);
 
+	const { title, excerpt } = post;
+
 	return {
 		post,
 		// NOTE: Not using .at() to avoid wrapping around
@@ -18,8 +20,9 @@ export async function load({ parent, params }) {
 		next: categorized[position + 1],
 		seo: {
 			path: `/writing/${post.slug}`,
-			title: post.title,
-			description: post.excerpt,
+			title,
+			description: excerpt,
+			image: `/writing/og?title=${encodeURIComponent(title)}&excerpt=${encodeURIComponent(excerpt)}`,
 			article: true,
 		},
 	};
