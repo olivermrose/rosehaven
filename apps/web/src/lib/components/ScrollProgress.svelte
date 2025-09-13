@@ -7,8 +7,8 @@
 
 		const cancel = scroll(
 			animate([
-				[".left", { scaleX: [0, 1] }, { at: 0 }],
-				[".right", { scaleX: [1, 0] }, { ease: [0.42, 0, 0.58, 1], at: 0 }],
+				["#scroll-progress .left", { scaleX: [0, 1] }, { at: 0 }],
+				["#scroll-progress .right", { scaleX: [1, 0] }, { ease: [0.42, 0, 0.58, 1], at: 0 }],
 			]),
 		);
 
@@ -16,7 +16,7 @@
 	});
 </script>
 
-<div class="scroll-progress fixed inset-x-0 bottom-0 z-20 flex h-2 items-center opacity-0">
+<div id="scroll-progress" class="fixed inset-x-0 bottom-0 z-20 flex h-2 items-center opacity-0">
 	<div class="bg-aloe-400 dark:bg-off-white relative h-full w-1/5"></div>
 
 	<div class="relative h-full flex-auto">
