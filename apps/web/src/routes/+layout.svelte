@@ -7,7 +7,7 @@
 	import { onMount } from "svelte";
 	import { dev } from "$app/environment";
 	import { page } from "$app/state";
-	import { PUBLIC_BASE_URL } from "$env/static/public";
+	import { env } from "$env/dynamic/public";
 	import { SITE_NAME } from "$lib";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
 	import Header from "$lib/components/Header.svelte";
@@ -19,7 +19,7 @@
 
 	const { seo } = $derived(page.data);
 	const title = $derived(seo.title ? `${seo.title} | ${SITE_NAME}` : SITE_NAME);
-	const image = $derived(seo.image ? PUBLIC_BASE_URL + seo.image : null);
+	const image = $derived(seo.image ? env.PUBLIC_BASE_URL + seo.image : null);
 
 	onMount(() => {
 		const lenis = new Lenis();

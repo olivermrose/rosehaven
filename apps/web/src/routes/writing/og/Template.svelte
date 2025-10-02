@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_BASE_URL } from "$env/static/public";
+	import { env } from "$env/dynamic/public";
 
 	interface Props {
 		title: string;
@@ -21,7 +21,7 @@
 	<div class="flex grow flex-col justify-between p-10">
 		<div class="-mt-2 flex items-center">
 			<!-- svelte-ignore a11y_missing_attribute -->
-			<img class="h-14 w-14" style="filter: invert(1)" src="{PUBLIC_BASE_URL}/favicon.svg" />
+			<img class="h-14 w-14" style="filter: invert(1)" src="{env.PUBLIC_BASE_URL}/favicon.svg" />
 
 			<h1 class="ml-5 text-4xl font-normal">oliver rose.</h1>
 		</div>
