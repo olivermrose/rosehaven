@@ -9,6 +9,7 @@ node_modules
 .next
 build
 .turbo
+.open-next
 next-env.d.ts
 
 # OS

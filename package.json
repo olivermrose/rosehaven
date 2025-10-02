@@ -16,5 +16,8 @@
 			"esbuild",
 			"unrs-resolver"
 		]
+	},
+	"dependencies": {
+		"wrangler": "^4.40.3"
 	}
 }
