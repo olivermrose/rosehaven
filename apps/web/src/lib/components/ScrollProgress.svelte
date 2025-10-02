@@ -3,7 +3,7 @@
 	import { onMount } from "svelte";
 
 	onMount(() => {
-		animate(".scroll-progress", { opacity: 1 }, { duration: 0.5 });
+		animate("#scroll-progress", { opacity: 1 }, { duration: 0.5 });
 
 		const cancel = scroll(
 			animate([
