@@ -1,6 +1,6 @@
 {
 	"$schema": "../../node_modules/wrangler/config-schema.json",
-	"name": "@rosehaven/cms",
+	"name": "rosehaven-cms",
 	"main": ".open-next/worker.js",
 	"compatibility_date": "2025-10-01",
 	"compatibility_flags": [
