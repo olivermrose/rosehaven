@@ -1,5 +1,6 @@
 import { Buffer } from "node:buffer";
-import { Resvg } from "@resvg/resvg-js";
+import { initWasm, Resvg } from "@resvg/resvg-wasm";
+import resvgWasm from "@resvg/resvg-wasm/index_bg.wasm?url";
 import satori from "satori";
 import type { SatoriOptions } from "satori";
 import { html } from "satori-html";
@@ -26,7 +27,22 @@ const satoriOptions: SatoriOptions = {
 	],
 };
 
-export async function GET({ url }) {
+async function initResvg(response: Response) {
+	try {
+		await initWasm(response);
+	} catch (error) {
+		if (error instanceof Error && error.message.includes("Already initialized")) {
+			return;
+		}
+
+		throw error;
+	}
+}
+
+export async function GET({ url, fetch }) {
+	const response = await fetch(resvgWasm);
+	await initResvg(response);
+
 	const title = url.searchParams.get("title") ?? "Untitled";
 	const excerpt = url.searchParams.get("excerpt") ?? "";
 
