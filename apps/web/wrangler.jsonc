@@ -13,5 +13,11 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"routes": [
+		{
+			"pattern": "olivermrose.com",
+			"custom_domain": true
+		}
+	]
 }

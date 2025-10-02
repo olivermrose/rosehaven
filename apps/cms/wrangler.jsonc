@@ -16,5 +16,11 @@
 			"binding": "NEXT_INC_CACHE_R2_BUCKET",
 			"bucket_name": "rosehaven-cms-cache"
 		}
+	],
+	"routes": [
+		{
+			"pattern": "cms.olivermrose.com",
+			"custom_domain": true
+		}
 	]
 }
