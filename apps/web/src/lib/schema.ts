@@ -23,6 +23,7 @@ export const postSchema = metadata.extend({
 	excerpt: z.string(),
 	explicit: z.boolean(),
 	contentHtml: z.string(),
+	commentary: z.string().optional(),
 });
 
 export type Post = z.infer<typeof postSchema>;

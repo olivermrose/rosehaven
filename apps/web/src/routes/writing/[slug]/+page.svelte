@@ -29,7 +29,7 @@
 			</a>
 		</div>
 
-		<h1 class="text-fluid-4xl mb-8 mt-1 font-semibold">
+		<h1 class="text-fluid-4xl mb-8 mt-4 font-semibold">
 			{data.post.title}
 		</h1>
 	</header>
@@ -37,6 +37,13 @@
 	<div data-content data-category={data.post.category}>
 		{@html content}
 	</div>
+
+	{#if data.post.commentary}
+		<details class="text-sm">
+			<summary>Commentary</summary>
+			<p>{data.post.commentary}</p>
+		</details>
+	{/if}
 
 	{#if data.prev || data.next}
 		<div class="bg-foreground/50 my-10 h-px w-full" role="separator"></div>

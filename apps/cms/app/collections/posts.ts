@@ -53,6 +53,11 @@ export const posts: CollectionConfig<"posts"> = {
 			htmlFieldName: "contentHtml",
 			lexicalFieldName: "content",
 		}),
+		{
+			name: "commentary",
+			type: "textarea",
+			required: false,
+		},
 		...slugField("title"),
 		{
 			name: "publishedAt",

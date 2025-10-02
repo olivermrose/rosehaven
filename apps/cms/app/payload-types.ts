@@ -141,6 +141,7 @@ export interface Post {
     [k: string]: unknown;
   };
   contentHtml?: string | null;
+  commentary?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   publishedAt?: string | null;
@@ -257,6 +258,7 @@ export interface PostsSelect<T extends boolean = true> {
   explicit?: T;
   content?: T;
   contentHtml?: T;
+  commentary?: T;
   slug?: T;
   slugLock?: T;
   publishedAt?: T;
