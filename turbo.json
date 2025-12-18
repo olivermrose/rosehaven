@@ -5,6 +5,14 @@
 			"cache": false
 		},
 		"build": {
+			"inputs": [
+				"$TURBO_DEFAULT$",
+				".env"
+			],
+			"env": [
+				"PAYLOAD_SECRET",
+				"DATABASE_URL"
+			],
 			"dependsOn": [
 				"^build"
 			],
@@ -16,6 +24,10 @@
 			]
 		},
 		"dev": {
+			"inputs": [
+				"$TURBO_DEFAULT$",
+				".env"
+			],
 			"cache": false,
 			"persistent": true
 		}
