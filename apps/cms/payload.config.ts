@@ -3,7 +3,7 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { posts } from "@collections/posts";
 import { quotes } from "@collections/quotes";
-import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { buildConfig } from "payload";
 
@@ -23,8 +23,9 @@ export default buildConfig({
 		outputFile: path.resolve(dirname, "app", "payload-types.ts"),
 	},
 	secret: process.env.PAYLOAD_SECRET ?? "",
-	db: mongooseAdapter({
-		url: process.env.DATABASE_URL ?? "",
-		migrationDir: path.resolve(dirname, "app", "migrations"),
+	db: postgresAdapter({
+		pool: {
+			connectionString: process.env.DATABASE_URL,
+		},
 	}),
 });

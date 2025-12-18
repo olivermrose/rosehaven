@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const metadata = z.object({
-	id: z.string(),
+	id: z.number(),
 	createdAt: z.iso.datetime(),
 	updatedAt: z.iso.datetime(),
 });
@@ -10,20 +10,20 @@ export const quoteSchema = metadata.extend({
 	text: z.string(),
 	quotee: z.string(),
 	sourceTitle: z.string(),
-	sourceUrl: z.string().optional(),
+	sourceUrl: z.string().nullable(),
 });
 
 export type Quote = z.infer<typeof quoteSchema>;
 
 export const postSchema = metadata.extend({
-	publishedAt: z.iso.datetime().optional(),
+	publishedAt: z.iso.datetime().nullable(),
 	category: z.enum(["dialogue", "poetry", "prose-poetry", "short-story"]),
 	slug: z.string(),
 	title: z.string(),
 	excerpt: z.string(),
 	explicit: z.boolean(),
 	contentHtml: z.string(),
-	commentary: z.string().optional(),
+	commentary: z.string().nullable(),
 });
 
 export type Post = z.infer<typeof postSchema>;
