@@ -14,5 +14,5 @@
 			}
 		}
 	],
-	"tailwindStylesheet": "./src/app.css"
+	"tailwindStylesheet": "./apps/web/src/app.css"
 }

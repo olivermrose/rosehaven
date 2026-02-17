@@ -10,25 +10,34 @@ export default antfu({
 		"perfectionist/sort-imports": [
 			"error",
 			{
-				newlinesBetween: "never",
+				newlinesBetween: 0,
 				groups: [
 					"side-effect",
 					"side-effect-style",
 					"builtin",
 					"external",
+					"icons",
 					"sveltekit",
-					["internal", "internal-type"],
-					["parent", "parent-type"],
-					["sibling", "sibling-type"],
-					["index", "index-type"],
-					"object",
+					"internal",
+					"type-internal",
+					"parent",
+					"type-parent",
+					"sibling",
+					"type-sibling",
+					"index",
+					"type-index",
 					"unknown",
 				],
-				customGroups: {
-					value: {
-						sveltekit: ["\\$app/.+", "\\$env/.+", "\\$lib/.+", "\\$lib"],
+				customGroups: [
+					{
+						groupName: "icons",
+						elementNamePattern: ["^~icons/.+"],
 					},
-				},
+					{
+						groupName: "sveltekit",
+						elementNamePattern: ["\\$app/.+", "\\$env/.+", "\\$lib/.+"],
+					},
+				],
 			},
 		],
 		"unused-imports/no-unused-imports": "warn",
