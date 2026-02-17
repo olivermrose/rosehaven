@@ -3,7 +3,7 @@
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
 	import type { Snippet } from "svelte";
-	import { expoInOut } from "$lib";
+	import { expoInOut } from "$lib/index";
 
 	const { children }: { children: Snippet } = $props();
 
@@ -60,11 +60,11 @@
 	<div id="loading-screen" class="invisible">
 		<div class="grid h-dvh grid-cols-5 overflow-hidden">
 			{#each { length: 5 }, i}
-				<div class="column bg-wine-600 h-full {darkColumns[i]}"></div>
+				<div class="column h-full bg-wine-600 {darkColumns[i]}"></div>
 			{/each}
 		</div>
 
-		<div class="absolute bottom-8 right-8 overflow-hidden">
+		<div class="absolute right-8 bottom-8 overflow-hidden">
 			<div class="flavor-text text-right">
 				<p>Where silence gathers dust</p>
 				<p>And memories bloom</p>

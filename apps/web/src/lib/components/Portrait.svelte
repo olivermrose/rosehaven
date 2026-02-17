@@ -2,7 +2,7 @@
 	import { Canvas } from "@threlte/core";
 	import { animate, scroll } from "motion";
 	import { onMount } from "svelte";
-	import { expoInOut } from "$lib";
+	import { expoInOut } from "$lib/index";
 	import Distortion from "./Distortion.svelte";
 
 	let container = $state<HTMLElement>();
@@ -49,7 +49,7 @@
 
 			<div
 				id="portrait"
-				class="rounded-bl-4xl rounded-tr-4xl mx-auto aspect-[3/4] size-full overflow-hidden"
+				class="mx-auto aspect-3/4 size-full overflow-hidden rounded-tr-4xl rounded-bl-4xl"
 			>
 				<Canvas>
 					<Distortion src="https://r2.olivermrose.com/self.jpg" />

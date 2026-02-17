@@ -3,12 +3,12 @@
 
 	const { posts }: { posts: Post[] } = $props();
 
-	const categories = Object.groupBy(posts, (post) => post.category);
+	const categories = $derived(Object.groupBy(posts, (post) => post.category));
 </script>
 
-<section id="anthology" class="mx-auto max-w-screen-xl px-4 pt-16 sm:px-6">
+<section id="anthology" class="mx-auto max-w-7xl px-4 pt-16 sm:px-6">
 	<hgroup class="max-w-prose">
-		<h1 class="text-fluid-3xl/[1.25]">
+		<h1 class="text-fluid-3xl/tight">
 			To write is to discover the essence of what remains
 			<span class="font-serif italic">untold</span>.
 		</h1>
@@ -23,7 +23,7 @@
 		{#each Object.entries(categories) as [category, posts] (category)}
 			<ul id={category}>
 				<li class="flex flex-col">
-					<h2 class="period text-fluid-xl/[1.25] col-span-full mb-5 font-semibold">
+					<h2 class="period col-span-full mb-5 text-fluid-xl/tight font-semibold">
 						{category.replace("-", " ").toLowerCase()}
 					</h2>
 
@@ -50,7 +50,7 @@
 										{/if}
 									</div>
 
-									<p class="text-fluid-xs mt-1">{post.excerpt}</p>
+									<p class="mt-1 text-fluid-xs">{post.excerpt}</p>
 								</a>
 							</li>
 						{/each}
