@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { animate, stagger } from "motion";
+	import { animate, motion, stagger } from "motion-sv";
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
 	import type { Snippet } from "svelte";
@@ -26,9 +26,6 @@
 			loaded = true;
 			return;
 		}
-
-		// NOTE: Do not await this animate call because it will cause a flash
-		animate("#loading-screen", { visibility: "visible" }, { duration: 0 });
 
 		await animate(
 			[
@@ -57,7 +54,11 @@
 {#if loaded}
 	{@render children()}
 {:else}
-	<div id="loading-screen" class="invisible">
+	<motion.div
+		initial={{ visibility: "hidden" }}
+		animate={{ visibility: "visible" }}
+		transition={{ duration: 0 }}
+	>
 		<div class="grid h-dvh grid-cols-5 overflow-hidden">
 			{#each { length: 5 }, i}
 				<div class="column h-full bg-wine-600 {darkColumns[i]}"></div>
@@ -65,10 +66,10 @@
 		</div>
 
 		<div class="absolute right-8 bottom-8 overflow-hidden">
-			<div class="flavor-text text-right">
-				<p>Where silence gathers dust</p>
-				<p>And memories bloom</p>
+			<div class="flavor-text flex flex-col text-right">
+				<span>Where silence gathers dust</span>
+				<span>And memories bloom</span>
 			</div>
 		</div>
-	</div>
+	</motion.div>
 {/if}

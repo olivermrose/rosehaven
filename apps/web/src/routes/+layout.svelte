@@ -3,7 +3,7 @@
 	import "../app.css";
 	import Lenis from "lenis";
 	import { ModeWatcher } from "mode-watcher";
-	import { frame } from "motion";
+	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
 	import { dev } from "$app/environment";
 	import { page } from "$app/state";

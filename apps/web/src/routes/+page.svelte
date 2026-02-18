@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { animate, scroll, stagger } from "motion";
+	import { animate, scroll, stagger } from "motion-sv";
 	import { IsIdle } from "runed";
 	import { onMount } from "svelte";
 	import Anthology from "$lib/components/Anthology.svelte";
@@ -57,9 +57,9 @@
 </script>
 
 <div class="relative min-h-full overflow-hidden sm:h-dvh" bind:this={hero}>
-	<div class="flex items-center justify-center px-4 pb-36 pt-48 sm:h-full sm:p-0">
+	<div class="flex items-center justify-center px-4 pt-48 pb-36 sm:h-full sm:p-0">
 		<h1
-			class="sm:grid-cols-36 m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] uppercase tracking-tighter"
+			class="m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] tracking-tighter uppercase sm:grid-cols-36"
 		>
 			<!-- eslint-disable-next-line svelte/require-each-key -->
 			{#each names as name}
@@ -70,18 +70,18 @@
 		</h1>
 	</div>
 
-	<div class="absolute bottom-12 right-10">
+	<div class="absolute right-10 bottom-12">
 		<div
 			id="scroll-hint"
 			class={["flex items-center gap-x-1 opacity-0", idle.current && "animate-bounce"]}
 		>
 			<span class="text-sm">Scroll</span>
 
-			<svg class="text-peach-400 mt-1 size-4" viewBox="0 0 24 24">
+			<svg class="mt-1 size-4 text-peach-400" viewBox="0 0 24 24">
 				<path
+					d="M1.2 8h21.6V5.5H1.2V8Zm21.6 9V8h-2.5v9h2.5Z"
 					fill="currentColor"
 					fill-rule="evenodd"
-					d="M1.2 8h21.6V5.5H1.2V8Zm21.6 9V8h-2.5v9h2.5Z"
 					clip-rule="evenodd"
 				>
 				</path>

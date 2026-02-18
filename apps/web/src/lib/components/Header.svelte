@@ -1,30 +1,23 @@
 <script lang="ts">
 	import { mode, toggleMode } from "mode-watcher";
-	import { animate } from "motion";
-	import { onMount } from "svelte";
+	import { motion } from "motion-sv";
 	import { PUBLIC_SITE_NAME } from "$env/static/public";
-
-	onMount(() => {
-		animate("#site-header", { opacity: 1 }, { duration: 0.75 });
-	});
-
-	$effect(() => {
-		animate("#theme-btn .label", { y: mode.current === "light" ? "0%" : "-100%" });
-	});
 </script>
 
-<header
-	id="site-header"
-	class="fixed inset-x-0 top-0 z-50 p-6 pb-0 opacity-0 mix-blend-difference md:px-10"
+<motion.header
+	class="fixed inset-x-0 top-0 z-50 p-6 pb-0 mix-blend-difference md:px-10"
+	initial={{ opacity: 0 }}
+	animate={{ opacity: 1 }}
+	transition={{ duration: 0.75 }}
 >
 	<nav class="flex w-full items-center justify-between">
 		<a class="blended" href="/">{PUBLIC_SITE_NAME}</a>
 
-		<button id="theme-btn" class="hover:cursor-pointer" type="button" onclick={toggleMode}>
-			<div class="flex h-6 flex-col items-end justify-start overflow-hidden">
-				<span class="label blended">light.</span>
-				<span class="label blended">dark.</span>
+		<button class="hover:cursor-pointer" type="button" onclick={toggleMode}>
+			<div class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">
+				<motion.span animate={{ y: mode.current === "light" ? "0%" : "-100%" }}>light.</motion.span>
+				<motion.span animate={{ y: mode.current === "light" ? "0%" : "-100%" }}>dark.</motion.span>
 			</div>
 		</button>
 	</nav>
-</header>
+</motion.header>

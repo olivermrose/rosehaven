@@ -1,7 +1,7 @@
 <script lang="ts">
 	import chroma from "chroma-js";
 	import dayjs from "dayjs";
-	import { animate, cancelFrame, frame } from "motion";
+	import { animate, cancelFrame, frame, motion } from "motion-sv";
 	import { onMount } from "svelte";
 
 	const seasons = [
@@ -107,15 +107,20 @@
 	}
 </script>
 
-<div class="fixed inset-0">
+<motion.div
+	class="fixed inset-0"
+	initial={{ opacity: 0 }}
+	animate={{ opacity: 1 }}
+	transition={{ duration: 0.75 }}
+>
 	{#each { length: 25 }}
 		{@const [main, anti] = generateDiagonals()}
 
 		<div
-			class="petal bg-linear-to-br/oklch from-(--petal-shade-1) to-(--petal-shade-2) absolute size-3"
+			class="petal absolute size-3 bg-linear-to-br/oklch from-(--petal-from) to-(--petal-to)"
 			style:border-radius="{main}px {anti}px"
-			style:--petal-shade-1={shade1}
-			style:--petal-shade-2={shade2}
+			style:--petal-from={shade1}
+			style:--petal-to={shade2}
 		></div>
 	{/each}
-</div>
+</motion.div>

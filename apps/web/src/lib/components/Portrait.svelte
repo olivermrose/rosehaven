@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Canvas } from "@threlte/core";
-	import { animate, scroll } from "motion";
+	import { animate, scroll } from "motion-sv";
 	import { onMount } from "svelte";
 	import { expoInOut } from "$lib/index";
 	import Distortion from "./Distortion.svelte";
