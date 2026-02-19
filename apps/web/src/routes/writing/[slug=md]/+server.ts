@@ -4,17 +4,6 @@ import { payloadResponse, postSchema } from "$lib/schema";
 
 const turndown = new Turndown();
 
-turndown.addRule("speaker", {
-	filter: "p",
-	replacement(content, node) {
-		if (node.style.textAlign === "right") {
-			return `\n\n${content}\n\n`;
-		}
-
-		return `\n\n*${content}*\n\n`;
-	},
-});
-
 export async function GET({ params }) {
 	const postsResponse = await fetch(
 		`${PUBLIC_CMS_API_URL}/posts?where[_status][equals]=published&pagination=false`,
@@ -25,6 +14,19 @@ export async function GET({ params }) {
 
 	if (!post) {
 		return new Response("Not found", { status: 404 });
+	}
+
+	if (post.category === "dialogue") {
+		turndown.addRule("speaker", {
+			filter: "p",
+			replacement(content, node) {
+				if (node.style.textAlign === "right") {
+					return `\n\n${content}\n\n`;
+				}
+
+				return `\n\n*${content}*\n\n`;
+			},
+		});
 	}
 
 	let markdown = turndown.turndown(post.contentHtml);
