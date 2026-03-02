@@ -15,7 +15,7 @@
 		"dark:bg-neutral-400",
 	];
 
-	const seenLoadingScreen = new PersistedState("seen-ls", false, {
+	const seenLoadingScreen = new PersistedState("rosehaven:seen-ls", false, {
 		storage: "session",
 	});
 
