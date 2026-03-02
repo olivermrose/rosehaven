@@ -1,9 +1,27 @@
 <script lang="ts">
+	import { PersistedState } from "runed";
+	import { onMount } from "svelte";
 	import type { Post } from "$lib/schema";
 
 	const { posts }: { posts: Post[] } = $props();
 
+	const seen = new PersistedState<number[]>("rosehaven:seen-posts", [], {
+		storage: "local",
+	});
+
+	let newPosts = $state.raw(new Set<number>());
 	const categories = $derived(Object.groupBy(posts, (post) => post.category));
+
+	onMount(() => {
+		const ids = posts.map((p) => p.id);
+
+		if (seen.current.length) {
+			const seenIds = new Set(seen.current);
+			newPosts = new Set(ids.filter((id) => !seenIds.has(id)));
+		}
+
+		seen.current = ids;
+	});
 </script>
 
 <section id="anthology" class="mx-auto max-w-7xl px-4 pt-16 sm:px-6">
@@ -47,6 +65,13 @@
 													d="M9 17h6v-2h-4v-2h4v-2h-4V9h4V7H9zm-4 4q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21z"
 												/>
 											</svg>
+										{/if}
+
+										{#if newPosts.has(post.id)}
+											<span
+												class="inline-block size-2 shrink-0 rounded-full bg-peach-400"
+												aria-label="New"
+											></span>
 										{/if}
 									</div>
 
