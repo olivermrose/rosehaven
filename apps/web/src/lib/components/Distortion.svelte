@@ -3,8 +3,8 @@
 	import { animate, clamp, mix } from "motion-sv";
 	import type { AnimationPlaybackControls } from "motion-sv";
 	import { TextureLoader, Vector2 } from "three";
-	import fragmentShader from "../shaders/distortion.frag";
-	import vertexShader from "../shaders/distortion.vert";
+	import fragmentShader from "../shaders/distortion.frag?raw";
+	import vertexShader from "../shaders/distortion.vert?raw";
 
 	const { src }: { src: string } = $props();
 

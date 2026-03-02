@@ -8,15 +8,6 @@ export default defineConfig({
 		tailwindcss(),
 		sveltekit(),
 		{
-			enforce: "pre",
-			name: "vite-plugin-glsl",
-			transform(code, id) {
-				if (/\.(?:vert|frag|glsl)$/.test(id)) {
-					return { code: `export default ${JSON.stringify(code)}` };
-				}
-			},
-		},
-		{
 			name: "vite-plugin-fonts",
 			async transform(_, id) {
 				if (id.endsWith(".woff")) {
