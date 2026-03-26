@@ -1,0 +1,10 @@
+{
+	"name": "olivermrose",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_flags": ["nodejs_als", "nodejs_compat"],
+	"compatibility_date": "2026-03-25",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare",
+	}
+}

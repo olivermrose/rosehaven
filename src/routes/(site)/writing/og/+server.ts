@@ -33,7 +33,6 @@ export async function GET({ url }) {
 	const rendered = render(Template, { props: { title, excerpt } });
 	const element = html(rendered.body);
 
-	// @ts-expect-error - type mismatch
 	const svg = await satori(element, satoriOptions);
 
 	const resvg = new Resvg(svg, {
