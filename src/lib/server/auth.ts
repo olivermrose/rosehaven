@@ -1,12 +1,12 @@
 import { createHmac } from "node:crypto";
 import type { Cookies } from "@sveltejs/kit";
-import { ADMIN_PASSWORD } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7;
 const COOKIE_NAME = "admin_session";
 
 function getSessionToken(): string {
-	return createHmac("sha256", ADMIN_PASSWORD).update("rosehaven-admin").digest("hex");
+	return createHmac("sha256", env.ADMIN_PASSWORD).update("rosehaven-admin").digest("hex");
 }
 
 export function createSession(cookies: Cookies) {

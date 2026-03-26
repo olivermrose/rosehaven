@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { PUBLIC_BASE_URL } from "$env/static/public";
+import { env } from "$env/dynamic/public";
 
 const colors = [
 	"#9e3340", // wine
@@ -33,7 +33,7 @@ export function template({ title, excerpt }: { title: string; excerpt: string })
 				$("img", {
 					tw: "h-14 w-14",
 					style: { filter: "invert(1)" },
-					src: `${PUBLIC_BASE_URL}/favicon.svg`,
+					src: `${env.PUBLIC_BASE_URL}/favicon.svg`,
 				}),
 				$("h1", { tw: "ml-5 text-4xl font-normal" }, "oliver rose."),
 			),

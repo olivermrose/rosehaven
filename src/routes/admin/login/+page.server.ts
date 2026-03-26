@@ -1,5 +1,5 @@
 import { fail, redirect } from "@sveltejs/kit";
-import { ADMIN_PASSWORD } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import { createSession, destroySession } from "$lib/server/auth";
 
 export const actions = {
@@ -7,7 +7,7 @@ export const actions = {
 		const data = await request.formData();
 		const password = data.get("password");
 
-		if (typeof password !== "string" || password !== ADMIN_PASSWORD) {
+		if (typeof password !== "string" || password !== env.ADMIN_PASSWORD) {
 			return fail(400, { error: "Invalid password" });
 		}
 
