@@ -1,4 +1,5 @@
 {
+	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "olivermrose",
 	"main": ".svelte-kit/cloudflare/_worker.js",
 	"compatibility_flags": ["nodejs_als", "nodejs_compat"],
@@ -6,5 +7,9 @@
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare",
-	}
+	},
+	"vars": {
+		"PUBLIC_BASE_URL": "https://olivermrose.com",
+		"PUBLIC_SITE_NAME": "oliver rose.",
+	},
 }
