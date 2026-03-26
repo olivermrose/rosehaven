@@ -20,4 +20,10 @@ export default defineConfig({
 			},
 		},
 	],
+	optimizeDeps: {
+		exclude: ["@takumi-rs/core"],
+	},
+	ssr: {
+		external: ["@takumi-rs/core"],
+	},
 });

@@ -20,7 +20,8 @@
 		"migrate": "tsx scripts/migrate.ts"
 	},
 	"dependencies": {
-		"@resvg/resvg-js": "^2.6.2",
+		"@takumi-rs/image-response": "beta",
+		"@takumi-rs/wasm": "beta",
 		"@threlte/core": "^8.3.1",
 		"@tiptap/core": "^3.20.5",
 		"@tiptap/extension-link": "^3.20.5",
@@ -36,8 +37,6 @@
 		"motion-sv": "^0.1.10",
 		"postgres": "^3.4.8",
 		"runed": "^0.37.1",
-		"satori": "^0.19.2",
-		"satori-html": "^0.3.2",
 		"three": "^0.182.0",
 		"turndown": "^7.2.2",
 		"zod": "^4.3.6"
@@ -51,6 +50,7 @@
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/chroma-js": "^3.1.2",
 		"@types/node": "^25.5.0",
+		"@types/react": "^19.2.14",
 		"@types/three": "^0.182.0",
 		"@types/turndown": "^5.0.6",
 		"drizzle-kit": "^0.31.10",
@@ -66,7 +66,7 @@
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.56.0",
-		"vite": "8.0.0-beta.16",
+		"vite": "8.0.2",
 		"wrangler": "^4.77.0"
 	},
 	"pnpm": {
