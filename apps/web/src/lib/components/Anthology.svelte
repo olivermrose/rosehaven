@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
-	import type { Post } from "$lib/schema";
+	import type { Post } from "$lib/server/db/schema";
 
 	const { posts }: { posts: Post[] } = $props();
 

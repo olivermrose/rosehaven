@@ -10,15 +10,13 @@
 				".env"
 			],
 			"env": [
-				"PAYLOAD_SECRET",
-				"DATABASE_URL"
+				"DATABASE_URL",
+				"ADMIN_PASSWORD"
 			],
 			"dependsOn": [
 				"^build"
 			],
 			"outputs": [
-				".next/**",
-				"!.next/cache/**",
 				".svelte-kit/**",
 				".vercel/**"
 			]
