@@ -3,13 +3,6 @@
 	import type { Post } from "$lib/server/db/schema";
 
 	const { data } = $props();
-
-	const content = $derived.by(() => {
-		// Lexical adds leading/trailing whitespace within <a /> (and probably
-		// other inline elements).
-		// eslint-disable-next-line regexp/no-super-linear-backtracking
-		return data.post.contentHtml.replace(/(<a[^>]*>)\s*(.*?)\s*(<\/a>)/g, "$1$2$3");
-	});
 </script>
 
 <article
@@ -35,7 +28,7 @@
 	</header>
 
 	<div data-content data-category={data.post.category}>
-		{@html content}
+		{@html data.post.contentHtml}
 	</div>
 
 	{#if data.post.commentary}
