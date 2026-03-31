@@ -22,7 +22,7 @@ export async function load({ parent, params }) {
 			path: `/writing/${post.slug}`,
 			title,
 			description: excerpt,
-			image: `/writing/og?title=${encodeURIComponent(title)}&excerpt=${encodeURIComponent(excerpt)}`,
+			image: `/writing/${post.slug}/og`,
 			article: true,
 		},
 	};
