@@ -11,7 +11,7 @@ export async function load({ params }) {
 		.where(eq(posts.id, Number(params.id)));
 
 	if (!post) {
-		throw error(404, "Post not found");
+		error(404, "Post not found");
 	}
 
 	return { post };
@@ -34,7 +34,10 @@ export const actions = {
 		}
 
 		const id = Number(params.id);
-		const [existing] = await db.select({ publishedAt: posts.publishedAt }).from(posts).where(eq(posts.id, id));
+		const [existing] = await db
+			.select({ publishedAt: posts.publishedAt })
+			.from(posts)
+			.where(eq(posts.id, id));
 
 		const slug = slugify(title);
 		const publishedAt =
@@ -61,6 +64,6 @@ export const actions = {
 
 	delete: async ({ params }) => {
 		await db.delete(posts).where(eq(posts.id, Number(params.id)));
-		throw redirect(303, "/admin/posts");
+		redirect(303, "/admin/posts");
 	},
 };

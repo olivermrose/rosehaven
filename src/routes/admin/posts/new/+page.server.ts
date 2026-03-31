@@ -24,9 +24,19 @@ export const actions = {
 
 		const [post] = await db
 			.insert(posts)
-			.values({ title, slug, category, excerpt, explicit, contentHtml, commentary, status, publishedAt })
+			.values({
+				title,
+				slug,
+				category,
+				excerpt,
+				explicit,
+				contentHtml,
+				commentary,
+				status,
+				publishedAt,
+			})
 			.returning({ id: posts.id });
 
-		throw redirect(303, `/admin/posts/${post.id}`);
+		redirect(303, `/admin/posts/${post.id}`);
 	},
 };

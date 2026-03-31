@@ -20,6 +20,6 @@ export const actions = {
 			.values({ text, quotee, sourceTitle, sourceUrl })
 			.returning({ id: quotes.id });
 
-		throw redirect(303, `/admin/quotes/${quote.id}`);
+		redirect(303, `/admin/quotes/${quote.id}`);
 	},
 };

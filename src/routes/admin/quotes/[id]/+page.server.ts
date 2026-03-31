@@ -10,7 +10,7 @@ export async function load({ params }) {
 		.where(eq(quotes.id, Number(params.id)));
 
 	if (!quote) {
-		throw error(404, "Quote not found");
+		error(404, "Quote not found");
 	}
 
 	return { quote };
@@ -39,6 +39,6 @@ export const actions = {
 
 	delete: async ({ params }) => {
 		await db.delete(quotes).where(eq(quotes.id, Number(params.id)));
-		throw redirect(303, "/admin/quotes");
+		redirect(303, "/admin/quotes");
 	},
 };

@@ -12,11 +12,11 @@ export const actions = {
 		}
 
 		createSession(cookies);
-		throw redirect(303, "/admin");
+		redirect(303, "/admin");
 	},
 
 	logout: async ({ cookies }) => {
 		destroySession(cookies);
-		throw redirect(303, "/admin/login");
+		redirect(303, "/admin/login");
 	},
 };

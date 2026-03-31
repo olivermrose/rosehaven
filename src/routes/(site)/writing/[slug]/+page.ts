@@ -5,7 +5,7 @@ export async function load({ parent, params }) {
 	const post = posts.find((post) => post.slug === params.slug);
 
 	if (!post) {
-		throw error(404, { message: "Not found" });
+		error(404, { message: "Not found" });
 	}
 
 	const categorized = posts.filter((p) => p.category === post.category);
