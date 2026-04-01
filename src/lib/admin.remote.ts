@@ -1,13 +1,12 @@
 import { invalid, redirect } from "@sveltejs/kit";
 import z from "zod";
 import { form, getRequestEvent } from "$app/server";
-import { env } from "$env/dynamic/private";
-import { createSession, destroySession } from "./server/auth";
+import { createSession, destroySession, verifyPassword } from "./server/auth";
 
 export const login = form(z.object({ password: z.string() }), async (data, issue) => {
 	const event = getRequestEvent();
 
-	if (data.password !== env.ADMIN_PASSWORD) {
+	if (!(await verifyPassword(data.password))) {
 		invalid(issue.password("Incorrect password"));
 	}
 
