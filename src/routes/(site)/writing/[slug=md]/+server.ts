@@ -1,18 +1,13 @@
 import { eq } from "drizzle-orm";
 import Turndown from "turndown";
-import { db } from "$lib/server/db";
 import { posts } from "$lib/server/db/schema";
 
 const turndown = new Turndown();
 
-export async function GET({ params }) {
+export async function GET({ params, locals }) {
 	const slug = params.slug.slice(0, -3);
 
-	const [post] = await db
-		.select()
-		.from(posts)
-		.where(eq(posts.slug, slug))
-		.limit(1);
+	const [post] = await locals.db.select().from(posts).where(eq(posts.slug, slug)).limit(1);
 
 	if (!post || post.status !== "published") {
 		return new Response("Not found", { status: 404 });

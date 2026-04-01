@@ -1,16 +1,15 @@
 import { count, sql } from "drizzle-orm";
-import { db } from "$lib/server/db";
 import { posts, quotes } from "$lib/server/db/schema";
 
-export async function load() {
-	const [postStats] = await db
+export async function load({ locals }) {
+	const [postStats] = await locals.db
 		.select({
 			total: count(),
 			published: sql<number>`count(*) filter (where ${posts.status} = 'published')`,
 		})
 		.from(posts);
 
-	const [quoteStats] = await db.select({ total: count() }).from(quotes);
+	const [quoteStats] = await locals.db.select({ total: count() }).from(quotes);
 
 	return {
 		stats: {

@@ -1,12 +1,11 @@
 import { ImageResponse } from "@takumi-rs/image-response/wasm";
 import { eq } from "drizzle-orm";
 import { dev } from "$app/environment";
-import { db } from "$lib/server/db";
 import { posts } from "$lib/server/db/schema";
 import { template } from "./template";
 
-export async function GET({ params }) {
-	const [post] = await db
+export async function GET({ params, locals }) {
+	const [post] = await locals.db
 		.select({ title: posts.title, excerpt: posts.excerpt })
 		.from(posts)
 		.where(eq(posts.slug, params.slug));

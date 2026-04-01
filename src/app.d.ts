@@ -1,5 +1,5 @@
-// See https://svelte.dev/docs/kit/types#app.d.ts
-// for information about these interfaces
+import type { Hyperdrive } from "@cloudflare/workers-types";
+import type { Drizzle } from "drizzle-orm/node-postgres";
 
 interface Seo {
 	path: string;
@@ -12,12 +12,19 @@ interface Seo {
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			db: Drizzle;
+		}
+
 		interface PageData {
 			seo: Seo;
 		}
 		// interface PageState {}
-		// interface Platform {}
+		interface Platform {
+			env: {
+				HYPERDRIVE: Hyperdrive;
+			};
+		}
 	}
 }
 

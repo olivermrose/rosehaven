@@ -1,9 +1,8 @@
 import { desc } from "drizzle-orm";
-import { db } from "$lib/server/db";
 import { posts } from "$lib/server/db/schema";
 
-export async function load() {
-	const result = await db
+export async function load({ locals }) {
+	const result = await locals.db
 		.select({
 			id: posts.id,
 			title: posts.title,

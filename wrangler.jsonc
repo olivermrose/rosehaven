@@ -28,4 +28,10 @@
 			"head_sampling_rate": 1,
 		},
 	},
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "6e70c80615f742da9efce9640eacb8f7",
+		},
+	],
 }
