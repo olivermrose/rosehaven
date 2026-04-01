@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
+	import { logout } from "$lib/admin.remote.js";
 
 	const { data, children } = $props();
 
@@ -38,10 +39,10 @@
 			</div>
 
 			<div class="border-t border-neutral-200 p-3">
-				<form method="POST" action="/admin/login?/logout">
+				<form {...logout}>
 					<button
-						type="submit"
 						class="w-full rounded-md px-3 py-1.5 text-left text-sm text-neutral-500 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
+						type="submit"
 					>
 						Sign out
 					</button>

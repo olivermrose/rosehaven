@@ -6,6 +6,7 @@ export default antfu({
 	rules: {
 		"no-console": "off",
 		"no-unused-vars": "warn",
+		"antfu/no-top-level-await": "off",
 		"import/order": "off",
 		"perfectionist/sort-imports": [
 			"error",

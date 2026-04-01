@@ -6,9 +6,10 @@
 
 <div class="flex items-center justify-between">
 	<h1 class="text-xl font-semibold">Posts</h1>
+
 	<a
-		href="/admin/posts/new"
 		class="rounded-lg bg-neutral-900 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
+		href="/admin/posts/new"
 	>
 		New post
 	</a>
@@ -27,18 +28,18 @@
 					<th class="px-4 py-2.5 font-medium text-neutral-600">Updated</th>
 				</tr>
 			</thead>
+
 			<tbody class="divide-y divide-neutral-100">
 				{#each data.posts as post}
 					<tr class="transition-colors hover:bg-neutral-50">
 						<td class="px-4 py-2.5">
-							<a
-								href="/admin/posts/{post.id}"
-								class="font-medium text-neutral-900 hover:underline"
-							>
+							<a class="font-medium text-neutral-900 hover:underline" href="/admin/posts/{post.id}">
 								{post.title}
 							</a>
 						</td>
+
 						<td class="px-4 py-2.5 text-neutral-600">{post.category}</td>
+
 						<td class="px-4 py-2.5">
 							<span
 								class={[
@@ -51,6 +52,7 @@
 								{post.status}
 							</span>
 						</td>
+
 						<td class="px-4 py-2.5 text-neutral-500">
 							{dayjs(post.updatedAt).format("MMM D, YYYY")}
 						</td>

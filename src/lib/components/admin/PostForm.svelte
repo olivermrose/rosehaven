@@ -1,16 +1,31 @@
 <script lang="ts">
+	import { onMount } from "svelte";
+	import { createPost, updatePost } from "$lib/posts.remote";
 	import type { Post } from "$lib/server/db/schema";
 	import Editor from "./Editor.svelte";
 
 	interface Props {
+		form: typeof createPost | typeof updatePost;
 		post?: Post;
-		action?: string;
-		error?: string;
 	}
 
-	const { post, action, error }: Props = $props();
+	const { form, post }: Props = $props();
+
+	onMount(() => {
+		if (!post) return;
+
+		form.fields.set({
+			title: post.title,
+			excerpt: post.excerpt,
+			category: post.category,
+			contentHtml: post.contentHtml,
+			commentary: post.commentary ?? undefined,
+			explicit: post.explicit,
+		});
+	});
 
 	let content = $derived(post?.contentHtml ?? "");
+	const issues = $derived(form.fields.allIssues());
 
 	const categories = [
 		{ label: "Dialogue", value: "dialogue" },
@@ -23,20 +38,27 @@
 		"w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm outline-none transition-colors focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900";
 </script>
 
-<form method="POST" {action} class="space-y-5">
-	{#if error}
-		<div class="rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-700">{error}</div>
+<form class="space-y-5" {...form}>
+	{#if issues}
+		<div class="rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-700">
+			<ul>
+				{#each issues as issue}
+					<li>{issue.message}</li>
+				{/each}
+			</ul>
+		</div>
 	{/if}
 
 	<div class="grid gap-5 sm:grid-cols-2">
 		<div>
 			<label for="title" class="mb-1.5 block text-sm font-medium">Title</label>
-			<input id="title" name="title" required value={post?.title ?? ""} class={inputClass} />
+			<input id="title" class={inputClass} {...form.fields.title.as("text")} />
 		</div>
 
 		<div>
 			<label for="category" class="mb-1.5 block text-sm font-medium">Category</label>
-			<select id="category" name="category" required class={inputClass}>
+
+			<select id="category" class={inputClass} {...form.fields.category.as("select")}>
 				{#each categories as cat}
 					<option value={cat.value} selected={post?.category === cat.value}>
 						{cat.label}
@@ -48,14 +70,15 @@
 
 	<div>
 		<label for="excerpt" class="mb-1.5 block text-sm font-medium">Excerpt</label>
-		<input id="excerpt" name="excerpt" required value={post?.excerpt ?? ""} class={inputClass} />
+		<input id="excerpt" class={inputClass} {...form.fields.excerpt.as("text")} />
 	</div>
 
 	<div>
 		<!-- svelte-ignore a11y_label_has_associated_control -->
 		<label class="mb-1.5 block text-sm font-medium">Content</label>
+		<input name="contentHtml" type="hidden" value={content} />
+
 		<Editor {content} onupdate={(html) => (content = html)} />
-		<input type="hidden" name="contentHtml" value={content} />
 	</div>
 
 	<div>
@@ -63,37 +86,28 @@
 			Commentary
 			<span class="font-normal text-neutral-400">(optional)</span>
 		</label>
-		<textarea
-			id="commentary"
-			name="commentary"
-			rows="3"
-			class={inputClass}
-			value={post?.commentary ?? ""}
+		<textarea id="commentary" class={inputClass} rows="3" {...form.fields.commentary.as("text")}
 		></textarea>
 	</div>
 
 	<div class="flex items-center gap-6">
 		<label class="flex items-center gap-2 text-sm">
-			<input type="checkbox" name="explicit" checked={post?.explicit ?? false} class="rounded" />
+			<input class="rounded" {...form.fields.explicit.as("checkbox")} />
 			Explicit
 		</label>
 	</div>
 
 	<div class="flex items-center gap-3 border-t border-neutral-200 pt-5">
 		<button
-			type="submit"
-			name="status"
-			value="draft"
 			class="rounded-lg border border-neutral-200 bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-neutral-50"
+			{...form.fields.status.as("submit", "draft")}
 		>
 			Save as draft
 		</button>
 
 		<button
-			type="submit"
-			name="status"
-			value="published"
 			class="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
+			{...form.fields.status.as("submit", "published")}
 		>
 			{post?.status === "published" ? "Update" : "Publish"}
 		</button>
