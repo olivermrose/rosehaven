@@ -20,7 +20,6 @@
 		"migrate": "tsx scripts/migrate.ts"
 	},
 	"dependencies": {
-		"@node-rs/argon2": "^2.0.2",
 		"@takumi-rs/image-response": "beta",
 		"@takumi-rs/wasm": "beta",
 		"@threlte/core": "^8.5.2",
