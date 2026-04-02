@@ -5,8 +5,6 @@ export default defineConfig({
 	schema: "./src/lib/server/db/schema.ts",
 	out: "./drizzle",
 	dbCredentials: {
-		// @ts-expect-error - types
-		// eslint-disable-next-line node/prefer-global/process
-		url: process.env.DATABASE_URL!,
+		url: "postgresql://postgres:password@localhost:5432/rosehaven",
 	},
 });
