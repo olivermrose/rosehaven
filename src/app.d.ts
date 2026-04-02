@@ -1,5 +1,5 @@
 import type { Hyperdrive } from "@cloudflare/workers-types";
-import type { Drizzle } from "drizzle-orm/node-postgres";
+import type { drizzle } from "drizzle-orm/node-postgres";
 
 interface Seo {
 	path: string;
@@ -13,7 +13,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			db: Drizzle;
+			db: ReturnType<typeof drizzle>;
 		}
 
 		interface PageData {
