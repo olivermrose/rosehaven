@@ -9,4 +9,5 @@ export default defineConfig({
 		// eslint-disable-next-line node/prefer-global/process
 		url: process.env.DATABASE_URL!,
 	},
+	verbose: true,
 });
