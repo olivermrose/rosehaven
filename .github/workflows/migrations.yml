@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths: [drizzle/**]
 
 jobs:
   deploy:
@@ -20,6 +21,6 @@ jobs:
         run: npm ci
 
       - name: Run Database Migrations
+        run: npm run db:migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: npx tsx src/lib/db/migrate.ts
