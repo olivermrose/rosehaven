@@ -8,6 +8,7 @@ export default defineConfig({
 		// @ts-expect-error - types
 		// eslint-disable-next-line node/prefer-global/process
 		url: process.env.DATABASE_URL!,
+		ssl: true,
 	},
 	verbose: true,
 });
