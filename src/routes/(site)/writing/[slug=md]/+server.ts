@@ -26,7 +26,7 @@ export async function GET({ params, locals }) {
 		});
 	}
 
-	let markdown = turndown.turndown(post.contentHtml);
+	let markdown = turndown.turndown(post.content);
 	markdown = `# ${post.title}\n\n${markdown}`;
 
 	return new Response(markdown, {

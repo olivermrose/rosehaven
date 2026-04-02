@@ -1,11 +1,4 @@
-import {
-	boolean,
-	pgEnum,
-	pgTable,
-	serial,
-	text,
-	timestamp,
-} from "drizzle-orm/pg-core";
+import { boolean, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const categoryEnum = pgEnum("category", [
 	"dialogue",
@@ -23,7 +16,7 @@ export const posts = pgTable("posts", {
 	slug: text("slug").notNull(),
 	excerpt: text("excerpt").notNull(),
 	explicit: boolean("explicit").notNull().default(false),
-	contentHtml: text("content_html").notNull(),
+	content: text("content").notNull(),
 	commentary: text("commentary"),
 	status: statusEnum("status").notNull().default("draft"),
 	publishedAt: timestamp("published_at", { withTimezone: true }),

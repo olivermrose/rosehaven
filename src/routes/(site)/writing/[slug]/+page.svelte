@@ -28,7 +28,7 @@
 	</header>
 
 	<div data-content data-category={data.post.category}>
-		{@html data.post.contentHtml}
+		{@html data.post.content}
 	</div>
 
 	{#if data.post.commentary}

@@ -18,13 +18,13 @@
 			title: post.title,
 			excerpt: post.excerpt,
 			category: post.category,
-			contentHtml: post.contentHtml,
+			content: post.content,
 			commentary: post.commentary ?? undefined,
 			explicit: post.explicit,
 		});
 	});
 
-	let content = $derived(post?.contentHtml ?? "");
+	let content = $derived(post?.content ?? "");
 	const issues = $derived(form.fields.allIssues());
 
 	const categories = [
@@ -76,7 +76,7 @@
 	<div>
 		<!-- svelte-ignore a11y_label_has_associated_control -->
 		<label class="mb-1.5 block text-sm font-medium">Content</label>
-		<input name="contentHtml" type="hidden" value={content} />
+		<input name="content" type="hidden" value={content} />
 
 		<Editor {content} onupdate={(html) => (content = html)} />
 	</div>
