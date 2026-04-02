@@ -10,8 +10,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  migrate:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -30,5 +32,3 @@ jobs:
 
       - name: Run Database Migrations
         run: pnpm db:migrate
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
