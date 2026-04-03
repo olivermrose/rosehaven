@@ -4,17 +4,34 @@
 	import { animate, cancelFrame, frame, motion } from "motion-sv";
 	import { onMount } from "svelte";
 
-	const seasons = [
-		["#FFE438", "#88C924"], // Spring
-		["#F0D83A", "#FFA02B"], // Summer
-		["#C7781E", "#EB3636"], // Autumn
-		["#A3D8FF", "#BDFFFF"], // Winter
+	const SIMULATE_TIME = false;
+	const SIM_YEAR_SECONDS = 60;
+
+	// These colors are how I see months :)
+	const months = [
+		"#61A5FA", // Jan — cornflower
+		"#F472B6", // Feb — bubblegum
+		"#34D399", // Mar — shamrock
+		"#4DB6AC", // Apr — cyan
+		"#A78BFA", // May — lavender
+		"#EF4444", // Jun — coral
+		"#FFA726", // Jul — tangerine
+		"#FBBF23", // Aug — golden
+		"#B91C1B", // Sep — terracotta
+		"#D97707", // Oct — maple
+		"#8D6E63", // Nov — umber
+		"#80DEEA", // Dec — turquoise
 	];
 
 	let shade1 = $state("");
 	let shade2 = $state("");
+	let monthLabel = $state("");
+
+	let simStart = 0;
 
 	onMount(() => {
+		simStart = Date.now();
+
 		updateGradient();
 
 		for (const petal of document.querySelectorAll(".petal")) {
@@ -78,19 +95,35 @@
 		return () => cancelFrame(updateGradient);
 	});
 
+	function getTime() {
+		if (!SIMULATE_TIME) return dayjs();
+
+		const elapsedMs = Date.now() - simStart;
+		const yearMs = 365.25 * 86_400_000;
+		const simElapsed = (elapsedMs / (SIM_YEAR_SECONDS * 1000)) * yearMs;
+
+		return dayjs(dayjs().startOf("year").valueOf() + (simElapsed % yearMs));
+	}
+
 	function updateGradient() {
-		const now = dayjs();
+		const now = getTime();
+		const month = now.month();
+		const nextMonth = (month + 1) % 12;
 
-		const currentSeason = Math.floor(now.month() / 3) % 4;
-		const nextSeason = Math.floor((now.month() + 1) / 3) % 4;
+		const monthStart = now.startOf("month");
+		const monthEnd = now.endOf("month");
+		const progress = now.diff(monthStart, "ms") / monthEnd.diff(monthStart, "ms");
 
-		const [from1, to1] = seasons[currentSeason];
-		const [from2, to2] = seasons[nextSeason];
+		const primary = chroma.mix(months[month], months[nextMonth], progress, "oklch").hex();
+		const [l, c, h] = chroma(primary).oklch();
+		const darker = chroma.oklch(Math.max(0, l - 0.25), c, h || 0).hex();
 
-		const progress = now.diff(now.startOf("month"), "seconds") / (30 * 86_400);
+		shade1 = primary;
+		shade2 = darker;
 
-		shade1 = chroma.mix(from1, from2, progress, "oklch").hex();
-		shade2 = chroma.mix(to1, to2, progress, "oklch").hex();
+		if (SIMULATE_TIME) {
+			monthLabel = now.format("MMMM");
+		}
 
 		frame.render(updateGradient, true);
 	}
@@ -106,6 +139,12 @@
 		];
 	}
 </script>
+
+{#if SIMULATE_TIME && monthLabel}
+	<div class="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+		<p class="text-8xl font-light tracking-tight">{monthLabel}</p>
+	</div>
+{/if}
 
 <motion.div
 	class="fixed inset-0"
