@@ -19,7 +19,7 @@
 	import Placeholder from "@tiptap/extension-placeholder";
 	import TextAlign from "@tiptap/extension-text-align";
 	import StarterKit from "@tiptap/starter-kit";
-	import { untrack } from "svelte";
+	import { onDestroy, onMount, settled, untrack } from "svelte";
 
 	interface ToolbarItem {
 		icon: IconSvgElement;
@@ -35,6 +35,7 @@
 
 	const { content, onupdate }: Props = $props();
 
+	let element: HTMLDivElement;
 	let editor = $state.raw<Editor>();
 
 	const marks: ToolbarItem[] = [
@@ -80,17 +81,11 @@
 		{ icon: TextAlignJustifyCenterIcon, value: "justify" },
 	];
 
-	$effect(() => {
-		if (!editor || content === undefined) return;
+	onMount(async () => {
+		await settled();
 
-		if (content !== editor.getHTML()) {
-			editor.commands.setContent(content, { emitUpdate: false });
-		}
-	});
-
-	function initEditor(node: HTMLDivElement) {
 		editor = new Editor({
-			element: node,
+			element,
 			extensions: [
 				StarterKit.configure({
 					link: {
@@ -114,9 +109,17 @@
 				onupdate?.(event.editor.getHTML());
 			},
 		});
+	});
 
-		return () => editor?.destroy();
-	}
+	onDestroy(() => editor?.destroy());
+
+	$effect(() => {
+		if (!editor || content === undefined) return;
+
+		if (content !== editor.getHTML()) {
+			editor.commands.setContent(content, { emitUpdate: false });
+		}
+	});
 
 	function insertLink() {
 		const url = prompt("URL:");
@@ -191,7 +194,7 @@
 		</div>
 	{/if}
 
-	<div class="max-h-180 overflow-auto px-5 py-4" {@attach initEditor}></div>
+	<div class="max-h-180 overflow-auto px-5 py-4" bind:this={element}></div>
 </div>
 
 <style>
