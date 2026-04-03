@@ -35,7 +35,7 @@
 
 	const { content, onupdate }: Props = $props();
 
-	let editor = $state<Editor>();
+	let editor = $state.raw<Editor>();
 
 	const marks: ToolbarItem[] = [
 		{
@@ -105,6 +105,10 @@
 				attributes: {
 					class: "prose prose-invert max-w-none outline-none min-h-80 nd-editor-content",
 				},
+			},
+			onTransaction(event) {
+				editor = undefined;
+				editor = event.editor;
 			},
 			onUpdate(event) {
 				onupdate?.(event.editor.getHTML());
