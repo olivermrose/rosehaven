@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { motion, useScroll } from "motion-sv";
+	import { motion, useScroll, useTransform } from "motion-sv";
 
-	const { scrollYProgress } = useScroll();
-
-	let progress = $state(scrollYProgress.get());
-
-	scrollYProgress.on("change", (latest) => {
-		progress = latest;
-	});
+	const { scrollYProgress: grow } = useScroll();
+	const shrink = useTransform(grow, [0, 1], [1, 0]);
 </script>
 
 <motion.div
@@ -21,11 +16,11 @@
 
 	<motion.div
 		class="h-full flex-auto origin-left bg-aloe-400 dark:bg-off-white"
-		style={{ scaleX: progress }}
+		style={{ scaleX: grow }}
 	/>
 
 	<motion.div
 		class="absolute right-0 h-full w-1/5 origin-right bg-plum-600 dark:bg-neutral-500"
-		style={{ scaleX: 1 - progress }}
+		style={{ scaleX: shrink }}
 	/>
 </motion.div>
