@@ -21,8 +21,14 @@
 		"db:studio": "drizzle-kit studio"
 	},
 	"dependencies": {
+		"@fontsource-variable/doto": "^5.2.10",
+		"@fontsource-variable/space-grotesk": "^5.2.10",
+		"@fontsource/space-mono": "^5.2.9",
+		"@hugeicons/core-free-icons": "^4.1.1",
+		"@hugeicons/svelte": "^1.1.2",
 		"@takumi-rs/image-response": "beta",
 		"@takumi-rs/wasm": "beta",
+		"@tanstack/svelte-table": "9.0.0-alpha.10",
 		"@threlte/core": "^8.5.5",
 		"@tiptap/core": "^3.22.0",
 		"@tiptap/extension-link": "^3.22.0",

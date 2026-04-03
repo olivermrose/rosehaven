@@ -4,34 +4,32 @@
 	const issues = $derived(login.fields.password.issues());
 </script>
 
-<div class="flex min-h-dvh items-center justify-center bg-neutral-50">
-	<div class="w-full max-w-sm">
-		<h1 class="mb-8 text-center text-xl font-semibold tracking-tight">Rosehaven</h1>
+<div class="flex min-h-dvh items-center justify-center bg-nd-black font-nd-sans">
+	<div class="w-full max-w-xs">
+		<div class="mb-16 text-center">
+			<h1 class="font-nd-display text-5xl/none tracking-tight text-nd-bright">CMS</h1>
+			<p class="nd-label mt-4">Rosehaven Admin</p>
+		</div>
 
-		<form class="space-y-4" {...login}>
+		<form class="space-y-8" {...login}>
 			<div>
-				<label for="password" class="mb-1 block text-sm font-medium text-neutral-700">
-					Password
-				</label>
-
+				<label for="password" class="nd-label mb-3 block">Password</label>
 				<input
 					id="password"
-					class="w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm transition-colors outline-none focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900"
+					class="nd-input font-nd-mono"
 					autocomplete="current-password"
+					placeholder="Enter password"
 					{...login.fields.password.as("password")}
 				/>
 			</div>
 
 			{#if issues}
-				<p class="text-sm text-red-600">{issues[0].message}</p>
+				<p class="font-nd-mono text-xs tracking-wide text-nd-accent">
+					[ERROR] {issues[0].message}
+				</p>
 			{/if}
 
-			<button
-				class="w-full rounded-lg bg-neutral-900 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
-				type="submit"
-			>
-				Sign in
-			</button>
+			<button class="nd-btn nd-btn-primary w-full" type="submit">Sign in</button>
 		</form>
 	</div>
 </div>

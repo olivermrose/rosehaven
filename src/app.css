@@ -18,8 +18,12 @@
 }
 
 @theme {
-	--font-sans: InterVariable, ui-sans-serif, sans-serif;
+	--font-sans: "InterVariable", ui-sans-serif, sans-serif;
 	--font-serif: "PP Eiko", ui-serif, serif;
+
+	--font-nd-display: "Doto", "Space Mono", ui-monospace, monospace;
+	--font-nd-sans: "Space Grotesk", ui-sans-serif, sans-serif;
+	--font-nd-mono: "Space Mono", ui-monospace, monospace;
 
 	/*
 	 * Values generated from https://www.fluid-type-scale.com/
@@ -44,6 +48,20 @@
 
 	--color-off-white: oklch(0.9578 0.0095 93.57);
 	--color-off-black: oklch(0.1818 0 0);
+
+	--color-nd-black: oklch(0% 0 0);
+	--color-nd-surface: oklch(17.764% 0 271.152);
+	--color-nd-raised: oklch(21.779% 0 271.152);
+	--color-nd-edge: oklab(25.197% 0 0);
+	--color-nd-edge-strong: oklch(32.109% 0 271.152);
+	--color-nd-dim: oklch(51.028% 0 271.152);
+	--color-nd-muted: oklch(68.295% 0 271.152);
+	--color-nd-solid: oklch(93.1% 0 271.152);
+	--color-nd-bright: oklch(100% 0 271.152);
+	--color-nd-accent: oklch(56.072% 0.2177 26.777);
+	--color-nd-success: oklch(62.995% 0.12788 148.661);
+	--color-nd-warning: oklch(75.344% 0.12738 84.934);
+	--color-nd-link: oklch(68.804% 0.15031 257.4);
 
 	--color-aloe-50: oklch(96.06% 0.076 126.22);
 	--color-aloe-100: oklch(91.17% 0.146 125.32);
@@ -160,6 +178,143 @@
 		font-family: var(--font-sans);
 		font-style: normal;
 		color: var(--color-peach-400);
+	}
+
+	.nd-label {
+		font-family: var(--font-nd-mono);
+		font-size: 12px;
+		line-height: 1.2;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-nd-muted);
+	}
+
+	.nd-btn {
+		font-family: var(--font-nd-mono);
+		font-size: 14px;
+		letter-spacing: var(--tracking-wider);
+		text-transform: uppercase;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-height: 44px;
+		padding: 12px 24px;
+		transition: all 200ms cubic-bezier(0.25, 0.1, 0.25, 1);
+		cursor: pointer;
+	}
+
+	.nd-btn-primary {
+		background: var(--color-nd-bright);
+		color: var(--color-nd-black);
+		border-radius: 999px;
+		border: none;
+
+		&:hover {
+			opacity: 0.9;
+		}
+	}
+
+	.nd-btn-secondary {
+		background: transparent;
+		color: var(--color-nd-solid);
+		border: 1px solid var(--color-nd-edge-strong);
+		border-radius: 999px;
+
+		&:hover {
+			border-color: var(--color-nd-solid);
+		}
+	}
+
+	.nd-btn-ghost {
+		background: transparent;
+		color: var(--color-nd-muted);
+		border: none;
+		padding: 12px 0;
+
+		&:hover {
+			color: var(--color-nd-solid);
+		}
+	}
+
+	.nd-btn-destructive {
+		background: transparent;
+		color: var(--color-nd-accent);
+		border: 1px solid var(--color-nd-accent);
+		border-radius: 999px;
+
+		&:hover {
+			background: var(--color-nd-accent);
+			color: var(--color-nd-bright);
+		}
+	}
+
+	.nd-input {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid var(--color-nd-edge-strong);
+		background: transparent;
+		padding: 12px 0;
+		font-family: var(--font-nd-sans);
+		font-size: 14px;
+		color: var(--color-nd-solid);
+		outline: none;
+		transition: border-color 200ms;
+
+		&:focus {
+			border-bottom-color: var(--color-nd-solid);
+		}
+
+		&::placeholder {
+			color: var(--color-nd-dim);
+		}
+	}
+
+	.nd-select {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid var(--color-nd-edge-strong);
+		background: transparent;
+		padding: 12px 0;
+		font-family: var(--font-nd-sans);
+		font-size: 14px;
+		color: var(--color-nd-solid);
+		outline: none;
+		transition: border-color 200ms;
+		appearance: none;
+
+		&:focus {
+			border-bottom-color: var(--color-nd-solid);
+		}
+
+		option {
+			background: var(--color-nd-surface);
+			color: var(--color-nd-solid);
+		}
+	}
+
+	.nd-toolbar-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 4px;
+		color: var(--color-nd-muted);
+		transition: all 150ms;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+
+		&:hover {
+			color: var(--color-nd-solid);
+			background: var(--color-nd-raised);
+		}
+
+		&[data-active="true"] {
+			color: var(--color-nd-bright);
+			background: var(--color-nd-raised);
+		}
 	}
 }
 

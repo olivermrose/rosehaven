@@ -1,8 +1,7 @@
 <script lang="ts">
-	import PostForm from "$lib/components/admin/PostForm.svelte";
 	import { createPost } from "$lib/posts.remote";
+	import Form from "../Form.svelte";
 </script>
 
-<h1 class="mb-6 text-xl font-semibold">New Post</h1>
-
-<PostForm form={createPost} />
+<h1 class="mb-10 font-nd-sans text-2xl font-light tracking-tight text-nd-bright">New Post</h1>
+<Form form={createPost} />

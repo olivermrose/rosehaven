@@ -1,24 +1,29 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import PostForm from "$lib/components/admin/PostForm.svelte";
 	import { deletePost, getPost, updatePost } from "$lib/posts.remote";
+	import Form from "../Form.svelte";
 
 	const post = $derived(await getPost(page.params.id!));
 </script>
 
-<div class="flex items-center justify-between">
-	<h1 class="mb-6 text-xl font-semibold">Edit Post</h1>
-
-	<button
-		class="rounded-lg px-3 py-1.5 text-sm text-red-600 transition-colors hover:bg-red-50"
-		onclick={() => deletePost(post.id)}
-	>
-		Delete
-	</button>
+<div class="mb-10">
+	<h1 class="font-nd-sans text-2xl tracking-tight text-nd-bright">Edit Post</h1>
 </div>
 
 {#if updatePost.result?.success}
-	<div class="mb-4 rounded-lg bg-emerald-50 px-4 py-2.5 text-sm text-emerald-700">Post saved.</div>
+	<div class="mb-6 font-nd-mono text-sm tracking-wider text-nd-success uppercase">
+		[SAVED] Post updated successfully
+	</div>
 {/if}
 
-<PostForm form={updatePost} {post} />
+<Form form={updatePost} {post}>
+	{#snippet actions()}
+		<button
+			class="nd-btn nd-btn-destructive w-full"
+			type="button"
+			onclick={() => deletePost(post.id)}
+		>
+			Delete
+		</button>
+	{/snippet}
+</Form>

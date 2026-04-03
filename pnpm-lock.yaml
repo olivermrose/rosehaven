@@ -8,12 +8,30 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/doto':
+        specifier: ^5.2.10
+        version: 5.2.10
+      '@fontsource-variable/space-grotesk':
+        specifier: ^5.2.10
+        version: 5.2.10
+      '@fontsource/space-mono':
+        specifier: ^5.2.9
+        version: 5.2.9
+      '@hugeicons/core-free-icons':
+        specifier: ^4.1.1
+        version: 4.1.1
+      '@hugeicons/svelte':
+        specifier: ^1.1.2
+        version: 1.1.2(svelte@5.55.1)
       '@takumi-rs/image-response':
         specifier: beta
         version: 1.0.0-beta.20
       '@takumi-rs/wasm':
         specifier: beta
         version: 1.0.0-beta.20
+      '@tanstack/svelte-table':
+        specifier: 9.0.0-alpha.10
+        version: 9.0.0-alpha.10(svelte@5.55.1)
       '@threlte/core':
         specifier: ^8.5.5
         version: 8.5.5(svelte@5.55.1)(three@0.183.2)
@@ -916,6 +934,23 @@ packages:
     resolution: {integrity: sha512-iH1B076HoAshH1mLpHMgwdGeTs0CYwL0SPMkGuSebZrwBp16v415e9NZXg2jtrqPVQjf6IANe2Vtlr5KswtcZQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
+  '@fontsource-variable/doto@5.2.10':
+    resolution: {integrity: sha512-9wflNv5TCTaLCtm1W+Iv6gyGW0LS6CezDX1CiRy9pvqOWufT9zAhVhsNSPZ4Z+0YKOma/KDxvxmigSMelI4duw==}
+
+  '@fontsource-variable/space-grotesk@5.2.10':
+    resolution: {integrity: sha512-yJQO/o35/hAP3CFnpdFTwQku2yzJOae2HIpBmqkOVoxhhXJaQP3g+b6Jrz7u+eI7A5ZdCIf88uMWpBJdFiGr5w==}
+
+  '@fontsource/space-mono@5.2.9':
+    resolution: {integrity: sha512-b61faFOHEISQ/pD25G+cfGY9o/WW6lRv6hBQQfpWvEJ4y1V+S4gmth95EVyBE2VL3qDYHeVQ8nBzrplzdXTDDg==}
+
+  '@hugeicons/core-free-icons@4.1.1':
+    resolution: {integrity: sha512-teqIBvPHl90ygIwKyJwTxOH8aNp1X1PjDTcMvLkEwdPxPD+8mssrZ5kXKIAJJFYPsz69a8LYQY0UPid4PAdavg==}
+
+  '@hugeicons/svelte@1.1.2':
+    resolution: {integrity: sha512-yYmLFE+tq/mJmmjNaGxnaA99+H9yOzZmWJOMxKd9g9EJ8FCTCG8jpTgzVSv5bpuXDjQZFIGJz+Z/syiXhrS0mA==}
+    peerDependencies:
+      svelte: ^5.0.0
+
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -1461,6 +1496,16 @@ packages:
 
   '@takumi-rs/wasm@1.0.0-beta.20':
     resolution: {integrity: sha512-x2GVSmHxjSXUzLIrjb+XiYLcc0sggI+kBULO8SrRp9hj5t1uqxolICb7HEXiIjgIDbos5EDnF0kXGe5PU3/1/w==}
+
+  '@tanstack/svelte-table@9.0.0-alpha.10':
+    resolution: {integrity: sha512-H0eAQlpXgK9JYYrgc0cWXVqEJywxkhuYODnVobUZGskFg6J+5PP+7UCjzrY9ftMge6s1hwb2Ipq3u4wPYJz7HA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      svelte: ^5.0.0-next
+
+  '@tanstack/table-core@9.0.0-alpha.10':
+    resolution: {integrity: sha512-f2kEGGL+d+I7evkhU926cID2MyH7nPI8acAPcwpaAR1DrgTNStAMp3NS+tgMDyrYtc8zd+RyTxC8m+NBhHhFmA==}
+    engines: {node: '>=12'}
 
   '@tediousjs/connection-string@0.5.0':
     resolution: {integrity: sha512-7qSgZbincDDDFyRweCIEvZULFAw5iz/DeunhvuxpL31nfntX3P4Yd4HkHBRg9H8CdqY1e5WFN1PZIz/REL9MVQ==}
@@ -4409,6 +4454,18 @@ snapshots:
       '@eslint/core': 1.1.1
       levn: 0.4.1
 
+  '@fontsource-variable/doto@5.2.10': {}
+
+  '@fontsource-variable/space-grotesk@5.2.10': {}
+
+  '@fontsource/space-mono@5.2.9': {}
+
+  '@hugeicons/core-free-icons@4.1.1': {}
+
+  '@hugeicons/svelte@1.1.2(svelte@5.55.1)':
+    dependencies:
+      svelte: 5.55.1
+
   '@humanfs/core@0.19.1': {}
 
   '@humanfs/node@0.16.7':
@@ -4808,6 +4865,13 @@ snapshots:
   '@takumi-rs/wasm@1.0.0-beta.20':
     dependencies:
       '@takumi-rs/helpers': 1.0.0-beta.20
+
+  '@tanstack/svelte-table@9.0.0-alpha.10(svelte@5.55.1)':
+    dependencies:
+      '@tanstack/table-core': 9.0.0-alpha.10
+      svelte: 5.55.1
+
+  '@tanstack/table-core@9.0.0-alpha.10': {}
 
   '@tediousjs/connection-string@0.5.0': {}
 

@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import QuoteForm from "$lib/components/admin/QuoteForm.svelte";
 	import { deleteQuote, getQuote, updateQuote } from "$lib/quotes.remote";
+	import Form from "../Form.svelte";
 
 	const [quote] = $derived(await getQuote(page.params.id!));
 </script>
 
-<div class="flex items-center justify-between">
-	<h1 class="mb-6 text-xl font-semibold">Edit Quote</h1>
+<div class="mb-10 flex items-center justify-between">
+	<h1 class="font-nd-sans text-2xl font-light tracking-tight text-nd-bright">Edit Quote</h1>
 
 	<button
-		class="rounded-lg px-3 py-1.5 text-sm text-red-600 transition-colors hover:bg-red-50"
+		class="nd-btn nd-btn-destructive"
 		type="button"
 		onclick={() => deleteQuote(page.params.id!)}
 	>
@@ -19,7 +19,9 @@
 </div>
 
 {#if updateQuote.result?.success}
-	<div class="mb-4 rounded-lg bg-emerald-50 px-4 py-2.5 text-sm text-emerald-700">Quote saved.</div>
+	<div class="mb-6 font-nd-mono text-xs tracking-wider text-nd-success uppercase">
+		[SAVED] Quote updated successfully
+	</div>
 {/if}
 
-<QuoteForm form={updateQuote} {quote} />
+<Form form={updateQuote} {quote} />

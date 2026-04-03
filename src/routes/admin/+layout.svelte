@@ -1,4 +1,7 @@
 <script lang="ts">
+	import "@fontsource/space-mono/index.css";
+	import "@fontsource-variable/doto/wght.css";
+	import "@fontsource-variable/space-grotesk/wght.css";
 	import { page } from "$app/state";
 	import { logout } from "$lib/admin.remote.js";
 
@@ -9,6 +12,14 @@
 		{ href: "/admin/posts", label: "Posts" },
 		{ href: "/admin/quotes", label: "Quotes" },
 	];
+
+	function isActive(href: string) {
+		if (href === "/admin") {
+			return page.url.pathname === "/admin";
+		}
+
+		return page.url.pathname.startsWith(href);
+	}
 </script>
 
 <svelte:head>
@@ -16,10 +27,12 @@
 </svelte:head>
 
 {#if data.authenticated}
-	<div class="flex min-h-dvh bg-neutral-50 text-neutral-900">
-		<nav class="flex w-52 shrink-0 flex-col border-r border-neutral-200 bg-white">
-			<div class="px-5 pt-6 pb-4">
-				<a href="/admin" class="text-lg font-semibold tracking-tight">CMS</a>
+	<div class="min-h-dvh bg-nd-black pl-52 font-nd-sans text-nd-solid">
+		<nav
+			class="fixed top-0 left-0 z-10 flex h-dvh w-52 flex-col border-r border-nd-edge bg-nd-surface"
+		>
+			<div class="px-6 pt-8 pb-6">
+				<a href="/admin" class="font-nd-display text-3xl leading-none text-nd-bright">CMS</a>
 			</div>
 
 			<div class="flex flex-1 flex-col gap-0.5 px-3">
@@ -27,10 +40,10 @@
 					<a
 						href={item.href}
 						class={[
-							"rounded-md px-3 py-1.5 text-sm transition-colors",
-							page.url.pathname === item.href
-								? "bg-neutral-100 font-medium text-neutral-900"
-								: "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900",
+							"nd-label relative block px-3 py-2.5 transition-colors",
+							isActive(item.href)
+								? "text-nd-bright before:absolute before:top-1/2 before:left-0 before:h-4 before:w-0.5 before:-translate-y-1/2 before:bg-nd-accent"
+								: "text-nd-dim hover:text-nd-muted",
 						]}
 					>
 						{item.label}
@@ -38,10 +51,10 @@
 				{/each}
 			</div>
 
-			<div class="border-t border-neutral-200 p-3">
+			<div class="border-t border-nd-edge p-3">
 				<form {...logout}>
 					<button
-						class="w-full rounded-md px-3 py-1.5 text-left text-sm text-neutral-500 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
+						class="nd-label w-full px-3 py-2 text-left text-nd-dim transition-colors hover:text-nd-muted"
 						type="submit"
 					>
 						Sign out
@@ -50,10 +63,8 @@
 			</div>
 		</nav>
 
-		<div class="flex-1 overflow-y-auto">
-			<div class="mx-auto max-w-4xl px-8 py-8">
-				{@render children?.()}
-			</div>
+		<div class="px-12 py-12">
+			{@render children?.()}
 		</div>
 	</div>
 {:else}
