@@ -26,21 +26,30 @@
 	const idle = new IsIdle({ timeout: 3000 });
 
 	let hero = $state<HTMLElement>();
+	let marquee = $state<HTMLElement>();
 
-	const { scrollYProgress } = $derived(
+	const { scrollYProgress: heroY } = $derived(
 		useScroll({
 			target: hero,
 			offset: ["start start", "end start"],
 		}),
 	);
 
+	const { scrollYProgress: marqueeY } = $derived(
+		useScroll({
+			target: marquee,
+			offset: ["start end", "end start"],
+		}),
+	);
+
 	const transforms = $derived([
-		useTransform(scrollYProgress, [0, 1], ["0", "-5%"]),
-		useTransform(scrollYProgress, [0, 1], ["0", "10%"]),
-		useTransform(scrollYProgress, [0, 1], ["0", "-15%"]),
+		useTransform(heroY, [0, 1], ["0", "-5%"]),
+		useTransform(heroY, [0, 1], ["0", "10%"]),
+		useTransform(heroY, [0, 1], ["0", "-15%"]),
 	]);
 
-	const hintOpacity = $derived(useTransform(scrollYProgress, [0, 1], [1, 0]));
+	const hintOpacity = $derived(useTransform(heroY, [0, 1], [1, 0]));
+	const marqueeX = $derived(useTransform(marqueeY, [0, 1], ["-15%", "0%"]));
 
 	onMount(() => {
 		animate(
@@ -94,6 +103,18 @@
 			</svg>
 		</motion.div>
 	</div>
+</div>
+
+<div class="overflow-hidden py-12 sm:py-20" bind:this={marquee}>
+	<motion.div
+		class="flex w-max items-center gap-x-10 text-[8vw]/none font-extralight tracking-tight uppercase opacity-5 sm:gap-x-20 sm:text-[5vw]/none"
+		style={{ x: marqueeX }}
+	>
+		<!-- eslint-disable-next-line svelte/require-each-key -->
+		{#each { length: 5 }}
+			<span class="whitespace-nowrap">Crafting Worlds Through Words</span>
+		{/each}
+	</motion.div>
 </div>
 
 <Portrait />
