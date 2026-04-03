@@ -5,7 +5,8 @@
 </script>
 
 <div class="mb-8 flex items-center justify-between">
-	<h1 class="font-nd-sans text-2xl font-light tracking-tight text-nd-bright">Quotes</h1>
+	<h1 class="font-nd-sans text-2xl tracking-tight text-nd-bright">Quotes</h1>
+
 	<a href="/admin/quotes/new" class="nd-btn nd-btn-primary">New quote</a>
 </div>
 
