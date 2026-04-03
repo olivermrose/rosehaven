@@ -51,7 +51,14 @@
 				{/each}
 			</div>
 
-			<div class="border-t border-nd-edge p-3">
+			<div class="space-y-1 border-t border-nd-edge p-3">
+				<a
+					class="nd-label block px-3 py-2 text-nd-dim transition-colors hover:text-nd-muted"
+					href="/"
+				>
+					Back to site
+				</a>
+
 				<form {...logout}>
 					<button
 						class="nd-label w-full px-3 py-2 text-left text-nd-dim transition-colors hover:text-nd-muted"
