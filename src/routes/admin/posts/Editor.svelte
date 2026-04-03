@@ -16,7 +16,6 @@
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 	import type { IconSvgElement } from "@hugeicons/svelte";
 	import { Editor } from "@tiptap/core";
-	import Link from "@tiptap/extension-link";
 	import Placeholder from "@tiptap/extension-placeholder";
 	import TextAlign from "@tiptap/extension-text-align";
 	import StarterKit from "@tiptap/starter-kit";
@@ -86,8 +85,11 @@
 		editor = new Editor({
 			element,
 			extensions: [
-				StarterKit,
-				Link.configure({ openOnClick: false }),
+				StarterKit.configure({
+					link: {
+						openOnClick: false,
+					},
+				}),
 				TextAlign.configure({ types: ["heading", "paragraph"] }),
 				Placeholder.configure({ placeholder: "Start writing\u2026" }),
 			],
