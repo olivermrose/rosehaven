@@ -54,7 +54,7 @@
 									href="/writing/{post.slug}"
 								>
 									<div class="flex items-center gap-x-2">
-										<h3 class="text-fluid-base font-medium">
+										<h3 class="line-clamp-2 text-fluid-base font-medium">
 											{post.title}
 										</h3>
 
