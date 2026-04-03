@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { SITE_NAME } from "$lib";
 	import { mode, toggleMode } from "mode-watcher";
 	import { motion } from "motion-sv";
-	import { env } from "$env/dynamic/public";
 </script>
 
 <motion.header
@@ -11,7 +11,7 @@
 	transition={{ duration: 0.75 }}
 >
 	<nav class="flex w-full items-center justify-between">
-		<a class="blended" href="/">{env.PUBLIC_SITE_NAME}</a>
+		<a class="blended" href="/">{SITE_NAME}</a>
 
 		<button class="hover:cursor-pointer" type="button" onclick={toggleMode}>
 			<div class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">

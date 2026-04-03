@@ -8,10 +8,6 @@
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare",
 	},
-	"vars": {
-		"PUBLIC_BASE_URL": "https://olivermrose.com",
-		"PUBLIC_SITE_NAME": "oliver rose.",
-	},
 
 	"observability": {
 		"enabled": false,

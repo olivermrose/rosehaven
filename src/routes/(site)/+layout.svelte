@@ -1,12 +1,12 @@
 <script lang="ts">
 	import "lenis/dist/lenis.css";
+	import { BASE_URL, SITE_NAME } from "$lib";
 	import Lenis from "lenis";
 	import { ModeWatcher } from "mode-watcher";
 	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
 	import { dev } from "$app/environment";
 	import { page } from "$app/state";
-	import { env } from "$env/dynamic/public";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
@@ -16,10 +16,8 @@
 	const { children } = $props();
 
 	const { seo } = $derived(page.data);
-	const title = $derived(
-		seo.title ? `${seo.title} | ${env.PUBLIC_SITE_NAME}` : env.PUBLIC_SITE_NAME,
-	);
-	const image = $derived(seo.image ? env.PUBLIC_BASE_URL + seo.image : null);
+	const title = $derived(seo.title ? `${seo.title} | ${SITE_NAME}` : SITE_NAME);
+	const image = $derived(seo.image ? BASE_URL + seo.image : null);
 
 	onMount(() => {
 		const lenis = new Lenis();
@@ -33,7 +31,7 @@
 	<title>{title}</title>
 	<meta name="description" content={seo.description} />
 
-	<meta property="og:site_name" content={env.PUBLIC_SITE_NAME} />
+	<meta property="og:site_name" content={SITE_NAME} />
 	<meta property="og:type" content={seo.article ? "article" : "website"} />
 	<meta property="og:url" content="https://olivermrose.com/{seo.path.slice(1)}" />
 	<meta property="og:title" content={title} />
