@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { animate, scroll, stagger } from "motion-sv";
+	import { animate, motion, stagger, useScroll, useTransform } from "motion-sv";
 	import { IsIdle } from "runed";
 	import { onMount } from "svelte";
 	import Anthology from "$lib/components/Anthology.svelte";
@@ -27,8 +27,23 @@
 
 	let hero = $state<HTMLElement>();
 
-	onMount(async () => {
-		await animate(
+	const { scrollYProgress } = $derived(
+		useScroll({
+			target: hero,
+			offset: ["start start", "end start"],
+		}),
+	);
+
+	const transforms = $derived([
+		useTransform(scrollYProgress, [0, 1], ["0", "-5%"]),
+		useTransform(scrollYProgress, [0, 1], ["0", "10%"]),
+		useTransform(scrollYProgress, [0, 1], ["0", "-15%"]),
+	]);
+
+	const hintOpacity = $derived(useTransform(scrollYProgress, [0, 1], [1, 0]));
+
+	onMount(() => {
+		animate(
 			[
 				[".name", { y: ["100%", "0%"], opacity: 1 }, { delay: stagger(0.1) }],
 				["#scroll-hint", { y: [15, 0], opacity: 1 }, { at: "<0.5" }],
@@ -40,19 +55,6 @@
 				},
 			},
 		);
-
-		scroll(
-			animate([
-				[":nth-child(1 of .row)", { x: "-5%" }],
-				[":nth-child(2 of .row)", { x: "10%" }, { at: "<" }],
-				[":nth-child(3 of .row)", { x: "-15%" }, { at: "<" }],
-				["#scroll-hint", { opacity: 0 }, { at: "<" }],
-			]),
-			{
-				target: hero,
-				offset: ["start start", "end start"],
-			},
-		);
 	});
 </script>
 
@@ -62,18 +64,22 @@
 			class="m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] tracking-tighter uppercase sm:grid-cols-36"
 		>
 			<!-- eslint-disable-next-line svelte/require-each-key -->
-			{#each names as name}
-				<span class={["row -col-end-1 block overflow-hidden", name.style]}>
+			{#each names as name, i}
+				<motion.span
+					class={["row -col-end-1 block overflow-hidden", name.style]}
+					style={{ x: transforms[i] }}
+				>
 					<span class="name inline-block opacity-0">{name.text}</span>
-				</span>
+				</motion.span>
 			{/each}
 		</h1>
 	</div>
 
 	<div class="absolute right-10 bottom-12">
-		<div
+		<motion.div
 			id="scroll-hint"
 			class={["flex items-center gap-x-1 opacity-0", idle.current && "animate-bounce"]}
+			style={{ opacity: hintOpacity }}
 		>
 			<span class="text-sm">Scroll</span>
 
@@ -86,7 +92,7 @@
 				>
 				</path>
 			</svg>
-		</div>
+		</motion.div>
 	</div>
 </div>
 
