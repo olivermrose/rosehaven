@@ -12,7 +12,7 @@ function getSessionToken(): string {
 
 export function createSession(cookies: Cookies) {
 	cookies.set(COOKIE_NAME, getSessionToken(), {
-		path: "/admin",
+		path: "/",
 		httpOnly: true,
 		secure: true,
 		sameSite: "strict",
@@ -25,7 +25,7 @@ export function verifySession(cookies: Cookies): boolean {
 }
 
 export function destroySession(cookies: Cookies) {
-	cookies.delete(COOKIE_NAME, { path: "/admin" });
+	cookies.delete(COOKIE_NAME, { path: "/" });
 }
 
 export function verifyPassword(password: string): Promise<boolean> {

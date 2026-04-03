@@ -9,18 +9,24 @@
 	class="mx-auto prose max-w-4xl overflow-auto px-4 pt-28 pb-20 prose-neutral sm:px-6 dark:prose-invert"
 >
 	<header>
-		<div class="flex items-center justify-between text-sm">
-			<time
-				class="font-medium text-denim-500 dark:text-neutral-500"
-				datetime={data.post.publishedAt?.toISOString()}
-			>
-				{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
-			</time>
-
+		<div class="mb-4 flex items-center justify-between text-sm">
 			<a class="group no-underline" href="/#{data.post.category}">
 				<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
 			</a>
+
+			{#if data.authenticated}
+				<a class="group no-underline" href="/admin/posts/{data.post.id}">
+					Edit <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
+				</a>
+			{/if}
 		</div>
+
+		<time
+			class="font-medium text-denim-500 dark:text-neutral-500"
+			datetime={data.post.publishedAt?.toISOString()}
+		>
+			{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
+		</time>
 
 		<h1 class="mt-4 mb-8 text-fluid-4xl font-semibold text-pretty">
 			{data.post.title}
