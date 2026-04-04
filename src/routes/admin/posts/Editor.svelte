@@ -114,10 +114,11 @@
 	onDestroy(() => editor?.destroy());
 
 	$effect(() => {
-		if (!editor || content === undefined) return;
+		const _editor = untrack(() => editor);
+		if (!_editor || content === undefined) return;
 
-		if (content !== editor.getHTML()) {
-			editor.commands.setContent(content, { emitUpdate: false });
+		if (content !== _editor.getHTML()) {
+			_editor.commands.setContent(content, { emitUpdate: false });
 		}
 	});
 
