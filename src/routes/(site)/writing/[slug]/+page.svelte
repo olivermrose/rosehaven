@@ -28,7 +28,11 @@
 			{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
 		</time>
 
-		<h1 class="mt-4 mb-8 text-fluid-4xl font-semibold text-pretty">
+		<h1
+			class="mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty"
+			style:view-transition-class="post-title"
+			style:view-transition-name="post-{data.post.id}"
+		>
 			{data.post.title}
 		</h1>
 	</header>

@@ -357,3 +357,11 @@
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
+
+::view-transition-old(.post-title) {
+	display: none;
+}
+
+::view-transition-group(.post-title) {
+	animation-duration: 300ms;
+}

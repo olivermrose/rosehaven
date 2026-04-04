@@ -50,12 +50,16 @@
 							{@const title = post.title + (post.explicit ? " (Explicit)" : "")}
 
 							<li class="relative -m-4 flex flex-col p-4">
-								<a class="absolute inset-0" {title} href="/writing/{post.slug}">
+								<a class="absolute inset-0 z-1" {title} href="/writing/{post.slug}">
 									<span class="sr-only">{title}</span>
 								</a>
 
 								<div class="flex items-center gap-x-2">
-									<h3 class="line-clamp-2 text-fluid-base font-medium">
+									<h3
+										class="line-clamp-2 text-fluid-base font-medium"
+										style:view-transition-class="post-title"
+										style:view-transition-name="post-{post.id}"
+									>
 										{post.title}
 									</h3>
 

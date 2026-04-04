@@ -6,6 +6,7 @@
 	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
 	import { dev } from "$app/environment";
+	import { onNavigate } from "$app/navigation";
 	import { page } from "$app/state";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
 	import Header from "$lib/components/Header.svelte";
@@ -24,6 +25,17 @@
 		frame.render((d) => lenis.raf(d.timestamp), true);
 
 		return () => lenis.destroy();
+	});
+
+	onNavigate((navigation) => {
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				window.scrollTo(0, 0);
+				resolve();
+
+				await navigation.complete;
+			});
+		});
 	});
 </script>
 
