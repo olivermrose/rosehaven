@@ -2,6 +2,8 @@
 	import { SITE_NAME } from "$lib";
 	import { mode, toggleMode } from "mode-watcher";
 	import { motion } from "motion-sv";
+
+	const y = $derived(mode.current === "light" ? "0%" : "-100%");
 </script>
 
 <motion.header
@@ -14,10 +16,10 @@
 		<a class="blended" href="/">{SITE_NAME}</a>
 
 		<button class="hover:cursor-pointer" type="button" onclick={toggleMode}>
-			<div class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">
-				<motion.span animate={{ y: mode.current === "light" ? "0%" : "-100%" }}>light.</motion.span>
-				<motion.span animate={{ y: mode.current === "light" ? "0%" : "-100%" }}>dark.</motion.span>
-			</div>
+			<span class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">
+				<motion.span animate={{ y }}>light.</motion.span>
+				<motion.span animate={{ y }}>dark.</motion.span>
+			</span>
 		</button>
 	</nav>
 </motion.header>
