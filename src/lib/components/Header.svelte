@@ -4,7 +4,48 @@
 	import { motion } from "motion-sv";
 	import { page } from "$app/state";
 
+	let toggle = $state<HTMLButtonElement>();
+
 	const y = $derived(mode.current === "light" ? "0%" : "-100%");
+
+	async function transitionMode() {
+		if (!toggle) {
+			return toggleMode();
+		}
+
+		document.documentElement.classList.add("transitioning");
+
+		const transition = document.startViewTransition(() => {
+			toggleMode();
+		});
+
+		transition.finished.finally(() => {
+			document.documentElement.classList.remove("transitioning");
+		});
+
+		await transition.ready;
+
+		const rect = toggle.getBoundingClientRect();
+
+		const x = rect.left + rect.width / 2;
+		const y = rect.top + rect.height / 2;
+
+		const right = window.innerWidth - rect.left;
+		const bottom = window.innerHeight - rect.top;
+
+		const maxRadius = Math.hypot(Math.max(rect.left, right), Math.max(rect.top, bottom));
+
+		document.documentElement.animate(
+			{
+				clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`],
+			},
+			{
+				duration: 500,
+				easing: "ease",
+				pseudoElement: "::view-transition-new(root)",
+			},
+		);
+	}
 </script>
 
 <motion.header
@@ -21,7 +62,7 @@
 				<a class="blended hover:underline" href="/admin">admin.</a>
 			{/if}
 
-			<button type="button" onclick={toggleMode}>
+			<button type="button" onclick={transitionMode} bind:this={toggle}>
 				<span class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">
 					<motion.span animate={{ y }}>light.</motion.span>
 					<motion.span animate={{ y }}>dark.</motion.span>

@@ -29,7 +29,7 @@
 		</time>
 
 		<h1
-			class="mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty"
+			class="post-title mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty"
 			style:view-transition-class="post-title"
 			style:view-transition-name="post-{data.post.id}"
 		>

@@ -151,6 +151,7 @@
 	initial={{ opacity: 0 }}
 	animate={{ opacity: 1 }}
 	transition={{ duration: 0.75 }}
+	style={{ viewTransitionName: "persist" }}
 >
 	{#each { length: 25 }}
 		{@const [main, anti] = generateDiagonals()}

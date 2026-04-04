@@ -56,7 +56,7 @@
 
 								<div class="flex items-center gap-x-2">
 									<h3
-										class="line-clamp-2 text-fluid-base font-medium"
+										class="post-title line-clamp-2 text-fluid-base font-medium"
 										style:view-transition-class="post-title"
 										style:view-transition-name="post-{post.id}"
 									>

@@ -358,10 +358,30 @@
 	-webkit-text-fill-color: transparent;
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+::view-transition-old(.persist) {
+	display: none;
+}
+
+::view-transition-new(.persist) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+
 ::view-transition-old(.post-title) {
 	display: none;
 }
 
 ::view-transition-group(.post-title) {
 	animation-duration: 300ms;
+	mix-blend-mode: normal;
+}
+
+html.transitioning .post-title {
+	view-transition-name: none !important;
 }
