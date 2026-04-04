@@ -15,7 +15,7 @@
 	<nav class="flex w-full items-center justify-between">
 		<a class="blended" href="/">{SITE_NAME}</a>
 
-		<button class="hover:cursor-pointer" type="button" onclick={toggleMode}>
+		<button type="button" onclick={toggleMode}>
 			<span class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">
 				<motion.span animate={{ y }}>light.</motion.span>
 				<motion.span animate={{ y }}>dark.</motion.span>
