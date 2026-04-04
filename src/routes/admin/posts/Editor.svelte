@@ -211,12 +211,6 @@
 		font-family: var(--font-nd-sans);
 	}
 
-	:global(.nd-editor-content h1),
-	:global(.nd-editor-content h2),
-	:global(.nd-editor-content h3) {
-		color: var(--color-nd-bright);
-	}
-
 	:global(.nd-editor-content a) {
 		color: var(--color-nd-link);
 		text-decoration: underline;
