@@ -2,6 +2,7 @@
 	import { SITE_NAME } from "$lib";
 	import { mode, toggleMode } from "mode-watcher";
 	import { motion } from "motion-sv";
+	import { page } from "$app/state";
 
 	const y = $derived(mode.current === "light" ? "0%" : "-100%");
 </script>
@@ -15,11 +16,17 @@
 	<nav class="flex w-full items-center justify-between">
 		<a class="blended" href="/">{SITE_NAME}</a>
 
-		<button type="button" onclick={toggleMode}>
-			<span class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">
-				<motion.span animate={{ y }}>light.</motion.span>
-				<motion.span animate={{ y }}>dark.</motion.span>
-			</span>
-		</button>
+		<div class="space-x-4">
+			{#if page.data.authenticated}
+				<a class="blended hover:underline" href="/admin">admin.</a>
+			{/if}
+
+			<button type="button" onclick={toggleMode}>
+				<span class="flex h-6 flex-col items-end justify-start overflow-hidden *:blended">
+					<motion.span animate={{ y }}>light.</motion.span>
+					<motion.span animate={{ y }}>dark.</motion.span>
+				</span>
+			</button>
+		</div>
 	</nav>
 </motion.header>

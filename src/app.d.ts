@@ -17,6 +17,7 @@ declare global {
 		}
 
 		interface PageData {
+			authenticated?: boolean;
 			seo: Seo;
 		}
 		// interface PageState {}
