@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import type { createQuote, updateQuote } from "$lib/quotes.remote";
 	import type { Quote } from "$lib/server/db/schema";
 
@@ -12,7 +11,7 @@
 
 	const issues = $derived(form.fields.allIssues());
 
-	onMount(() => {
+	$effect(() => {
 		if (!quote) return;
 
 		form.fields.set({
