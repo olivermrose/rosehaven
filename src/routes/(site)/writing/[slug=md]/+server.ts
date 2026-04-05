@@ -20,10 +20,10 @@ export async function GET({ params, locals }) {
 				const style = node.getAttribute("style");
 
 				if (style?.endsWith("right")) {
-					return `\n\n${content}\n\n`;
+					return content;
 				}
 
-				return `\n\n*${content}*\n\n`;
+				return `*${content}*`;
 			},
 		};
 	}
