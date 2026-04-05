@@ -28,8 +28,15 @@ export async function GET({ params, locals }) {
 		};
 	}
 
-	let markdown = NodeHtmlMarkdown.translate(post.content, {}, translators);
-	markdown = `# ${post.title}\n\n${markdown}`;
+	const markdown = [
+		"---",
+		`type: ${post.category}`,
+		"---",
+		"",
+		`# ${post.title}`,
+		"",
+		NodeHtmlMarkdown.translate(post.content, {}, translators),
+	].join("\n");
 
 	return new Response(markdown, {
 		headers: {
