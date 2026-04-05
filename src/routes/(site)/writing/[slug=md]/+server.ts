@@ -1,8 +1,7 @@
 import { eq } from "drizzle-orm";
-import Turndown from "turndown";
+import { NodeHtmlMarkdown } from "node-html-markdown";
+import type { TranslatorConfigObject } from "node-html-markdown";
 import { posts } from "$lib/server/db/schema";
-
-const turndown = new Turndown();
 
 export async function GET({ params, locals }) {
 	const slug = params.slug.slice(0, -3);
@@ -13,20 +12,23 @@ export async function GET({ params, locals }) {
 		return new Response("Not found", { status: 404 });
 	}
 
+	const translators: TranslatorConfigObject = {};
+
 	if (post.category === "dialogue") {
-		turndown.addRule("speaker", {
-			filter: "p",
-			replacement(content, node) {
-				if ((node as HTMLElement).style.textAlign === "right") {
+		translators.p = {
+			postprocess({ content, node }) {
+				const style = node.getAttribute("style");
+
+				if (style?.endsWith("right")) {
 					return `\n\n${content}\n\n`;
 				}
 
 				return `\n\n*${content}*\n\n`;
 			},
-		});
+		};
 	}
 
-	let markdown = turndown.turndown(post.content);
+	let markdown = NodeHtmlMarkdown.translate(post.content, {}, translators);
 	markdown = `# ${post.title}\n\n${markdown}`;
 
 	return new Response(markdown, {
