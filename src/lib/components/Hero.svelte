@@ -41,7 +41,7 @@
 		animate(
 			[
 				[".name", { y: ["100%", "0%"], opacity: 1 }, { delay: stagger(0.1) }],
-				["#scroll-hint", { y: [15, 0], opacity: 1 }, { at: "<0.5" }],
+				["#scroll-hint", { y: [15, 0], opacity: [0, 1] }, { at: "<0.5" }],
 			],
 			{
 				defaultTransition: {
