@@ -292,30 +292,6 @@
 			color: var(--color-nd-solid);
 		}
 	}
-
-	.nd-toolbar-btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 36px;
-		height: 36px;
-		border-radius: 4px;
-		color: var(--color-nd-muted);
-		transition: all 150ms;
-		border: none;
-		background: transparent;
-		cursor: pointer;
-
-		&:hover {
-			color: var(--color-nd-solid);
-			background: var(--color-nd-raised);
-		}
-
-		&[data-active="true"] {
-			color: var(--color-nd-bright);
-			background: var(--color-nd-raised);
-		}
-	}
 }
 
 @layer utilities {

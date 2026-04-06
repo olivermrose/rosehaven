@@ -24,8 +24,7 @@
 
 	interface ToolbarItem {
 		icon: IconSvgElement;
-		action: string;
-		attrs?: Record<string, unknown>;
+		active?: string | boolean;
 		exec: () => void;
 	}
 
@@ -44,17 +43,17 @@
 	const marks: ToolbarItem[] = [
 		{
 			icon: TextBoldIcon,
-			action: "bold",
+			active: "bold",
 			exec: () => editor?.chain().focus().toggleBold().run(),
 		},
 		{
 			icon: TextItalicIcon,
-			action: "italic",
+			active: "italic",
 			exec: () => editor?.chain().focus().toggleItalic().run(),
 		},
 		{
 			icon: TextStrikethroughIcon,
-			action: "strike",
+			active: "strike",
 			exec: () => editor?.chain().focus().toggleStrike().run(),
 		},
 	];
@@ -62,17 +61,17 @@
 	const blocks: ToolbarItem[] = [
 		{
 			icon: LeftToRightBlockQuoteIcon,
-			action: "blockquote",
+			active: "blockquote",
 			exec: () => editor?.chain().focus().toggleBlockquote().run(),
 		},
 		{
 			icon: LeftToRightListBulletIcon,
-			action: "bulletList",
+			active: "bulletList",
 			exec: () => editor?.chain().focus().toggleBulletList().run(),
 		},
 		{
 			icon: LeftToRightListNumberIcon,
-			action: "orderedList",
+			active: "orderedList",
 			exec: () => editor?.chain().focus().toggleOrderedList().run(),
 		},
 	];
@@ -150,66 +149,43 @@
 <div class="overflow-hidden rounded-lg border border-nd-edge bg-nd-surface">
 	{#if editor}
 		<div class="flex flex-wrap items-center gap-0.5 border-b border-nd-edge px-3 py-2">
-			{#each marks as btn}
-				<button
-					class="nd-toolbar-btn"
-					type="button"
-					onclick={() => btn.exec()}
-					data-active={isActive(btn.action)}
-				>
-					<HugeiconsIcon icon={btn.icon} size={18} strokeWidth={1.5} />
-				</button>
+			{#each marks as mark}
+				{@render toolbarButton(mark)}
 			{/each}
 
-			<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+			<span role="separator" aria-orientation="vertical"></span>
 
 			{#if !dialogue}
-				{#each blocks as btn}
-					<button
-						class="nd-toolbar-btn"
-						type="button"
-						onclick={() => btn.exec()}
-						data-active={isActive(btn.action, btn.attrs)}
-					>
-						<HugeiconsIcon icon={btn.icon} size={18} strokeWidth={1.5} />
-					</button>
+				{#each blocks as block}
+					{@render toolbarButton(block)}
 				{/each}
 
-				<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+				<span role="separator" aria-orientation="vertical"></span>
 
 				{#each aligns as align}
-					<button
-						class="nd-toolbar-btn"
-						type="button"
-						onclick={() => editor?.chain().focus().setTextAlign(align.value).run()}
-						data-active={editor?.isActive({ textAlign: align.value })}
-					>
-						<HugeiconsIcon icon={align.icon} size={18} strokeWidth={1.5} />
-					</button>
+					{@render toolbarButton({
+						icon: align.icon,
+						active: editor?.isActive({ textAlign: align.value }),
+						exec: () => editor?.chain().focus().setTextAlign(align.value).run(),
+					})}
 				{/each}
 
-				<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+				<span role="separator" aria-orientation="vertical"></span>
 			{/if}
 
-			<button
-				class="nd-toolbar-btn"
-				type="button"
-				onclick={insertLink}
-				data-active={isActive("link")}
-			>
-				<HugeiconsIcon icon={Link01Icon} size={18} strokeWidth={1.5} />
-			</button>
+			{@render toolbarButton({
+				icon: Link01Icon,
+				active: isActive("link"),
+				exec: insertLink,
+			})}
 
-			<button
-				class="nd-toolbar-btn"
-				type="button"
-				onclick={() => editor?.chain().focus().setHorizontalRule().run()}
-			>
-				<HugeiconsIcon icon={MinusSignIcon} size={18} strokeWidth={1.5} />
-			</button>
+			{@render toolbarButton({
+				icon: MinusSignIcon,
+				exec: () => editor?.chain().focus().setHorizontalRule().run(),
+			})}
 
 			{#if dialogue}
-				<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+				<span role="separator" aria-orientation="vertical"></span>
 
 				<div class="flex items-center gap-2">
 					<span class="font-nd-mono text-[10px] tracking-widest text-nd-dim uppercase">
@@ -251,7 +227,30 @@
 	<div class="max-h-180 overflow-auto px-5 py-4" bind:this={element}></div>
 </div>
 
+{#snippet toolbarButton({ icon, active = false, exec }: ToolbarItem)}
+	{@const isActive = typeof active === "boolean" ? active : editor?.isActive(active)}
+
+	<button
+		class={[
+			"flex size-9 items-center justify-center rounded-sm text-nd-muted transition-colors",
+			"hover:text-nd-solid data-[active=true]:bg-nd-raised data-[active=true]:text-nd-bright",
+		]}
+		type="button"
+		onclick={exec}
+		data-active={isActive}
+	>
+		<HugeiconsIcon {icon} size={18} strokeWidth={1.5} />
+	</button>
+{/snippet}
+
 <style>
+	[role="separator"] {
+		background-color: var(--color-nd-edge);
+		margin-inline: 6px;
+		width: 1px;
+		height: 20px;
+	}
+
 	:global(.tiptap p.is-editor-empty:first-child::before) {
 		color: var(--color-nd-dim);
 		content: attr(data-placeholder);
