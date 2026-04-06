@@ -3,13 +3,13 @@
 </script>
 
 <div
-	class="text-foreground z-9999 fixed bottom-5 left-5 flex select-none items-center space-x-2 rounded-full bg-black/20 px-2.5 py-1 font-mono text-xs backdrop-blur-sm dark:bg-white/30"
+	class="fixed bottom-5 left-5 z-9999 flex items-center space-x-2 rounded-full bg-black/20 px-2.5 py-1 font-mono text-xs text-foreground backdrop-blur-sm select-none dark:bg-white/30"
 >
 	<span>
 		{innerWidth.current} &times; {innerHeight.current}
 	</span>
 
-	<div class="bg-foreground h-4 w-px"></div>
+	<div class="h-4 w-px bg-foreground"></div>
 
 	<span class="sm:hidden">XS</span>
 	<span class="hidden sm:inline md:hidden">SM</span>

@@ -1,4 +1,4 @@
-export async function load() {
+export function load() {
 	return {
 		seo: {
 			path: "/",

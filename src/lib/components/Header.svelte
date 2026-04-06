@@ -28,6 +28,7 @@
 		const rect = toggle.getBoundingClientRect();
 
 		const x = rect.left + rect.width / 2;
+		// oxlint-disable-next-line no-shadow
 		const y = rect.top + rect.height / 2;
 
 		const right = window.innerWidth - rect.left;

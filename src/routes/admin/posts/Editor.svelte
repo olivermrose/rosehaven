@@ -35,6 +35,7 @@
 
 	let { content = $bindable(), dialogue = false }: Props = $props();
 
+	// oxlint-disable-next-line no-unassigned-vars
 	let element: HTMLDivElement;
 	let editor = $state.raw<Editor>();
 

@@ -49,22 +49,24 @@ export const Dialogue = Extension.create({
 					return commands.updateAttributes("paragraph", { speaker });
 				};
 			},
-		toggleSpeaker: () => ({ tr, dispatch }) => {
-			this.editor.storage.dialogue.start =
-				this.editor.storage.dialogue.start === "self" ? "other" : "self";
+			toggleSpeaker:
+				() =>
+				({ tr, dispatch }) => {
+					this.editor.storage.dialogue.start =
+						this.editor.storage.dialogue.start === "self" ? "other" : "self";
 
-			this.editor.state.doc.descendants((node, pos) => {
-				if (node.type.name === "paragraph" && node.attrs.speaker) {
-					tr.setNodeMarkup(pos, undefined, {
-						...node.attrs,
-						speaker: node.attrs.speaker === "other" ? "self" : "other",
+					this.editor.state.doc.descendants((node, pos) => {
+						if (node.type.name === "paragraph" && node.attrs.speaker) {
+							tr.setNodeMarkup(pos, undefined, {
+								...node.attrs,
+								speaker: node.attrs.speaker === "other" ? "self" : "other",
+							});
+						}
 					});
-				}
-			});
 
-			dispatch?.(tr);
-			return true;
-		},
+					dispatch?.(tr);
+					return true;
+				},
 		};
 	},
 	addKeyboardShortcuts() {

@@ -15,7 +15,7 @@
 	onMount(() => {
 		const ids = posts.map((p) => p.id);
 
-		if (seen.current.length) {
+		if (seen.current.length > 0) {
 			const seenIds = new Set(seen.current);
 			newPosts = new Set(ids.filter((id) => !seenIds.has(id)));
 		}

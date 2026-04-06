@@ -54,7 +54,7 @@
 	}
 
 	function formatCategory(cat: string) {
-		return cat.replace(/-/g, " ").toUpperCase();
+		return cat.replaceAll("-", " ").toUpperCase();
 	}
 </script>
 

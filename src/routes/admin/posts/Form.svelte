@@ -133,6 +133,7 @@
 				<label class="flex cursor-pointer items-center gap-3">
 					<div class="relative">
 						<input class="peer sr-only" {...form.fields.explicit.as("checkbox")} />
+
 						<div
 							class="h-5 w-9 rounded-full border border-nd-edge-strong transition-colors peer-checked:border-nd-solid peer-checked:bg-nd-solid"
 						></div>
@@ -140,6 +141,7 @@
 							class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-nd-dim transition-all peer-checked:left-4.5 peer-checked:bg-nd-black"
 						></div>
 					</div>
+
 					<span class="nd-label">Explicit</span>
 				</label>
 			</div>

@@ -21,7 +21,7 @@ export const getPost = query(z.string(), async (idOrSlug) => {
 	return post;
 });
 
-export const getPosts = query(async () => {
+export const getPosts = query(() => {
 	const event = getRequestEvent();
 
 	return event.locals.db

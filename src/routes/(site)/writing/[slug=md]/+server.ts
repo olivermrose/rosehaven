@@ -17,6 +17,7 @@ export async function GET({ params, locals }) {
 	if (post.category === "dialogue") {
 		translators.p = {
 			postprocess({ content, node }) {
+				// oxlint-disable-next-line unicorn/prefer-dom-node-dataset
 				if (node.getAttribute("data-speaker") === "other") {
 					return content;
 				}

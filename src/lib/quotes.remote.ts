@@ -4,7 +4,7 @@ import z from "zod";
 import { command, form, getRequestEvent, query } from "$app/server";
 import { quotes } from "./server/db/schema";
 
-export const getQuote = query(z.coerce.number(), async (id) => {
+export const getQuote = query(z.coerce.number(), (id) => {
 	const event = getRequestEvent();
 
 	return event.locals.db.select().from(quotes).where(eq(quotes.id, id)).limit(1);

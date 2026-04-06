@@ -1,6 +1,6 @@
 export function slugify(val: string) {
 	return val
-		.replace(/ /g, "-")
-		.replace(/[^\w-]+/g, "")
+		.replaceAll(" ", "-")
+		.replaceAll(/[^\w-]+/g, "")
 		.toLowerCase();
 }

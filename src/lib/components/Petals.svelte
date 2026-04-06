@@ -29,6 +29,7 @@
 
 	let simStart = 0;
 
+	// oxlint-disable-next-line max-lines-per-function
 	onMount(() => {
 		simStart = Date.now();
 
