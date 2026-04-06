@@ -334,8 +334,10 @@
 
 	[data-category="dialogue"] p {
 		max-width: 60ch;
+		text-wrap: pretty;
 
-		&[style*="text-align: right"] {
+		&[data-speaker="self"] {
+			text-align: right;
 			margin-left: auto;
 			color: var(--color-wine-700);
 

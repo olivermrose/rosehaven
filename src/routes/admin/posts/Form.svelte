@@ -13,6 +13,7 @@
 	const { form, post, actions }: Props = $props();
 
 	const categories = [
+		{ label: "Select category", value: "" },
 		{ label: "Dialogue", value: "dialogue" },
 		{ label: "Poetry", value: "poetry" },
 		{ label: "Prose Poetry", value: "prose-poetry" },
@@ -92,7 +93,12 @@
 			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label class="nd-label mb-3 block">Content</label>
 			<input name="content" type="hidden" value={content} />
-			<Editor {content} onupdate={(html) => (content = html)} />
+
+			<Editor
+				{content}
+				dialogue={form.fields.category.value() === "dialogue"}
+				onupdate={(html) => (content = html)}
+			/>
 		</div>
 
 		<div>

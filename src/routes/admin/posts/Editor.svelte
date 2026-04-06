@@ -20,6 +20,7 @@
 	import TextAlign from "@tiptap/extension-text-align";
 	import StarterKit from "@tiptap/starter-kit";
 	import { onDestroy, onMount, settled, untrack } from "svelte";
+	import { Dialogue } from "./extensions";
 
 	interface ToolbarItem {
 		icon: IconSvgElement;
@@ -30,13 +31,16 @@
 
 	interface Props {
 		content?: string;
+		dialogue?: boolean;
 		onupdate?: (html: string) => void;
 	}
 
-	const { content, onupdate }: Props = $props();
+	const { content, dialogue = false, onupdate }: Props = $props();
 
 	let element: HTMLDivElement;
 	let editor = $state.raw<Editor>();
+
+	const startLeft = $derived(editor?.storage.dialogue.start === "other");
 
 	const marks: ToolbarItem[] = [
 		{
@@ -88,14 +92,13 @@
 			element,
 			extensions: [
 				StarterKit.configure({
-					link: {
-						openOnClick: false,
-					},
+					link: { openOnClick: false },
 				}),
-				TextAlign.configure({ types: ["heading", "paragraph"] }),
+				TextAlign.configure({ types: ["paragraph"] }),
 				Placeholder.configure({ placeholder: "Start writing\u2026" }),
+				Dialogue,
 			],
-			content: untrack(() => content),
+			content,
 			editorProps: {
 				attributes: {
 					class: "prose prose-invert max-w-none outline-none min-h-80 nd-editor-content",
@@ -122,7 +125,18 @@
 		}
 	});
 
+	$effect(() => {
+		const _editor = editor;
+		if (!_editor) return;
+
+		if (_editor.storage.dialogue.enabled === dialogue) return;
+
+		_editor.storage.dialogue.enabled = dialogue;
+		_editor.view.dispatch(_editor.state.tr);
+	});
+
 	function insertLink() {
+		// eslint-disable-next-line no-alert
 		const url = prompt("URL:");
 		if (!url || !editor) return;
 
@@ -150,31 +164,33 @@
 
 			<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
 
-			{#each blocks as btn}
-				<button
-					class="nd-toolbar-btn"
-					type="button"
-					onclick={() => btn.exec()}
-					data-active={isActive(btn.action, btn.attrs)}
-				>
-					<HugeiconsIcon icon={btn.icon} size={18} strokeWidth={1.5} />
-				</button>
-			{/each}
+			{#if !dialogue}
+				{#each blocks as btn}
+					<button
+						class="nd-toolbar-btn"
+						type="button"
+						onclick={() => btn.exec()}
+						data-active={isActive(btn.action, btn.attrs)}
+					>
+						<HugeiconsIcon icon={btn.icon} size={18} strokeWidth={1.5} />
+					</button>
+				{/each}
 
-			<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+				<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
 
-			{#each aligns as align}
-				<button
-					class="nd-toolbar-btn"
-					type="button"
-					onclick={() => editor?.chain().focus().setTextAlign(align.value).run()}
-					data-active={editor?.isActive({ textAlign: align.value })}
-				>
-					<HugeiconsIcon icon={align.icon} size={18} strokeWidth={1.5} />
-				</button>
-			{/each}
+				{#each aligns as align}
+					<button
+						class="nd-toolbar-btn"
+						type="button"
+						onclick={() => editor?.chain().focus().setTextAlign(align.value).run()}
+						data-active={editor?.isActive({ textAlign: align.value })}
+					>
+						<HugeiconsIcon icon={align.icon} size={18} strokeWidth={1.5} />
+					</button>
+				{/each}
 
-			<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+				<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+			{/if}
 
 			<button
 				class="nd-toolbar-btn"
@@ -192,6 +208,44 @@
 			>
 				<HugeiconsIcon icon={MinusSignIcon} size={18} strokeWidth={1.5} />
 			</button>
+
+			{#if dialogue}
+				<span class="mx-1.5 h-5 w-px bg-nd-edge"></span>
+
+				<div class="flex items-center gap-2">
+					<span class="font-nd-mono text-[10px] tracking-widest text-nd-dim uppercase">
+						Start
+					</span>
+
+					<div class="flex overflow-hidden rounded border border-nd-edge">
+						<button
+							class={[
+								"flex h-7 w-8 items-center justify-center transition-colors",
+								startLeft ? "bg-nd-raised text-nd-bright" : "text-nd-dim hover:text-nd-muted",
+							]}
+							type="button"
+							onclick={() => {
+								if (!startLeft) editor?.commands.toggleSpeaker();
+							}}
+						>
+							<HugeiconsIcon icon={TextAlignLeftIcon} size={14} strokeWidth={1.5} />
+						</button>
+
+						<button
+							class={[
+								"flex h-7 w-8 items-center justify-center border-l border-nd-edge transition-colors",
+								!startLeft ? "bg-nd-raised text-nd-bright" : "text-nd-dim hover:text-nd-muted",
+							]}
+							type="button"
+							onclick={() => {
+								if (startLeft) editor?.commands.toggleSpeaker();
+							}}
+						>
+							<HugeiconsIcon icon={TextAlignRightIcon} size={14} strokeWidth={1.5} />
+						</button>
+					</div>
+				</div>
+			{/if}
 		</div>
 	{/if}
 
@@ -242,5 +296,15 @@
 
 	:global(.nd-editor-content li::marker) {
 		color: var(--color-nd-dim);
+	}
+
+	:global(.nd-editor-content p[data-speaker]) {
+		max-width: 60ch;
+	}
+
+	:global(.nd-editor-content p[data-speaker="self"]) {
+		text-align: right;
+		margin-left: auto;
+		color: var(--color-wine-500);
 	}
 </style>

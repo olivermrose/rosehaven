@@ -17,9 +17,7 @@ export async function GET({ params, locals }) {
 	if (post.category === "dialogue") {
 		translators.p = {
 			postprocess({ content, node }) {
-				const style = node.getAttribute("style");
-
-				if (style?.endsWith("right")) {
+				if (node.getAttribute("data-speaker") === "other") {
 					return content;
 				}
 
