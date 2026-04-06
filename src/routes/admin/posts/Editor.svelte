@@ -32,10 +32,9 @@
 	interface Props {
 		content?: string;
 		dialogue?: boolean;
-		onupdate?: (html: string) => void;
 	}
 
-	const { content, dialogue = false, onupdate }: Props = $props();
+	let { content = $bindable(), dialogue = false }: Props = $props();
 
 	let element: HTMLDivElement;
 	let editor = $state.raw<Editor>();
@@ -109,7 +108,7 @@
 				editor = event.editor;
 			},
 			onUpdate(event) {
-				onupdate?.(event.editor.getHTML());
+				content = event.editor.getHTML();
 			},
 		});
 	});

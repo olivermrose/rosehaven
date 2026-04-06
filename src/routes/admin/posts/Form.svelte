@@ -94,11 +94,7 @@
 			<label class="nd-label mb-3 block">Content</label>
 			<input name="content" type="hidden" value={content} />
 
-			<Editor
-				{content}
-				dialogue={form.fields.category.value() === "dialogue"}
-				onupdate={(html) => (content = html)}
-			/>
+			<Editor dialogue={form.fields.category.value() === "dialogue"} bind:content />
 		</div>
 
 		<div>
