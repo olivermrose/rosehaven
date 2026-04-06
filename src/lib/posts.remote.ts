@@ -103,7 +103,7 @@ export const updatePost = form(postSchema.partial(), async (data) => {
 
 export const deletePost = command(z.number(), async (id) => {
 	const event = getRequestEvent();
-
 	await event.locals.db.delete(posts).where(eq(posts.id, id));
-	redirect(303, "/admin/posts");
+
+	return { success: true };
 });

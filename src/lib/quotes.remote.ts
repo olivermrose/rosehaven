@@ -62,7 +62,7 @@ export const updateQuote = form(quoteSchema.partial(), async (data) => {
 
 export const deleteQuote = command(z.coerce.number(), async (id) => {
 	const event = getRequestEvent();
-
 	await event.locals.db.delete(quotes).where(eq(quotes.id, id));
-	redirect(303, "/admin/quotes");
+
+	return { success: true };
 });
