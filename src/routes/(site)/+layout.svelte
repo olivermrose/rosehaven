@@ -13,6 +13,7 @@
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 	import Petals from "$lib/components/Petals.svelte";
 	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
+	import Cursor from "$lib/components/Cursor.svelte";
 
 	const { children } = $props();
 
@@ -60,6 +61,7 @@
 </svelte:head>
 
 <ModeWatcher />
+<Cursor />
 
 <LoadingScreen>
 	<Petals />
