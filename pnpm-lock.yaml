@@ -11,6 +11,9 @@ importers:
       '@fontsource-variable/doto':
         specifier: ^5.2.10
         version: 5.2.10
+      '@fontsource-variable/jetbrains-mono':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@fontsource-variable/space-grotesk':
         specifier: ^5.2.10
         version: 5.2.10
@@ -792,6 +795,9 @@ packages:
 
   '@fontsource-variable/doto@5.2.10':
     resolution: {integrity: sha512-9wflNv5TCTaLCtm1W+Iv6gyGW0LS6CezDX1CiRy9pvqOWufT9zAhVhsNSPZ4Z+0YKOma/KDxvxmigSMelI4duw==}
+
+  '@fontsource-variable/jetbrains-mono@5.2.8':
+    resolution: {integrity: sha512-WBA9elru6Jdp5df2mES55wuOO0WIrn3kpXnI4+W2ek5u3ZgLS9XS4gmIlcQhiZOWEKl95meYdvK7xI+ETLCq/Q==}
 
   '@fontsource-variable/space-grotesk@5.2.10':
     resolution: {integrity: sha512-yJQO/o35/hAP3CFnpdFTwQku2yzJOae2HIpBmqkOVoxhhXJaQP3g+b6Jrz7u+eI7A5ZdCIf88uMWpBJdFiGr5w==}
@@ -3491,6 +3497,8 @@ snapshots:
       levn: 0.4.1
 
   '@fontsource-variable/doto@5.2.10': {}
+
+  '@fontsource-variable/jetbrains-mono@5.2.8': {}
 
   '@fontsource-variable/space-grotesk@5.2.10': {}
 

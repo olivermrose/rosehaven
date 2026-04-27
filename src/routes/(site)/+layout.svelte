@@ -1,4 +1,5 @@
 <script lang="ts">
+	import "@fontsource-variable/jetbrains-mono/wght.css";
 	import "lenis/dist/lenis.css";
 	import { BASE_URL, SITE_NAME } from "$lib";
 	import Lenis from "lenis";
