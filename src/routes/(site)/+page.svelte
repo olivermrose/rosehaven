@@ -23,7 +23,7 @@
 
 <div class="overflow-hidden py-12 sm:py-20" bind:this={marquee}>
 	<motion.div
-		class="flex w-max items-center gap-x-10 text-[8vw]/none font-extralight tracking-tight uppercase opacity-5 sm:gap-x-20 sm:text-[5vw]/none"
+		class="flex w-max items-center gap-x-10 text-[8vw]/none font-extralight tracking-tight uppercase opacity-10 sm:gap-x-20 sm:text-[5vw]/none"
 		style={{ x: marqueeX }}
 	>
 		<!-- eslint-disable-next-line svelte/require-each-key -->
