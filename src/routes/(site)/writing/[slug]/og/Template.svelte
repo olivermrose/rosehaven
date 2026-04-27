@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BASE_URL } from "$lib";
+	import logo from "/favicon.svg?raw";
 
 	const colors = [
 		"#9e3340", // wine
@@ -18,16 +18,17 @@
 </script>
 
 <div class="relative flex h-full w-full flex-col bg-white">
-	<div class="flex flex-col justify-between p-10">
-		<div class="-mt-2 flex items-center">
-			<!-- svelte-ignore a11y_missing_attribute -->
-			<img class="size-14 invert" src="{BASE_URL}/favicon.svg" />
+	<div class="flex flex-col justify-between p-8">
+		<div class="flex items-center">
+			<div class="size-12 invert">
+				{@html logo}
+			</div>
 
-			<h1 class="ml-4 text-4xl font-normal">oliver rose.</h1>
+			<h1 class="ml-4 text-3xl/none font-normal">oliver rose.</h1>
 		</div>
 
 		<hgroup class="flex w-full flex-col">
-			<h2 class="mb-0 flex text-8xl/none font-bold">{title}</h2>
+			<h2 class="ov mb-0 flex text-8xl/none font-bold">{title}</h2>
 
 			<p class="flex max-w-3/4 text-4xl text-neutral-600">
 				{excerpt}
