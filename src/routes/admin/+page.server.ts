@@ -1,22 +1,19 @@
-import { count, sql } from "drizzle-orm";
-import { posts, quotes } from "$lib/server/db/schema";
+import { desc } from "drizzle-orm";
+import { posts } from "$lib/server/db/schema";
 
 export async function load({ locals }) {
-	const [postStats] = await locals.db
+	const result = await locals.db
 		.select({
-			total: count(),
-			published: sql<number>`count(*) filter (where ${posts.status} = 'published')`,
+			id: posts.id,
+			title: posts.title,
+			slug: posts.slug,
+			category: posts.category,
+			status: posts.status,
+			publishedAt: posts.publishedAt,
+			updatedAt: posts.updatedAt,
 		})
-		.from(posts);
+		.from(posts)
+		.orderBy(desc(posts.updatedAt));
 
-	const [quoteStats] = await locals.db.select({ total: count() }).from(quotes);
-
-	return {
-		stats: {
-			posts: postStats.total,
-			published: postStats.published,
-			drafts: postStats.total - postStats.published,
-			quotes: quoteStats.total,
-		},
-	};
+	return { posts: result };
 }

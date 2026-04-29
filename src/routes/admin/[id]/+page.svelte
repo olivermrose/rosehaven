@@ -8,7 +8,7 @@
 
 	async function handleDelete() {
 		await deletePost(post.id);
-		await goto("/admin/posts");
+		await goto("/admin");
 	}
 </script>
 

@@ -62,7 +62,7 @@ export const createPost = form(postSchema, async (data) => {
 		})
 		.returning({ id: posts.id });
 
-	redirect(303, `/admin/posts/${post.id}`);
+	redirect(303, `/admin/${post.id}`);
 });
 
 export const updatePost = form(postSchema.partial(), async (data) => {

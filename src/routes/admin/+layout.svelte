@@ -6,20 +6,6 @@
 	import { logout } from "$lib/admin.remote.js";
 
 	const { data, children } = $props();
-
-	const nav = [
-		{ href: "/admin", label: "Dashboard" },
-		{ href: "/admin/posts", label: "Posts" },
-		{ href: "/admin/quotes", label: "Quotes" },
-	];
-
-	function isActive(href: string) {
-		if (href === "/admin") {
-			return page.url.pathname === "/admin";
-		}
-
-		return page.url.pathname.startsWith(href);
-	}
 </script>
 
 <svelte:head>
@@ -36,19 +22,17 @@
 			</div>
 
 			<div class="flex flex-1 flex-col gap-0.5 px-3">
-				{#each nav as item}
-					<a
-						href={item.href}
-						class={[
-							"nd-label relative block px-3 py-2.5 transition-colors",
-							isActive(item.href)
-								? "text-nd-bright before:absolute before:top-1/2 before:left-0 before:h-4 before:w-0.5 before:-translate-y-1/2 before:bg-nd-accent"
-								: "text-nd-dim hover:text-nd-muted",
-						]}
-					>
-						{item.label}
-					</a>
-				{/each}
+				<a
+					href="/admin"
+					class={[
+						"nd-label relative block px-3 py-2.5 transition-colors",
+						page.url.pathname === "/admin"
+							? "text-nd-bright before:absolute before:top-1/2 before:left-0 before:h-4 before:w-0.5 before:-translate-y-1/2 before:bg-nd-accent"
+							: "text-nd-dim hover:text-nd-muted",
+					]}
+				>
+					Posts
+				</a>
 			</div>
 
 			<div class="space-y-1 border-t border-nd-edge p-3">

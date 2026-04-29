@@ -15,7 +15,7 @@
 			</a>
 
 			{#if data.authenticated}
-				<a class="group no-underline" href="/admin/posts/{data.post.id}">
+				<a class="group no-underline" href="/admin/{data.post.id}">
 					Edit <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
 				</a>
 			{/if}
