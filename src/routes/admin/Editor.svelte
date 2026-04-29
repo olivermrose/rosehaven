@@ -16,7 +16,6 @@
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 	import type { IconSvgElement } from "@hugeicons/svelte";
 	import { Editor } from "@tiptap/core";
-	import Placeholder from "@tiptap/extension-placeholder";
 	import TextAlign from "@tiptap/extension-text-align";
 	import StarterKit from "@tiptap/starter-kit";
 	import { onDestroy, onMount, settled, untrack } from "svelte";
@@ -94,13 +93,12 @@
 					link: { openOnClick: false },
 				}),
 				TextAlign.configure({ types: ["paragraph"] }),
-				Placeholder.configure({ placeholder: "Start writing\u2026" }),
 				Dialogue,
 			],
 			content,
 			editorProps: {
 				attributes: {
-					class: "prose prose-invert max-w-none outline-none min-h-80 nd-editor-content",
+					class: "prose dark:prose-invert max-w-none outline-none min-h-80",
 				},
 			},
 			onTransaction(event) {
@@ -147,9 +145,9 @@
 	}
 </script>
 
-<div class="overflow-hidden rounded-lg border border-nd-edge bg-nd-surface">
+<div class="overflow-hidden rounded-2xl border border-border bg-background text-foreground">
 	{#if editor}
-		<div class="flex flex-wrap items-center gap-0.5 border-b border-nd-edge px-3 py-2">
+		<div class="flex flex-wrap items-center gap-0.5 border-b border-border px-3 py-2">
 			{#each marks as mark}
 				{@render toolbarButton(mark)}
 			{/each}
@@ -189,15 +187,15 @@
 				<span role="separator" aria-orientation="vertical"></span>
 
 				<div class="flex items-center gap-2">
-					<span class="font-nd-mono text-[10px] tracking-widest text-nd-dim uppercase">
-						Start
-					</span>
+					<span class="font-mono text-[10px] text-muted-foreground uppercase">Start</span>
 
-					<div class="flex overflow-hidden rounded border border-nd-edge">
+					<div class="flex overflow-hidden rounded border border-border">
 						<button
 							class={[
 								"flex h-7 w-8 items-center justify-center transition-colors",
-								startLeft ? "bg-nd-raised text-nd-bright" : "text-nd-dim hover:text-nd-muted",
+								startLeft
+									? "bg-muted text-foreground"
+									: "text-muted-foreground hover:text-foreground",
 							]}
 							type="button"
 							onclick={() => {
@@ -209,8 +207,10 @@
 
 						<button
 							class={[
-								"flex h-7 w-8 items-center justify-center border-l border-nd-edge transition-colors",
-								!startLeft ? "bg-nd-raised text-nd-bright" : "text-nd-dim hover:text-nd-muted",
+								"flex h-7 w-8 items-center justify-center border-l border-border transition-colors",
+								!startLeft
+									? "bg-muted text-foreground"
+									: "text-muted-foreground hover:text-foreground",
 							]}
 							type="button"
 							onclick={() => {
@@ -225,7 +225,7 @@
 		</div>
 	{/if}
 
-	<div class="max-h-180 overflow-auto px-5 py-4" bind:this={element}></div>
+	<div class="bg-neutral-100 px-5 py-4 dark:bg-neutral-950" bind:this={element}></div>
 </div>
 
 {#snippet toolbarButton({ icon, active = false, exec }: ToolbarItem)}
@@ -233,8 +233,8 @@
 
 	<button
 		class={[
-			"flex size-9 items-center justify-center rounded-sm text-nd-muted transition-colors",
-			"hover:text-nd-solid data-[active=true]:bg-nd-raised data-[active=true]:text-nd-bright",
+			"flex size-9 items-center justify-center rounded-lg transition-colors",
+			"hover:bg-foreground/10 data-[active=true]:bg-foreground/10 data-[active=true]:text-foreground",
 		]}
 		type="button"
 		onclick={exec}
@@ -246,62 +246,17 @@
 
 <style>
 	[role="separator"] {
-		background-color: var(--color-nd-edge);
+		background-color: --alpha(currentcolor / 20%);
 		margin-inline: 6px;
 		width: 1px;
 		height: 20px;
 	}
 
-	:global(.tiptap p.is-editor-empty:first-child::before) {
-		color: var(--color-nd-dim);
-		content: attr(data-placeholder);
-		float: left;
-		height: 0;
-		pointer-events: none;
-	}
-
-	:global(.nd-editor-content) {
-		color: var(--color-nd-solid);
-		font-family: var(--font-nd-sans);
-	}
-
-	:global(.nd-editor-content a) {
-		color: var(--color-nd-link);
-		text-decoration: underline;
-	}
-
-	:global(.nd-editor-content blockquote) {
-		border-left-color: var(--color-nd-edge-strong);
-		color: var(--color-nd-muted);
-	}
-
-	:global(.nd-editor-content hr) {
-		border-color: var(--color-nd-edge);
-	}
-
-	:global(.nd-editor-content code) {
-		color: var(--color-nd-bright);
-		font-family: var(--font-nd-mono);
-	}
-
-	:global(.nd-editor-content strong) {
-		color: var(--color-nd-bright);
-	}
-
-	:global(.nd-editor-content ul),
-	:global(.nd-editor-content ol) {
-		color: var(--color-nd-solid);
-	}
-
-	:global(.nd-editor-content li::marker) {
-		color: var(--color-nd-dim);
-	}
-
-	:global(.nd-editor-content p[data-speaker]) {
+	:global(.tiptap p[data-speaker]) {
 		max-width: 60ch;
 	}
 
-	:global(.nd-editor-content p[data-speaker="self"]) {
+	:global(.tiptap p[data-speaker="self"]) {
 		text-align: right;
 		margin-left: auto;
 		color: var(--color-wine-500);

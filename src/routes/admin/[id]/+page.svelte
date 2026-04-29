@@ -12,30 +12,26 @@
 	}
 </script>
 
-<div class="mb-10 flex items-center justify-between">
-	<h1 class="font-nd-sans text-2xl tracking-tight text-nd-bright">Edit Post</h1>
+<div class="mb-8 flex items-center justify-between font-medium">
+	<a class="group text-sm no-underline" href="/admin">
+		<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
+	</a>
 
 	{#if post.status === "published"}
-		<a
-			class="nd-label text-nd-link transition-colors hover:text-nd-bright"
-			href="/writing/{post.slug}"
-			target="_blank"
-		>
-			View post
+		<a class="group text-sm no-underline" href="/writing/{post.slug}" target="_blank">
+			View <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
 		</a>
 	{/if}
 </div>
 
 {#if updatePost.result?.success}
-	<div class="mb-6 font-nd-mono text-sm tracking-wider text-nd-success uppercase">
-		[SAVED] Post updated successfully
-	</div>
+	<div class="mb-8 text-sm text-aloe-600 uppercase dark:text-aloe-300">saved · post updated</div>
 {/if}
 
 <Form form={updatePost} {post}>
 	{#snippet actions()}
-		<button class="nd-btn nd-btn-destructive w-full" type="button" onclick={handleDelete}>
-			Delete
+		<button class="w-full" type="button" data-variant="destructive" onclick={handleDelete}>
+			delete
 		</button>
 	{/snippet}
 </Form>

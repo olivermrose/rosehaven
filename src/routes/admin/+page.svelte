@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { logout } from "$lib/admin.remote";
 	import {
 		createTable,
 		getCoreRowModel,
@@ -12,7 +13,7 @@
 
 	type Post = (typeof data.posts)[number];
 
-	const columns: ColumnDef<Post, unknown>[] = [
+	const columns: ColumnDef<Post>[] = [
 		{ accessorKey: "title", header: "Title", enableSorting: true },
 		{ accessorKey: "category", header: "Category", enableSorting: true },
 		{ accessorKey: "status", header: "Status", enableSorting: true },
@@ -50,99 +51,79 @@
 		const sort = sorting.find((s) => s.id === columnId);
 		if (!sort) return "";
 
-		return sort.desc ? " \u2193" : " \u2191";
-	}
-
-	function formatCategory(cat: string) {
-		return cat.replaceAll("-", " ").toUpperCase();
+		return sort.desc ? " ↓" : " ↑";
 	}
 </script>
 
 <div class="mb-8 flex items-center justify-between">
-	<h1 class="font-nd-sans text-2xl tracking-tight text-nd-bright">Posts</h1>
+	<input class="max-w-sm" type="text" placeholder="Search posts..." bind:value={globalFilter} />
 
-	<a href="/admin/new" class="nd-btn nd-btn-primary">New post</a>
-</div>
+	<div class="flex items-center gap-2">
+		<a href="/admin/new" data-variant="primary">New Post</a>
 
-<div class="mb-6">
-	<input
-		type="text"
-		class="nd-input max-w-xs font-nd-mono text-xs placeholder:uppercase"
-		placeholder="Search posts..."
-		bind:value={globalFilter}
-	/>
-</div>
-
-{#if data.posts.length === 0}
-	<div class="py-24 text-center">
-		<p class="nd-label text-nd-dim">No posts yet</p>
+		<form {...logout}>
+			<button type="submit" data-variant="secondary">Sign Out</button>
+		</form>
 	</div>
-{:else}
-	<div class="overflow-hidden rounded-lg border border-nd-edge">
-		<table class="w-full text-left">
-			<thead>
-				<tr class="border-b border-nd-edge-strong">
-					{#each table.getHeaderGroups() as headerGroup}
-						{#each headerGroup.headers as header}
-							<th
-								class="nd-label cursor-pointer px-4 py-3 transition-colors select-none hover:text-nd-solid"
-								onclick={header.column.getToggleSortingHandler()}
-							>
-								{header.column.columnDef.header + getSortIndicator(header.column.id)}
-							</th>
-						{/each}
+</div>
+
+<div class="border-y border-foreground/15">
+	<table class="w-full text-left">
+		<thead>
+			<tr class="border-b border-foreground/15">
+				{#each table.getHeaderGroups() as group}
+					{#each group.headers as header}
+						<th
+							class="cursor-pointer px-2 py-4 text-sm font-medium uppercase transition-opacity select-none hover:opacity-100"
+							onclick={header.column.getToggleSortingHandler()}
+						>
+							{header.column.columnDef.header + getSortIndicator(header.column.id)}
+						</th>
 					{/each}
-				</tr>
-			</thead>
-
-			<tbody>
-				{#each table.getRowModel().rows as row}
-					{@const post = row.original}
-
-					<tr class="border-b border-nd-edge transition-colors last:border-none hover:bg-nd-raised">
-						<td class="max-w-100 px-4 py-3">
-							<a
-								href="/admin/{post.id}"
-								class="line-clamp-1 font-nd-sans text-sm text-nd-bright transition-colors hover:text-nd-link"
-							>
-								{post.title}
-							</a>
-						</td>
-
-						<td class="px-4 py-3">
-							<span class="font-nd-mono text-xs tracking-wider text-nd-muted">
-								{formatCategory(post.category)}
-							</span>
-						</td>
-
-						<td class="px-4 py-3">
-							<span
-								class={[
-									"inline-block rounded-full border px-3 py-0.5 font-nd-mono text-xs tracking-wider uppercase",
-									post.status === "published"
-										? "border-nd-success/40 text-nd-success"
-										: "border-nd-warning/40 text-nd-warning",
-								]}
-							>
-								{post.status}
-							</span>
-						</td>
-
-						<td class="px-4 py-3">
-							<time
-								class="font-nd-mono text-xs text-nd-dim"
-								datetime={post.updatedAt.toISOString()}
-							>
-								{dayjs(post.updatedAt).format("MMM DD, YYYY")}
-							</time>
-						</td>
-					</tr>
 				{/each}
-			</tbody>
-		</table>
-	</div>
+			</tr>
+		</thead>
 
-	<p class="nd-label mt-4 text-nd-dim">
-		{table.getRowModel().rows.length} of {data.posts.length} posts
-	</p>
-{/if}
+		<tbody>
+			{#each table.getRowModel().rows as { original: post }}
+				<tr
+					class="group border-b border-foreground/10 transition-colors last:border-none hover:bg-foreground/3"
+				>
+					<td class="max-w-104 px-2 py-5">
+						<a
+							class="line-clamp-1 transition-opacity group-hover:opacity-100"
+							href="/admin/{post.id}"
+						>
+							{post.title}
+						</a>
+					</td>
+
+					<td class="px-2 py-5">
+						<span class="text-sm lowercase opacity-60">
+							{post.category.replaceAll("-", " ")}
+						</span>
+					</td>
+
+					<td class="px-2 py-5">
+						<span
+							class={[
+								"inline-block rounded-full px-2 py-1 text-xs uppercase",
+								post.status === "published"
+									? "bg-aloe-500/40 text-aloe-700 dark:text-aloe-300"
+									: "bg-denim-500/40 text-denim-700 dark:text-denim-300",
+							]}
+						>
+							{post.status}
+						</span>
+					</td>
+
+					<td class="px-2 py-5">
+						<time class="text-sm opacity-50" datetime={post.updatedAt.toISOString()}>
+							{dayjs(post.updatedAt).format("MMM DD, YYYY")}
+						</time>
+					</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+</div>

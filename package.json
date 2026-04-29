@@ -20,16 +20,12 @@
 		"db:studio": "drizzle-kit studio"
 	},
 	"dependencies": {
-		"@fontsource-variable/doto": "^5.2.10",
 		"@fontsource-variable/jetbrains-mono": "^5.2.8",
-		"@fontsource-variable/space-grotesk": "^5.2.10",
-		"@fontsource/space-mono": "^5.2.9",
 		"@hugeicons/core-free-icons": "^4.1.1",
 		"@hugeicons/svelte": "^1.1.2",
 		"@tanstack/svelte-table": "9.0.0-alpha.10",
 		"@threlte/core": "^8.5.9",
 		"@tiptap/core": "^3.22.4",
-		"@tiptap/extension-placeholder": "^3.22.4",
 		"@tiptap/extension-text-align": "^3.22.4",
 		"@tiptap/pm": "^3.22.4",
 		"@tiptap/starter-kit": "^3.22.4",

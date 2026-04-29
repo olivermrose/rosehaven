@@ -3,13 +3,10 @@
 	import "lenis/dist/lenis.css";
 	import { BASE_URL, SITE_NAME } from "$lib";
 	import Lenis from "lenis";
-	import { ModeWatcher } from "mode-watcher";
 	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
-	import { dev } from "$app/environment";
 	import { onNavigate } from "$app/navigation";
 	import { page } from "$app/state";
-	import Breakpoint from "$lib/components/Breakpoint.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 	import Petals from "$lib/components/Petals.svelte";
@@ -61,7 +58,6 @@
 	{/if}
 </svelte:head>
 
-<ModeWatcher />
 <Cursor />
 
 <LoadingScreen>
@@ -74,7 +70,3 @@
 
 	<ScrollProgress />
 </LoadingScreen>
-
-{#if dev}
-	<Breakpoint />
-{/if}
