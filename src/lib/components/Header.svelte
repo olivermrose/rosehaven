@@ -2,7 +2,9 @@
 	import { SITE_NAME } from "$lib";
 	import { mode, toggleMode } from "mode-watcher";
 	import { motion } from "motion-sv";
+	import { TegakiRenderer } from "tegaki/svelte";
 	import { page } from "$app/state";
+	import bundle from "../../assets/brittany-signature-script/bundle";
 
 	let toggle = $state<HTMLButtonElement>();
 
@@ -56,7 +58,18 @@
 	transition={{ duration: 0.75 }}
 >
 	<nav class="flex w-full items-center justify-between">
-		<a class="blended" href="/">{SITE_NAME}</a>
+		<div class="relative">
+			<a class="absolute inset-0 z-10" href="/">
+				<span class="sr-only">{SITE_NAME}</span>
+			</a>
+
+			<TegakiRenderer
+				class="text-3xl/normal text-white"
+				font={bundle}
+				text={SITE_NAME}
+				time={{ mode: "uncontrolled", speed: 1.5 }}
+			/>
+		</div>
 
 		<div class="space-x-4">
 			{#if page.data.authenticated}

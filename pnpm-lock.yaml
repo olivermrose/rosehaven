@@ -74,6 +74,9 @@ importers:
       takumi-js:
         specifier: ^1.1.2
         version: 1.1.2
+      tegaki:
+        specifier: ^0.15.0
+        version: 0.15.0(svelte@5.55.5(@typescript-eslint/types@8.58.0))
       three:
         specifier: ^0.184.0
         version: 0.184.0
@@ -2541,6 +2544,26 @@ packages:
     resolution: {integrity: sha512-pk1Q16Yl62iocuQB+RWbg6rFUFkIyzqOFQ6NfysCltRvQqKwfurgj8v/f2X+CKvDhSL4IJ0cCOfCHDg9PWEEYA==}
     engines: {node: '>=18.17'}
 
+  tegaki@0.15.0:
+    resolution: {integrity: sha512-49iGyhUTM8Zh49GR+UD6tyV3yUHKU8hyOWaR55s7mJl6OrTKU4xI0Zk0bIjR55aJXDEDWDKLYncmtE70NX4YKQ==}
+    peerDependencies:
+      '@nuxt/kit': ^3.0.0 || ^4.0.0
+      react: '>=18'
+      solid-js: '>=1'
+      svelte: '>=5'
+      vue: '>=3'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      react:
+        optional: true
+      solid-js:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+
   three@0.184.0:
     resolution: {integrity: sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==}
 
@@ -4678,6 +4701,10 @@ snapshots:
     transitivePeerDependencies:
       - '@azure/core-client'
       - supports-color
+
+  tegaki@0.15.0(svelte@5.55.5(@typescript-eslint/types@8.58.0)):
+    optionalDependencies:
+      svelte: 5.55.5(@typescript-eslint/types@8.58.0)
 
   three@0.184.0: {}
 
