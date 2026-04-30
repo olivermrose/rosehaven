@@ -73,13 +73,13 @@
 </script>
 
 <section id="anthology" class="mx-auto max-w-7xl px-4 pt-16 sm:px-6">
-	<hgroup class="max-w-prose" {@attach reveal()}>
-		<h1 class="text-fluid-3xl/tight">
+	<hgroup class="max-w-prose">
+		<h1 class="reveal text-fluid-3xl/tight" {@attach reveal(200)}>
 			To write is to discover the essence of what remains
 			<span class="font-serif italic">untold</span>.
 		</h1>
 
-		<p class="mt-2">
+		<p class="reveal mt-2" {@attach reveal(300)}>
 			As I drift off into reverie, I find myself running through a thousand different scenarios of
 			"What if?" My life is not bound by the earth I stand upon.
 		</p>
