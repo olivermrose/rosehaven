@@ -102,7 +102,9 @@
 		</div>
 	</div>
 
-	<aside class="sticky top-24 w-64 shrink-0 space-y-6 rounded-2xl border border-border p-6">
+	<aside
+		class="sticky top-24 w-64 shrink-0 space-y-6 divide-y divide-border rounded-2xl border border-border p-6 *:not-last:pb-6"
+	>
 		<div>
 			<span class="mb-2 block">Status</span>
 
@@ -118,8 +120,8 @@
 			</div>
 		</div>
 
-		<div class="border-t border-border pt-6">
-			<label class="flex cursor-pointer items-center gap-3">
+		<div>
+			<label class="mb-0 flex cursor-pointer items-center gap-3">
 				<div class="relative">
 					<input class="peer sr-only" {...form.fields.explicit.as("checkbox")} />
 
@@ -135,7 +137,7 @@
 			</label>
 		</div>
 
-		<div class="space-y-2 border-t border-border pt-6">
+		<div class="space-y-2">
 			<button class="w-full" data-variant="secondary" {...form.fields.status.as("submit", "draft")}>
 				Save Draft
 			</button>
@@ -150,7 +152,7 @@
 		</div>
 
 		{#if actions}
-			<div class="border-t border-border pt-6">
+			<div>
 				{@render actions()}
 			</div>
 		{/if}
