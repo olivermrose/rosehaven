@@ -89,7 +89,7 @@
 		{#each Object.entries(categories) as [category, posts], categoryIndex (category)}
 			<section
 				id={category}
-				class="reveal group/sec grid grid-cols-1 gap-x-10 gap-y-8 lg:grid-cols-12"
+				class="reveal group/sec grid scroll-mt-24 grid-cols-1 gap-x-10 gap-y-8 lg:grid-cols-12"
 				{@attach reveal(categoryIndex * 80)}
 			>
 				<header class="lg:col-span-4">
