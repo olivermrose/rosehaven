@@ -251,14 +251,4 @@
 		width: 1px;
 		height: 20px;
 	}
-
-	:global(.tiptap p[data-speaker]) {
-		max-width: 60ch;
-	}
-
-	:global(.tiptap p[data-speaker="self"]) {
-		text-align: right;
-		margin-left: auto;
-		color: var(--color-wine-500);
-	}
 </style>

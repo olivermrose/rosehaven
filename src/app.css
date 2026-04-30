@@ -275,7 +275,8 @@
 		white-space: normal;
 	}
 
-	[data-category="dialogue"] p {
+	[data-category="dialogue"] p,
+	.tiptap p[data-speaker] {
 		max-width: 60ch;
 		text-wrap: pretty;
 
