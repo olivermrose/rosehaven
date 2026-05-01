@@ -67,8 +67,8 @@
 
 		<div class="absolute right-8 bottom-8 overflow-hidden">
 			<div class="flavor-text flex flex-col text-right">
-				<span>Where silence gathers dust</span>
-				<span>And memories bloom</span>
+				<span>Where <span class="font-serif italic">silence</span> gathers dust</span>
+				<span>And memories <span class="font-serif italic">bloom</span></span>
 			</div>
 		</div>
 	</motion.div>
