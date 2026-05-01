@@ -58,7 +58,6 @@
 		<h1
 			class="m-auto grid w-full max-w-full grid-cols-12 text-[14vw]/[0.8] tracking-tighter uppercase sm:grid-cols-36"
 		>
-			<!-- eslint-disable-next-line svelte/require-each-key -->
 			{#each names as name, i}
 				<motion.span
 					class={["row -col-end-1 block overflow-hidden", name.style]}

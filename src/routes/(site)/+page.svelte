@@ -26,7 +26,6 @@
 		class="flex w-max items-center gap-x-10 text-[8vw]/none font-extralight tracking-tight uppercase opacity-10 sm:gap-x-20 sm:text-[5vw]/none"
 		style={{ x: marqueeX }}
 	>
-		<!-- eslint-disable-next-line svelte/require-each-key -->
 		{#each { length: 5 }}
 			<span class="whitespace-nowrap">Crafting Worlds Through Words</span>
 		{/each}

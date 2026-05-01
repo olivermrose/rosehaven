@@ -6,7 +6,6 @@ export default defineConfig({
 	out: "./drizzle",
 	dbCredentials: {
 		// @ts-expect-error - types
-		// eslint-disable-next-line node/prefer-global/process
 		url: process.env.DATABASE_URL!,
 	},
 });

@@ -136,7 +136,6 @@
 	});
 
 	function insertLink() {
-		// eslint-disable-next-line no-alert
 		const url = prompt("URL:");
 		if (!url || !editor) return;
 
