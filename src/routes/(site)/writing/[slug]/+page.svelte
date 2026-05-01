@@ -5,62 +5,60 @@
 	const { data } = $props();
 </script>
 
-<article
-	class="mx-auto prose max-w-4xl overflow-auto px-4 pt-28 pb-20 prose-neutral sm:px-6 dark:prose-invert"
->
-	<header>
-		<div class="mb-4 flex items-center justify-between text-sm">
-			<a class="group no-underline" href="/#{data.post.category}">
-				<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
-			</a>
+<div class="mx-auto max-w-4xl px-4 pt-28 pb-20 sm:px-6">
+	<nav class="mb-4 flex items-center justify-between text-sm" aria-label="Post actions">
+		<a class="group no-underline" href="/#{data.post.category}">
+			<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
+		</a>
 
-			{#if data.authenticated}
-				<a class="group no-underline" href="/admin/{data.post.id}">
-					Edit <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
-				</a>
-			{/if}
+		{#if data.authenticated}
+			<a class="group no-underline" href="/admin/{data.post.id}">
+				Edit <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
+			</a>
+		{/if}
+	</nav>
+
+	<article class="prose max-w-4xl prose-neutral dark:prose-invert">
+		<header>
+			<time
+				class="font-medium text-denim-500 dark:text-neutral-500"
+				datetime={data.post.publishedAt?.toISOString()}
+			>
+				{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
+			</time>
+
+			<h1
+				class="post-title mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty"
+				style:view-transition-class="post-title"
+				style:view-transition-name="post-{data.post.id}"
+			>
+				{data.post.title}
+			</h1>
+		</header>
+
+		<div data-content data-category={data.post.category}>
+			{@html data.post.content}
 		</div>
 
-		<time
-			class="font-medium text-denim-500 dark:text-neutral-500"
-			datetime={data.post.publishedAt?.toISOString()}
-		>
-			{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
-		</time>
-
-		<h1
-			class="post-title mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty"
-			style:view-transition-class="post-title"
-			style:view-transition-name="post-{data.post.id}"
-		>
-			{data.post.title}
-		</h1>
-	</header>
-
-	<div data-content data-category={data.post.category}>
-		{@html data.post.content}
-	</div>
-
-	{#if data.post.commentary}
-		<details class="text-sm">
-			<summary>Commentary</summary>
-			<p>{data.post.commentary}</p>
-		</details>
-	{/if}
+		{#if data.post.commentary}
+			<details class="text-sm">
+				<summary>Commentary</summary>
+				<p>{data.post.commentary}</p>
+			</details>
+		{/if}
+	</article>
 
 	{#if data.prev || data.next}
-		<div class="my-10 h-px w-full bg-foreground/50" role="separator"></div>
+		<hr class="my-10 h-px w-full border-0 bg-muted-foreground" />
 
-		<footer class="flex flex-col">
-			<nav class="flex items-center justify-between">
-				{@render navigation("Previous", data.prev)}
-				{@render navigation("Next", data.next)}
-			</nav>
-		</footer>
+		<nav class="flex items-center justify-between" aria-label="Post navigation">
+			{@render navigation("Previous", data.prev)}
+			{@render navigation("Next", data.next)}
+		</nav>
 	{/if}
-</article>
+</div>
 
-{#snippet navigation(type: "Next" | "Previous", post?: Post)}
+{#snippet navigation(type: "Previous" | "Next", post?: Post)}
 	{#if post}
 		<div
 			class={[

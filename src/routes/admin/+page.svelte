@@ -56,7 +56,13 @@
 </script>
 
 <div class="mb-8 flex items-center justify-between">
-	<input class="max-w-sm" type="text" placeholder="Search posts..." bind:value={globalFilter} />
+	<input
+		id="search"
+		class="max-w-sm"
+		type="text"
+		placeholder="Search posts..."
+		bind:value={globalFilter}
+	/>
 
 	<div class="flex items-center gap-2">
 		<a href="/admin/new" data-variant="primary">New Post</a>

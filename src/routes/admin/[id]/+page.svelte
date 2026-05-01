@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="mb-8 flex items-center justify-between font-medium">
+<nav class="mb-8 flex items-center justify-between font-medium">
 	<a class="group text-sm no-underline" href="/admin">
 		<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
 	</a>
@@ -22,7 +22,7 @@
 			View <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
 		</a>
 	{/if}
-</div>
+</nav>
 
 {#if updatePost.result?.success}
 	<div class="mb-8 text-sm text-aloe-600 uppercase dark:text-aloe-300">saved · post updated</div>
