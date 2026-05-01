@@ -124,7 +124,9 @@
 	});
 
 	$effect(() => {
-		const _editor = editor;
+		void isDialogue;
+
+		const _editor = untrack(() => editor);
 		if (!_editor) return;
 
 		if (_editor.storage.dialogue.enabled === isDialogue) return;
