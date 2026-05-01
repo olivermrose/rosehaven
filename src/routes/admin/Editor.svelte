@@ -29,15 +29,16 @@
 
 	interface Props {
 		content?: string;
-		dialogue?: boolean;
+		category?: string;
 	}
 
-	let { content = $bindable(), dialogue = false }: Props = $props();
+	let { content = $bindable(), category }: Props = $props();
 
 	// oxlint-disable-next-line no-unassigned-vars
 	let element: HTMLDivElement;
 	let editor = $state.raw<Editor>();
 
+	const isDialogue = $derived(category === "dialogue");
 	const startLeft = $derived(editor?.storage.dialogue.start === "other");
 
 	const marks: ToolbarItem[] = [
@@ -98,7 +99,7 @@
 			content,
 			editorProps: {
 				attributes: {
-					class: "prose dark:prose-invert max-w-none outline-none min-h-80",
+					class: "outline-none min-h-80",
 				},
 			},
 			onTransaction(event) {
@@ -126,9 +127,9 @@
 		const _editor = editor;
 		if (!_editor) return;
 
-		if (_editor.storage.dialogue.enabled === dialogue) return;
+		if (_editor.storage.dialogue.enabled === isDialogue) return;
 
-		_editor.storage.dialogue.enabled = dialogue;
+		_editor.storage.dialogue.enabled = isDialogue;
 		_editor.view.dispatch(_editor.state.tr);
 	});
 
@@ -154,7 +155,7 @@
 
 			<span role="separator" aria-orientation="vertical"></span>
 
-			{#if !dialogue}
+			{#if !isDialogue}
 				{#each blocks as block}
 					{@render toolbarButton(block)}
 				{/each}
@@ -183,7 +184,7 @@
 				exec: () => editor?.chain().focus().setHorizontalRule().run(),
 			})}
 
-			{#if dialogue}
+			{#if isDialogue}
 				<span role="separator" aria-orientation="vertical"></span>
 
 				<div class="flex items-center gap-2">
@@ -225,7 +226,12 @@
 		</div>
 	{/if}
 
-	<div class="bg-neutral-100 px-5 py-4 dark:bg-neutral-950" bind:this={element}></div>
+	<div
+		class="bg-neutral-100 px-5 py-4 dark:bg-neutral-950"
+		data-content
+		data-category={category}
+		bind:this={element}
+	></div>
 </div>
 
 {#snippet toolbarButton({ icon, active = false, exec }: ToolbarItem)}
@@ -246,7 +252,7 @@
 
 <style>
 	[role="separator"] {
-		background-color: --alpha(currentcolor / 20%);
+		background-color: var(--color-border);
 		margin-inline: 6px;
 		width: 1px;
 		height: 20px;

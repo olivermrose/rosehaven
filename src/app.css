@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
 @font-face {
 	font-family: "PP Eiko";
@@ -177,6 +176,18 @@
 	button {
 		cursor: pointer;
 	}
+
+	label {
+		display: block;
+		margin-bottom: --spacing(2);
+		font-size: var(--text-xs);
+		text-transform: uppercase;
+		font-weight: 500;
+	}
+
+	select {
+		appearance: none;
+	}
 }
 
 @layer components {
@@ -187,12 +198,26 @@
 		color: var(--color-peach-400);
 	}
 
-	label {
-		display: block;
-		margin-bottom: --spacing(2);
-		font-size: var(--text-xs);
-		text-transform: uppercase;
-		font-weight: 500;
+	input,
+	select,
+	textarea {
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid var(--color-border);
+		background: transparent;
+		padding: --spacing(2) 2px;
+		font-family: var(--font-sans);
+		color: var(--foreground);
+		outline: none;
+		transition: border-color 200ms;
+
+		&:focus-visible {
+			border-bottom-color: var(--foreground);
+		}
+
+		&::placeholder {
+			color: var(--color-muted-foreground);
+		}
 	}
 
 	:is(a, button)[data-variant] {
@@ -236,47 +261,27 @@
 		}
 	}
 
-	input,
-	select,
-	textarea {
-		width: 100%;
-		border: none;
-		border-bottom: 1px solid var(--color-border);
-		background: transparent;
-		padding: --spacing(2) 2px;
-		font-family: var(--font-sans);
-		color: var(--foreground);
-		outline: none;
-		transition: border-color 200ms;
+	[data-content] {
+		a {
+			text-decoration: underline dashed var(--color-aloe-500) 1px;
+			text-underline-offset: 2px;
 
-		&:focus-visible {
-			border-bottom-color: var(--foreground);
+			@variant dark {
+				text-decoration-color: var(--color-neutral-400);
+			}
 		}
 
-		&::placeholder {
-			color: var(--color-muted-foreground);
+		p {
+			line-height: 1.75;
+			white-space: normal;
+
+			&:not(:last-child) {
+				margin-bottom: 1.25rem;
+			}
 		}
 	}
 
-	select {
-		appearance: none;
-	}
-
-	[data-content] a {
-		text-decoration: underline dashed var(--color-aloe-500) 1px;
-		text-underline-offset: 2px;
-
-		@variant dark {
-			text-decoration-color: var(--color-neutral-400);
-		}
-	}
-
-	[data-content] p {
-		white-space: normal;
-	}
-
-	[data-category="dialogue"] p,
-	.tiptap p[data-speaker] {
+	[data-category="dialogue"] p {
 		max-width: 60ch;
 		text-wrap: pretty;
 
@@ -286,12 +291,22 @@
 			color: var(--color-wine-700);
 
 			@variant dark {
-				color: white;
+				color: var(--foreground);
+			}
+		}
+
+		&[data-speaker="other"] {
+			@variant dark {
+				color: var(--color-neutral-400);
 			}
 		}
 	}
 
 	[data-category="short-story"] {
+		p:not(:last-child) {
+			margin-block: 0.25rem;
+		}
+
 		p:not([style*="text-align: center"]) {
 			text-indent: 4ch;
 		}
@@ -328,6 +343,6 @@
 	mix-blend-mode: normal;
 }
 
-html.transitioning .post-title {
+.transitioning .post-title {
 	view-transition-name: none !important;
 }

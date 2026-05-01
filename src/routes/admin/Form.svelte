@@ -84,7 +84,7 @@
 
 		<div>
 			<input name="content" type="hidden" value={content} />
-			<Editor dialogue={form.fields.category.value() === "dialogue"} bind:content />
+			<Editor category={form.fields.category.value()} bind:content />
 		</div>
 
 		<div>

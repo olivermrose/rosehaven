@@ -18,7 +18,7 @@
 		{/if}
 	</nav>
 
-	<article class="prose max-w-4xl prose-neutral dark:prose-invert">
+	<article class="max-w-4xl">
 		<header>
 			<time
 				class="font-medium text-denim-500 dark:text-neutral-500"
@@ -70,10 +70,7 @@
 				&lbrace; {type} &rbrace;
 			</span>
 
-			<a
-				class="not-prose mt-2 line-clamp-1 text-fluid-2xl/tight font-light"
-				href="/writing/{post.slug}"
-			>
+			<a class="mt-2 line-clamp-1 text-fluid-2xl/tight font-light" href="/writing/{post.slug}">
 				<span
 					class="transition-colors duration-300 group-hover:text-plum-500 dark:group-hover:text-white"
 				>
