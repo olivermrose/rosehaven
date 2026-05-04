@@ -15,8 +15,8 @@
 	const categories = [
 		{ label: "Dialogue", value: "dialogue" },
 		{ label: "Poetry", value: "poetry" },
-		{ label: "Prose Poetry", value: "prose-poetry" },
-		{ label: "Short Story", value: "short-story" },
+		{ label: "Prose Poetry", value: "prose poetry" },
+		{ label: "Short Story", value: "short story" },
 	];
 
 	let content = $state("");

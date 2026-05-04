@@ -33,7 +33,7 @@ export const getPosts = query(() => {
 
 const postSchema = z.object({
 	title: z.string().min(1),
-	category: z.enum(["dialogue", "poetry", "prose-poetry", "short-story"]),
+	category: z.enum(["dialogue", "poetry", "prose poetry", "short story"]),
 	excerpt: z.string().min(1),
 	content: z.string().min(1),
 	commentary: z.string().optional(),

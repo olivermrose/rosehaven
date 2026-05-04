@@ -109,7 +109,7 @@
 						</div>
 
 						<h2 class="period mt-4 font-serif text-fluid-3xl/none font-light tracking-tight italic">
-							{category.replace("-", " ").toLowerCase()}
+							{category}
 						</h2>
 					</div>
 				</header>

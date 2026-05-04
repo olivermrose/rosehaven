@@ -106,7 +106,7 @@
 
 					<td class="">
 						<span class="text-sm text-muted-foreground lowercase">
-							{post.category.replaceAll("-", " ")}
+							{post.category}
 						</span>
 					</td>
 

@@ -3,8 +3,8 @@ import { boolean, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/p
 export const categoryEnum = pgEnum("category", [
 	"dialogue",
 	"poetry",
-	"prose-poetry",
-	"short-story",
+	"prose poetry",
+	"short story",
 ]);
 
 export const statusEnum = pgEnum("status", ["draft", "published"]);
