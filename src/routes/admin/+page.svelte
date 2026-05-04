@@ -16,7 +16,7 @@
 	const columns: ColumnDef<Post>[] = [
 		{ accessorKey: "title", header: "Title", enableSorting: true },
 		{ accessorKey: "category", header: "Category", enableSorting: true },
-		{ accessorKey: "status", header: "Status", enableSorting: true },
+		{ accessorKey: "publishedAt", header: "Published", enableSorting: true },
 		{ accessorKey: "updatedAt", header: "Updated", enableSorting: true },
 	];
 
@@ -80,7 +80,7 @@
 				{#each table.getHeaderGroups() as group}
 					{#each group.headers as header}
 						<th
-							class="cursor-pointer px-2 py-4 text-sm font-medium uppercase transition-opacity select-none hover:opacity-100"
+							class="cursor-pointer py-4 text-sm font-medium uppercase transition-opacity select-none hover:opacity-100"
 							onclick={header.column.getToggleSortingHandler()}
 						>
 							{header.column.columnDef.header + getSortIndicator(header.column.id)}
@@ -93,9 +93,9 @@
 		<tbody>
 			{#each table.getRowModel().rows as { original: post }}
 				<tr
-					class="group border-b border-foreground/10 transition-colors last:border-none hover:bg-foreground/3"
+					class="group border-b border-border transition-colors *:px-2 *:py-4 last:border-none hover:bg-foreground/3"
 				>
-					<td class="max-w-104 px-2 py-5">
+					<td class="max-w-100">
 						<a
 							class="line-clamp-1 transition-opacity group-hover:opacity-100"
 							href="/admin/{post.id}"
@@ -104,27 +104,22 @@
 						</a>
 					</td>
 
-					<td class="px-2 py-5">
-						<span class="text-sm lowercase opacity-60">
+					<td class="">
+						<span class="text-sm text-muted-foreground lowercase">
 							{post.category.replaceAll("-", " ")}
 						</span>
 					</td>
 
-					<td class="px-2 py-5">
-						<span
-							class={[
-								"inline-block rounded-full px-2 py-1 text-xs uppercase",
-								post.status === "published"
-									? "bg-aloe-500/40 text-aloe-700 dark:text-aloe-300"
-									: "bg-denim-500/40 text-denim-700 dark:text-denim-300",
-							]}
-						>
-							{post.status}
-						</span>
+					<td class="">
+						{#if post.publishedAt}
+							<time class="text-sm text-muted-foreground" datetime={post.publishedAt.toISOString()}>
+								{dayjs(post.publishedAt).format("MMM DD, YYYY")}
+							</time>
+						{/if}
 					</td>
 
-					<td class="px-2 py-5">
-						<time class="text-sm opacity-50" datetime={post.updatedAt.toISOString()}>
+					<td class="">
+						<time class="text-sm text-muted-foreground" datetime={post.updatedAt.toISOString()}>
 							{dayjs(post.updatedAt).format("MMM DD, YYYY")}
 						</time>
 					</td>
