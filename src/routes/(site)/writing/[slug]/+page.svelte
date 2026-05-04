@@ -27,6 +27,15 @@
 				{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
 			</time>
 
+			{#if data.post.revisedAt}
+				<div class="text-sm text-muted-foreground">
+					Revised
+					<time datetime={data.post.revisedAt.toISOString()}>
+						{dayjs(data.post.revisedAt).format("MMMM D, YYYY")}
+					</time>
+				</div>
+			{/if}
+
 			<h1
 				class="post-title mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty"
 				style:view-transition-class="post-title"

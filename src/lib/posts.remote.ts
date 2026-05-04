@@ -65,41 +65,54 @@ export const createPost = form(postSchema, async (data) => {
 	redirect(303, `/admin/${post.id}`);
 });
 
-export const updatePost = form(postSchema.partial(), async (data) => {
-	const event = getRequestEvent();
-	const id = Number(event.params.id);
+export const updatePost = form(
+	postSchema.partial().extend({
+		revision: z.boolean().default(false),
+	}),
+	async (data) => {
+		const event = getRequestEvent();
+		const id = Number(event.params.id);
 
-	if (Number.isNaN(id)) {
-		error(400, "Invalid post ID");
-	}
+		if (Number.isNaN(id)) {
+			error(400, "Invalid post ID");
+		}
 
-	const [existing] = await event.locals.db
-		.select({ publishedAt: posts.publishedAt })
-		.from(posts)
-		.where(eq(posts.id, id));
+		const [existing] = await event.locals.db
+			.select({ publishedAt: posts.publishedAt, revisedAt: posts.revisedAt })
+			.from(posts)
+			.where(eq(posts.id, id));
 
-	const slug = data.title ? slugify(data.title) : undefined;
-	const publishedAt =
-		data.status === "published" && !existing?.publishedAt ? new Date() : existing?.publishedAt;
+		const slug = data.title ? slugify(data.title) : undefined;
+		const now = new Date();
 
-	await event.locals.db
-		.update(posts)
-		.set({
-			title: data.title,
-			slug,
-			category: data.category,
-			excerpt: data.excerpt,
-			explicit: data.explicit,
-			content: data.content,
-			commentary: data.commentary || null,
-			status: data.status,
-			publishedAt,
-			updatedAt: new Date(),
-		})
-		.where(eq(posts.id, id));
+		const publishedAt =
+			data.status === "published" && !existing?.publishedAt ? now : existing?.publishedAt;
 
-	return { success: true };
-});
+		const revisedAt =
+			data.revision && data.status === "published" && existing?.publishedAt
+				? now
+				: existing?.revisedAt;
+
+		await event.locals.db
+			.update(posts)
+			.set({
+				title: data.title,
+				slug,
+				category: data.category,
+				excerpt: data.excerpt,
+				explicit: data.explicit,
+				content: data.content,
+				commentary: data.commentary || null,
+				status: data.status,
+				publishedAt,
+				revisedAt,
+				updatedAt: now,
+			})
+			.where(eq(posts.id, id));
+
+		return { success: true };
+	},
+);
 
 export const deletePost = command(z.number(), async (id) => {
 	const event = getRequestEvent();
