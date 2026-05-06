@@ -302,7 +302,7 @@
 		}
 	}
 
-	[data-category="short-story"] {
+	[data-category="short story"] {
 		p:not(:last-child) {
 			margin-block: 0.25rem;
 		}
