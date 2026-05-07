@@ -283,6 +283,7 @@
 		&::after {
 			content: " />";
 			color: var(--bracket);
+			font-feature-settings: "calt" 0;
 		}
 
 		:global(&.ProseMirror-selectednode) {
