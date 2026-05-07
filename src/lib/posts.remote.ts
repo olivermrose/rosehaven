@@ -3,7 +3,13 @@ import { asc, eq } from "drizzle-orm";
 import z from "zod";
 import { command, form, getRequestEvent, query } from "$app/server";
 import { posts } from "./server/db/schema";
-import { slugify } from "./server/util";
+
+function slugify(val: string) {
+	return val
+		.replaceAll(" ", "-")
+		.replaceAll(/[^\w-]+/g, "")
+		.toLowerCase();
+}
 
 export const getPost = query(z.string(), async (idOrSlug) => {
 	const event = getRequestEvent();
