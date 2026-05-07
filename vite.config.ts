@@ -20,4 +20,9 @@ export default defineConfig({
 			},
 		},
 	],
+	css: {
+		lightningcss: {
+			exclude: 2048 /* OklabColors */ | 1048576 /* LightDark */,
+		},
+	},
 });
