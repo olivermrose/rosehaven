@@ -19,7 +19,9 @@
 	import TextAlign from "@tiptap/extension-text-align";
 	import StarterKit from "@tiptap/starter-kit";
 	import { onDestroy, onMount, settled, untrack } from "svelte";
-	import { Dialogue } from "./extensions";
+	import { postComponentNames } from "$lib/post-components";
+	import ComponentSelect from "./ComponentSelect.svelte";
+	import { CustomComponent, Dialogue } from "./extensions";
 
 	interface ToolbarItem {
 		icon: IconSvgElement;
@@ -37,7 +39,6 @@
 	// oxlint-disable-next-line no-unassigned-vars
 	let element: HTMLDivElement;
 	let editor = $state.raw<Editor>();
-
 	const isDialogue = $derived(category === "dialogue");
 	const startLeft = $derived(editor?.storage.dialogue.start === "other");
 
@@ -95,6 +96,7 @@
 				}),
 				TextAlign.configure({ types: ["paragraph"] }),
 				Dialogue,
+				CustomComponent,
 			],
 			content,
 			editorProps: {
@@ -185,6 +187,15 @@
 				exec: () => editor?.chain().focus().setHorizontalRule().run(),
 			})}
 
+			{#if postComponentNames.length > 0}
+				<span role="separator" aria-orientation="vertical"></span>
+
+				<ComponentSelect
+					names={postComponentNames}
+					onselect={(name) => editor?.chain().focus().insertComponent(name).run()}
+				/>
+			{/if}
+
 			{#if isDialogue}
 				<span role="separator" aria-orientation="vertical"></span>
 
@@ -257,5 +268,26 @@
 		margin-inline: 6px;
 		width: 1px;
 		height: 20px;
+	}
+
+	[data-content] :global([data-component]) {
+		--bracket: light-dark(#747474, #e6edf3);
+		color: light-dark(#61bc69, #ffa657);
+		cursor: pointer;
+
+		&::before {
+			content: "<";
+			color: var(--bracket);
+		}
+
+		&::after {
+			content: " />";
+			color: var(--bracket);
+		}
+
+		:global(&.ProseMirror-selectednode) {
+			background-color: --alpha(var(--color-blue-300) / 20%);
+			border: 1px solid var(--color-blue-400);
+		}
 	}
 </style>

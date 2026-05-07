@@ -1,4 +1,4 @@
-import { Extension } from "@tiptap/core";
+import { Extension, Node } from "@tiptap/core";
 
 type Speaker = "self" | "other";
 
@@ -7,6 +7,9 @@ declare module "@tiptap/core" {
 		dialogue: {
 			setSpeaker: (speaker: Speaker) => ReturnType;
 			toggleSpeaker: () => ReturnType;
+		};
+		customComponent: {
+			insertComponent: (name: string) => ReturnType;
 		};
 	}
 
@@ -45,9 +48,7 @@ export const Dialogue = Extension.create({
 	addCommands() {
 		return {
 			setSpeaker(speaker) {
-				return ({ commands }) => {
-					return commands.updateAttributes("paragraph", { speaker });
-				};
+				return ({ commands }) => commands.updateAttributes("paragraph", { speaker });
 			},
 			toggleSpeaker:
 				() =>
@@ -123,5 +124,52 @@ export const Dialogue = Extension.create({
 		if (changed) {
 			event.editor.view.dispatch(tr);
 		}
+	},
+});
+
+export const CustomComponent = Node.create({
+	name: "customComponent",
+	group: "block",
+	atom: true,
+	selectable: true,
+	draggable: true,
+	addAttributes() {
+		return {
+			name: {
+				default: null,
+				parseHTML: (element) => element.dataset.component || null,
+				renderHTML: (attributes) => (attributes.name ? { "data-component": attributes.name } : {}),
+			},
+		};
+	},
+	parseHTML() {
+		return [{ tag: "div[data-component]" }];
+	},
+	renderHTML({ HTMLAttributes }) {
+		return ["div", HTMLAttributes];
+	},
+	addNodeView() {
+		return ({ node }) => {
+			const dom = document.createElement("div");
+
+			dom.className =
+				"my-2 rounded-lg border border-dashed border-border bg-muted/30 px-4 py-3 font-mono text-sm select-none";
+			dom.contentEditable = "false";
+			dom.dataset.component = node.attrs.name;
+			dom.textContent = node.attrs.name;
+
+			return { dom };
+		};
+	},
+	addCommands() {
+		return {
+			insertComponent(name) {
+				return ({ commands }) =>
+					commands.insertContent({
+						type: "customComponent",
+						attrs: { name },
+					});
+			},
+		};
 	},
 });

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import dayjs from "dayjs";
+	import Content from "$lib/components/Content.svelte";
 	import type { Post } from "$lib/server/db/schema";
 
 	const { data } = $props();
@@ -45,9 +46,7 @@
 			</h1>
 		</header>
 
-		<div data-content data-category={data.post.category}>
-			{@html data.post.content}
-		</div>
+		<Content post={data.post} />
 
 		{#if data.post.commentary}
 			<details class="text-sm">
