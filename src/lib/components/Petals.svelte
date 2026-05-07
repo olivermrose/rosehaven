@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { rand } from "$lib";
 	import chroma from "chroma-js";
 	import dayjs from "dayjs";
 	import { animate, cancelFrame, frame, motion } from "motion-sv";
@@ -127,10 +128,6 @@
 		}
 
 		frame.render(updateGradient, true);
-	}
-
-	function rand(min: number, max: number) {
-		return min + Math.random() * (max - min);
 	}
 
 	function generateDiagonals() {
