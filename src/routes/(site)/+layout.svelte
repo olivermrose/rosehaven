@@ -9,7 +9,6 @@
 	import { page } from "$app/state";
 	import Header from "$lib/components/Header.svelte";
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
-	import Petals from "$lib/components/Petals.svelte";
 	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
 	import Cursor from "$lib/components/Cursor.svelte";
 
@@ -61,7 +60,6 @@
 <Cursor />
 
 <LoadingScreen>
-	<Petals />
 	<Header />
 
 	<main class="relative">

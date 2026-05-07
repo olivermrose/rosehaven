@@ -4,6 +4,7 @@
 	import Footer from "$lib/components/Footer.svelte";
 	import Hero from "$lib/components/Hero.svelte";
 	import Portrait from "$lib/components/Portrait.svelte";
+	import Petals from "$lib/components/Petals.svelte";
 
 	const { data } = $props();
 
@@ -19,6 +20,7 @@
 	const marqueeX = $derived(useTransform(marqueeY, [0, 1], ["-15%", "0%"]));
 </script>
 
+<Petals />
 <Hero />
 
 <div class="overflow-hidden py-12 sm:py-20" bind:this={marquee}>
