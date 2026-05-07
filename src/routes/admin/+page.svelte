@@ -80,7 +80,7 @@
 				{#each table.getHeaderGroups() as group}
 					{#each group.headers as header}
 						<th
-							class="cursor-pointer py-4 text-sm font-medium uppercase transition-opacity select-none hover:opacity-100"
+							class="cursor-pointer px-2 py-4 text-sm font-medium uppercase transition-opacity select-none hover:opacity-100"
 							onclick={header.column.getToggleSortingHandler()}
 						>
 							{header.column.columnDef.header + getSortIndicator(header.column.id)}
