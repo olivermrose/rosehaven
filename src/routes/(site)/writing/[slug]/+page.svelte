@@ -22,7 +22,7 @@
 	<article class="max-w-4xl">
 		<header>
 			<time
-				class="font-medium text-denim-500 dark:text-neutral-500"
+				class="font-medium text-denim-500 dark:text-neutral-300"
 				datetime={data.post.publishedAt?.toISOString()}
 			>
 				{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
