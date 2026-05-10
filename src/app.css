@@ -149,13 +149,8 @@
 }
 
 :root {
-	--background: var(--color-off-white);
-	--foreground: var(--color-off-black);
-}
-
-.dark {
-	--background: var(--color-off-black);
-	--foreground: var(--color-off-white);
+	--background: light-dark(var(--color-off-white), var(--color-off-black));
+	--foreground: light-dark(var(--color-off-black), var(--color-off-white));
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -263,12 +258,9 @@
 
 	[data-content] {
 		a {
-			text-decoration: underline dashed var(--color-aloe-500) 1px;
+			text-decoration: underline dashed light-dark(var(--color-aloe-400), var(--color-neutral-400))
+				1.5px;
 			text-underline-offset: 2px;
-
-			@variant dark {
-				text-decoration-color: var(--color-neutral-400);
-			}
 		}
 
 		p {
@@ -288,11 +280,7 @@
 		&[data-speaker="self"] {
 			text-align: right;
 			margin-left: auto;
-			color: var(--color-wine-700);
-
-			@variant dark {
-				color: var(--foreground);
-			}
+			color: light-dark(var(--color-wine-700), var(--color-foreground));
 		}
 
 		&[data-speaker="other"] {
