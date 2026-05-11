@@ -79,27 +79,27 @@
 		overflow: hidden;
 		z-index: 10;
 		pointer-events: none;
-	}
 
-	:nth-child(1 of .tag) {
-		top: 0.75rem;
-		left: 0.75rem;
+		.left {
+			top: 0.75rem;
+			left: 0.75rem;
 
-		@variant lg {
-			top: 20%;
-			left: -65%;
-			translate: 50% -50%;
+			@variant lg {
+				top: 20%;
+				left: -65%;
+				translate: 50% -50%;
+			}
 		}
-	}
 
-	:nth-child(2 of .tag) {
-		bottom: 0.75rem;
-		right: 0.75rem;
+		.right {
+			bottom: 0.75rem;
+			right: 0.75rem;
 
-		@variant lg {
-			bottom: 20%;
-			right: -55%;
-			translate: -50% 50%;
+			@variant lg {
+				bottom: 20%;
+				right: -55%;
+				translate: -50% 50%;
+			}
 		}
 	}
 </style>
