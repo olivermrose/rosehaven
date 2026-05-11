@@ -1,0 +1,7 @@
+engineStrict: true
+allowBuilds:
+  "@hugeicons/svelte": true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
