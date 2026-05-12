@@ -1,16 +1,16 @@
 <script lang="ts">
 	import "@fontsource-variable/jetbrains-mono/wght.css";
 	import "lenis/dist/lenis.css";
-	import { BASE_URL, SITE_NAME } from "$lib";
 	import Lenis from "lenis";
 	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
 	import { onNavigate } from "$app/navigation";
 	import { page } from "$app/state";
+	import { BASE_URL, SITE_NAME } from "$lib";
+	import Cursor from "$lib/components/Cursor.svelte";
 	import Header from "$lib/components/Header.svelte";
 	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
 	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
-	import Cursor from "$lib/components/Cursor.svelte";
 
 	const { children } = $props();
 

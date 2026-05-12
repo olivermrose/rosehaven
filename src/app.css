@@ -258,8 +258,8 @@
 
 	[data-content] {
 		a {
-			text-decoration: underline dashed light-dark(var(--color-aloe-400), var(--color-neutral-400))
-				1.5px;
+			text-decoration: underline dashed
+				light-dark(var(--color-aloe-400), var(--color-neutral-400)) 1.5px;
 			text-underline-offset: 2px;
 		}
 

@@ -138,7 +138,8 @@ export const CustomComponent = Node.create({
 			name: {
 				default: null,
 				parseHTML: (element) => element.dataset.component || null,
-				renderHTML: (attributes) => (attributes.name ? { "data-component": attributes.name } : {}),
+				renderHTML: (attributes) =>
+					attributes.name ? { "data-component": attributes.name } : {},
 			},
 		};
 	},

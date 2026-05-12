@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { rand } from "$lib";
 	import chroma from "chroma-js";
 	import dayjs from "dayjs";
 	import { animate, cancelFrame, frame, motion } from "motion-sv";
 	import { onMount } from "svelte";
+	import { rand } from "$lib";
 
 	const SIMULATE_TIME = false;
 	const SIM_YEAR_SECONDS = 60;

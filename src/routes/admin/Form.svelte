@@ -60,7 +60,11 @@
 		<div class="grid gap-8 sm:grid-cols-2">
 			<div>
 				<label for="excerpt">Excerpt</label>
-				<input id="excerpt" placeholder="Brief preview" {...form.fields.excerpt.as("text")} />
+				<input
+					id="excerpt"
+					placeholder="Brief preview"
+					{...form.fields.excerpt.as("text")}
+				/>
 			</div>
 
 			<div>
@@ -139,7 +143,10 @@
 			{#if post?.status === "published" && form === updatePost}
 				<label class="mb-0 flex cursor-pointer items-center gap-3">
 					<div class="relative">
-						<input class="peer sr-only" {...updatePost.fields.revision.as("checkbox")} />
+						<input
+							class="peer sr-only"
+							{...updatePost.fields.revision.as("checkbox")}
+						/>
 
 						<div
 							class="h-5 w-9 rounded-full border border-foreground/30 transition-colors peer-checked:border-foreground peer-checked:bg-foreground"
@@ -155,7 +162,11 @@
 		</div>
 
 		<div class="space-y-2">
-			<button class="w-full" data-variant="secondary" {...form.fields.status.as("submit", "draft")}>
+			<button
+				class="w-full"
+				data-variant="secondary"
+				{...form.fields.status.as("submit", "draft")}
+			>
 				Save Draft
 			</button>
 

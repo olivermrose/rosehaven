@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
-	import type { Post } from "$lib/server/db/schema";
 	import { on } from "svelte/events";
+	import type { Post } from "$lib/server/db/schema";
 
 	const { posts }: { posts: Post[] } = $props();
 
@@ -80,8 +80,8 @@
 		</h1>
 
 		<p class="reveal mt-2" {@attach reveal(300)}>
-			As I drift off into reverie, I find myself running through a thousand different scenarios of
-			"What if?" My life is not bound by the earth I stand upon.
+			As I drift off into reverie, I find myself running through a thousand different
+			scenarios of "What if?" My life is not bound by the earth I stand upon.
 		</p>
 	</hgroup>
 
@@ -108,7 +108,9 @@
 							</span>
 						</div>
 
-						<h2 class="period mt-4 font-serif text-fluid-3xl/none font-light tracking-tight italic">
+						<h2
+							class="period mt-4 font-serif text-fluid-3xl/none font-light tracking-tight italic"
+						>
 							{category}
 						</h2>
 					</div>
@@ -138,8 +140,12 @@
 								aria-hidden="true"
 							></span>
 
-							<div class="flex items-baseline justify-between font-mono text-xs uppercase">
-								<span class="opacity-50">{String(postIndex + 1).padStart(2, "0")}</span>
+							<div
+								class="flex items-baseline justify-between font-mono text-xs uppercase"
+							>
+								<span class="opacity-50"
+									>{String(postIndex + 1).padStart(2, "0")}</span
+								>
 
 								{#if newPosts.has(post.id)}
 									<span class="flex items-center gap-1.5 text-peach-500">
@@ -148,7 +154,9 @@
 												class="absolute inline-flex h-full w-full animate-ping rounded-full bg-peach-400"
 											></span>
 
-											<span class="relative inline-flex size-1.5 rounded-full bg-peach-400"></span>
+											<span
+												class="relative inline-flex size-1.5 rounded-full bg-peach-400"
+											></span>
 										</span>
 
 										New
@@ -169,7 +177,11 @@
 								</h3>
 
 								{#if post.explicit}
-									<svg class="size-4 shrink-0 opacity-30" viewBox="0 0 24 24" aria-hidden="true">
+									<svg
+										class="size-4 shrink-0 opacity-30"
+										viewBox="0 0 24 24"
+										aria-hidden="true"
+									>
 										<path
 											fill="currentColor"
 											d="M9 17h6v-2h-4v-2h4v-2h-4V9h4V7H9zm-4 4q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21z"

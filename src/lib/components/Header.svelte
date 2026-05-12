@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { SITE_NAME } from "$lib";
 	import { mode, toggleMode } from "mode-watcher";
 	import { motion } from "motion-sv";
 	import { TegakiRenderer } from "tegaki/svelte";
 	import { page } from "$app/state";
+	import { SITE_NAME } from "$lib";
 	import bundle from "../../assets/brittany-signature-script/bundle";
 
 	let toggle = $state<HTMLButtonElement>();
@@ -40,7 +40,10 @@
 
 		document.documentElement.animate(
 			{
-				clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxRadius}px at ${x}px ${y}px)`],
+				clipPath: [
+					`circle(0px at ${x}px ${y}px)`,
+					`circle(${maxRadius}px at ${x}px ${y}px)`,
+				],
 			},
 			{
 				duration: 500,

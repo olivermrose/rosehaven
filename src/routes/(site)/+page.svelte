@@ -3,8 +3,8 @@
 	import Anthology from "$lib/components/Anthology.svelte";
 	import Footer from "$lib/components/Footer.svelte";
 	import Hero from "$lib/components/Hero.svelte";
-	import Portrait from "$lib/components/Portrait.svelte";
 	import Petals from "$lib/components/Petals.svelte";
+	import Portrait from "$lib/components/Portrait.svelte";
 
 	const { data } = $props();
 

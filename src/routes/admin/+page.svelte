@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { logout } from "$lib/admin.remote";
 	import {
 		createTable,
 		getCoreRowModel,
@@ -8,6 +7,7 @@
 	} from "@tanstack/svelte-table";
 	import type { ColumnDef, SortingState } from "@tanstack/svelte-table";
 	import dayjs from "dayjs";
+	import { logout } from "$lib/admin.remote";
 
 	const { data } = $props();
 
@@ -112,14 +112,20 @@
 
 					<td class="">
 						{#if post.publishedAt}
-							<time class="text-sm text-muted-foreground" datetime={post.publishedAt.toISOString()}>
+							<time
+								class="text-sm text-muted-foreground"
+								datetime={post.publishedAt.toISOString()}
+							>
 								{dayjs(post.publishedAt).format("MMM DD, YYYY")}
 							</time>
 						{/if}
 					</td>
 
 					<td class="">
-						<time class="text-sm text-muted-foreground" datetime={post.updatedAt.toISOString()}>
+						<time
+							class="text-sm text-muted-foreground"
+							datetime={post.updatedAt.toISOString()}
+						>
 							{dayjs(post.updatedAt).format("MMM DD, YYYY")}
 						</time>
 					</td>

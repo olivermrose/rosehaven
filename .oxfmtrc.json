@@ -1,0 +1,13 @@
+{
+	"tabWidth": 4,
+	"useTabs": true,
+	"svelte": true,
+	"sortTailwindcss": {
+		"stylesheet": "./src/app.css"
+	},
+	"sortImports": {
+		"internalPattern": ["$"],
+		"newlinesBetween": false
+	},
+	"ignorePatterns": ["*.yml", "drizzle/**/*.json", "src/assets/**"]
+}

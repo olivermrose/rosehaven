@@ -1,8 +1,8 @@
 <script lang="ts">
 	import "../app.css";
+	import { ModeWatcher } from "mode-watcher";
 	import { dev } from "$app/environment";
 	import Breakpoint from "$lib/components/Breakpoint.svelte";
-	import { ModeWatcher } from "mode-watcher";
 
 	const { children } = $props();
 </script>
