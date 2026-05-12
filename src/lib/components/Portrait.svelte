@@ -12,10 +12,10 @@
 			animate(
 				[
 					[".tag > *", { opacity: 1 }, { duration: 0 }],
-					["#portrait", { "--clip-x": "0%" }],
+					["#portrait", { clipPath: ["inset(0 50%)", "inset(0 0)"] }],
 					[".tag .left", { x: ["100%", "0%"] }, { at: "-0.5" }],
 					[".tag .right", { x: ["-100%", "0%"] }, { at: "<" }],
-					["#portrait", { "--clip-y": "50%" }],
+					["#portrait", { clipPath: "inset(50% 0)" }],
 					[".tag .left", { y: "-100%" }, { at: "-0.25" }],
 					[".tag .right", { y: "100%" }, { at: "<" }],
 				],
@@ -67,12 +67,6 @@
 
 <style>
 	@reference "../../app.css";
-
-	#portrait {
-		--clip-x: 50%;
-		--clip-y: 0%;
-		clip-path: inset(var(--clip-y) var(--clip-x));
-	}
 
 	.tag {
 		position: absolute;
