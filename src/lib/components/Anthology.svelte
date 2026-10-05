@@ -2,7 +2,7 @@
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
 	import { on } from "svelte/events";
-	import type { Post } from "$lib/server/db/schema";
+	import type { Post } from "#lib/server/db/schema.js";
 
 	const { posts }: { posts: Post[] } = $props();
 

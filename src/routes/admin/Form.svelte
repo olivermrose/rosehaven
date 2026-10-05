@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
-	import { createPost, updatePost } from "$lib/posts.remote";
-	import type { Post } from "$lib/server/db/schema";
+	import { createPost, updatePost } from "#lib/posts.remote.js";
+	import type { Post } from "#lib/server/db/schema.js";
 	import Editor from "./Editor.svelte";
 
 	interface Props {
@@ -39,7 +39,7 @@
 </script>
 
 <form class="flex items-start gap-8 max-lg:flex-col" {...form}>
-	<div class="min-w-0 flex-1 space-y-8 w-full">
+	<div class="w-full min-w-0 flex-1 space-y-8">
 		{#if issues}
 			<div class="border-l-2 border-peach-400 bg-peach-400/5 px-5 py-3">
 				<p class="mb-2 text-peach-600 dark:text-peach-300">Error</p>

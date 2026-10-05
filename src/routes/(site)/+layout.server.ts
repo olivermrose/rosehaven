@@ -1,6 +1,6 @@
 import { asc, eq } from "drizzle-orm";
-import { verifySession } from "$lib/server/auth";
-import { posts } from "$lib/server/db/schema";
+import { verifySession } from "#lib/server/auth.js";
+import { posts } from "#lib/server/db/schema.js";
 
 export async function load({ locals, cookies }) {
 	const authenticated = verifySession(cookies);

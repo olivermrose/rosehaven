@@ -3,7 +3,7 @@
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
 	import type { Snippet } from "svelte";
-	import { expoInOut } from "$lib/index";
+	import { expoInOut } from "#lib";
 
 	const { children }: { children: Snippet } = $props();
 

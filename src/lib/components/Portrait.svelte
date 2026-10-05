@@ -2,7 +2,7 @@
 	import { Canvas } from "@threlte/core";
 	import { animate, scroll } from "motion-sv";
 	import { onMount } from "svelte";
-	import { expoInOut } from "$lib/index";
+	import { expoInOut } from "#lib";
 	import Distortion from "./Distortion.svelte";
 
 	let container = $state<HTMLElement>();

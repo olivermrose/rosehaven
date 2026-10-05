@@ -1,5 +1,5 @@
 import { redirect } from "@sveltejs/kit";
-import { verifySession } from "$lib/server/auth";
+import { verifySession } from "#lib/server/auth.js";
 
 export function load({ cookies, url }) {
 	const authenticated = verifySession(cookies);

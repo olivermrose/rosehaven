@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { postComponents } from "$lib/post-components";
-	import type { Post } from "$lib/server/db/schema";
+	import { postComponents } from "#lib/post-components.js";
+	import type { Post } from "#lib/server/db/schema.js";
 
 	interface Fragment {
 		id: string;

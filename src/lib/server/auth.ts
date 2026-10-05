@@ -1,7 +1,7 @@
 import { Buffer } from "node:buffer";
 import { createHmac, scrypt, timingSafeEqual } from "node:crypto";
 import type { Cookies } from "@sveltejs/kit";
-import { ADMIN_PASSWORD_HASH } from "$env/static/private";
+import { ADMIN_PASSWORD_HASH } from "$app/env/private";
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7;
 const COOKIE_NAME = "admin_session";

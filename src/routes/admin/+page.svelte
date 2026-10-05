@@ -7,7 +7,7 @@
 	} from "@tanstack/svelte-table";
 	import type { ColumnDef, SortingState } from "@tanstack/svelte-table";
 	import dayjs from "dayjs";
-	import { logout } from "$lib/admin.remote";
+	import { logout } from "#lib/admin.remote.js";
 
 	const { data } = $props();
 

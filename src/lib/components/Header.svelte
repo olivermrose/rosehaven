@@ -2,8 +2,8 @@
 	import { mode, toggleMode } from "mode-watcher";
 	import { motion } from "motion-sv";
 	import { TegakiRenderer } from "tegaki/svelte";
+	import { SITE_NAME } from "#lib";
 	import { page } from "$app/state";
-	import { SITE_NAME } from "$lib";
 	import bundle from "../../assets/brittany-signature-script/bundle";
 
 	let toggle = $state<HTMLButtonElement>();

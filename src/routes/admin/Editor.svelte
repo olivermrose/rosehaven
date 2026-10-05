@@ -19,7 +19,7 @@
 	import TextAlign from "@tiptap/extension-text-align";
 	import StarterKit from "@tiptap/starter-kit";
 	import { onDestroy, onMount, settled, untrack } from "svelte";
-	import { postComponentNames } from "$lib/post-components";
+	import { postComponentNames } from "#lib/post-components.js";
 	import ComponentSelect from "./ComponentSelect.svelte";
 	import { CustomComponent, Dialogue } from "./extensions";
 

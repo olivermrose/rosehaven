@@ -4,13 +4,13 @@
 	import Lenis from "lenis";
 	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
+	import { BASE_URL, SITE_NAME } from "#lib";
+	import Cursor from "#lib/components/Cursor.svelte";
+	import Header from "#lib/components/Header.svelte";
+	import LoadingScreen from "#lib/components/LoadingScreen.svelte";
+	import ScrollProgress from "#lib/components/ScrollProgress.svelte";
 	import { onNavigate } from "$app/navigation";
 	import { page } from "$app/state";
-	import { BASE_URL, SITE_NAME } from "$lib";
-	import Cursor from "$lib/components/Cursor.svelte";
-	import Header from "$lib/components/Header.svelte";
-	import LoadingScreen from "$lib/components/LoadingScreen.svelte";
-	import ScrollProgress from "$lib/components/ScrollProgress.svelte";
 
 	const { children } = $props();
 
@@ -26,6 +26,8 @@
 	});
 
 	onNavigate((navigation) => {
+		if (navigation.shallow) return;
+
 		return new Promise((resolve) => {
 			document.startViewTransition(async () => {
 				window.scrollTo(0, 0);

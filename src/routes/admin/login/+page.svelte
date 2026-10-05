@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { login } from "$lib/admin.remote";
+	import { login } from "#lib/admin.remote.js";
 
 	const issues = $derived(login.fields.password.issues());
 </script>

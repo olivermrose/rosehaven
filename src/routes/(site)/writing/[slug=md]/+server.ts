@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { NodeHtmlMarkdown } from "node-html-markdown";
 import type { TranslatorConfigObject } from "node-html-markdown";
-import { posts } from "$lib/server/db/schema";
+import { posts } from "#lib/server/db/schema.js";
 
 export async function GET({ params, locals }) {
 	const slug = params.slug.slice(0, -3);

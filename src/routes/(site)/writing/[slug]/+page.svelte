@@ -1,7 +1,7 @@
 <script lang="ts">
 	import dayjs from "dayjs";
-	import Content from "$lib/components/Content.svelte";
-	import type { Post } from "$lib/server/db/schema";
+	import Content from "#lib/components/Content.svelte";
+	import type { Post } from "#lib/server/db/schema.js";
 
 	const { data } = $props();
 </script>

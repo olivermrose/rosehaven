@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { animate, motion } from "motion-sv";
 	import { onMount } from "svelte";
-	import { rand } from "$lib";
+	import { rand } from "#lib";
 
 	// oxlint-disable-next-line max-lines-per-function
 	onMount(() => {

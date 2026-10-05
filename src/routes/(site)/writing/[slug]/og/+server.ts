@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { render } from "svelte/server";
 import { ImageResponse } from "takumi-js/response";
-import { dev } from "$app/environment";
-import { posts } from "$lib/server/db/schema";
+import { posts } from "#lib/server/db/schema.js";
+import { dev } from "$app/env";
 import Template from "./Template.svelte";
 import styles from "../../../../../app.css?inline";
 
@@ -11,12 +11,8 @@ export async function GET({ params, locals }) {
 		.select({ title: posts.title, excerpt: posts.excerpt })
 		.from(posts)
 		.where(eq(posts.slug, params.slug));
-
 	const { body, head } = await render(Template, {
-		props: {
-			title: post.title,
-			excerpt: post.excerpt,
-		},
+		props: { title: post.title, excerpt: post.excerpt },
 	});
 
 	return new ImageResponse(head + body, {
