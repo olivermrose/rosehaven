@@ -101,8 +101,7 @@
 				class="resize-y"
 				placeholder="Additional thoughts"
 				rows="3"
-				{...form.fields.commentary.as("text")}
-			></textarea>
+				{...form.fields.commentary.as("text")}></textarea>
 		</div>
 	</div>
 

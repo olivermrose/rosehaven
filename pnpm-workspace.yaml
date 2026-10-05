@@ -1,7 +1,17 @@
 engineStrict: true
 allowBuilds:
-    "@hugeicons/svelte": true
-    esbuild: true
-    sharp: true
-    unrs-resolver: true
-    workerd: true
+  "@hugeicons/svelte": true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vite-plus: latest
+overrides:
+  vite: "catalog:"
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"
