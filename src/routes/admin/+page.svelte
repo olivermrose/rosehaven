@@ -1,9 +1,12 @@
 <script lang="ts">
 	import {
 		createTable,
-		getCoreRowModel,
-		getFilteredRowModel,
-		getSortedRowModel,
+		tableFeatures,
+		rowSortingFeature,
+		globalFilteringFeature,
+		columnFilteringFeature,
+		createSortedRowModel,
+		createFilteredRowModel,
 	} from "@tanstack/svelte-table";
 	import type { ColumnDef, SortingState } from "@tanstack/svelte-table";
 	import dayjs from "dayjs";
@@ -11,9 +14,17 @@
 
 	const { data } = $props();
 
+	const features = tableFeatures({
+		rowSortingFeature,
+		columnFilteringFeature,
+		globalFilteringFeature,
+		sortedRowModel: createSortedRowModel(),
+		filteredRowModel: createFilteredRowModel(),
+	});
+
 	type Post = (typeof data.posts)[number];
 
-	const columns: ColumnDef<Post>[] = [
+	const columns: ColumnDef<typeof features, Post>[] = [
 		{ accessorKey: "title", header: "Title", enableSorting: true },
 		{ accessorKey: "category", header: "Category", enableSorting: true },
 		{ accessorKey: "publishedAt", header: "Published", enableSorting: true },
@@ -28,9 +39,7 @@
 			return data.posts;
 		},
 		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
+		features,
 		state: {
 			get sorting() {
 				return sorting;
