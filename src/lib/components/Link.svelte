@@ -10,7 +10,7 @@
 </script>
 
 <a
-	class={["group inline-flex items-baseline gap-1 no-underline", back && "flex-row-reverse"]}
+	class={["group inline-flex items-baseline gap-1.5 no-underline", back && "flex-row-reverse"]}
 	{href}
 	{...rest}
 >

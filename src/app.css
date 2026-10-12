@@ -183,15 +183,6 @@
 	select {
 		appearance: none;
 	}
-}
-
-@layer components {
-	.period::after {
-		content: ".";
-		font-family: var(--font-sans);
-		font-style: normal;
-		color: var(--color-peach-400);
-	}
 
 	input,
 	select,
@@ -213,6 +204,15 @@
 		&::placeholder {
 			color: var(--color-muted-foreground);
 		}
+	}
+}
+
+@layer components {
+	.period::after {
+		content: ".";
+		font-family: var(--font-sans);
+		font-style: normal;
+		color: var(--color-peach-400);
 	}
 
 	:is(a, button)[data-variant] {
@@ -270,6 +270,40 @@
 			&:not(:last-child) {
 				margin-bottom: 1.25rem;
 			}
+		}
+	}
+
+	[data-index] {
+		&:has(a:hover) li:not(:hover) {
+			@media (hover: hover) {
+				opacity: 0.45;
+			}
+		}
+
+		li {
+			transition: opacity 400ms var(--ease-out-expo);
+		}
+
+		[data-excerpt] {
+			display: grid;
+			grid-template-rows: 1fr;
+			transition:
+				grid-template-rows 500ms var(--ease-out-expo),
+				opacity 500ms var(--ease-out-expo);
+
+			> * {
+				overflow: hidden;
+			}
+
+			@media (hover: hover) {
+				grid-template-rows: 0fr;
+				opacity: 0;
+			}
+		}
+
+		a:is(:hover, :focus-visible) [data-excerpt] {
+			grid-template-rows: 1fr;
+			opacity: 1;
 		}
 	}
 

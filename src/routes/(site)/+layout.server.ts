@@ -1,4 +1,4 @@
-import { asc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { verifySession } from "#lib/server/auth.js";
 import { posts } from "#lib/server/db/schema.js";
 
@@ -9,7 +9,7 @@ export async function load({ locals, cookies }) {
 		.select()
 		.from(posts)
 		.where(eq(posts.status, "published"))
-		.orderBy(asc(posts.category), asc(posts.slug));
+		.orderBy(sql`${posts.category}::text`, desc(posts.publishedAt));
 
 	return { posts: result, authenticated };
 }
