@@ -87,7 +87,7 @@
 		</div>
 
 		<div>
-			<input name="content" type="hidden" value={content} />
+			<input {...form.fields.content.as("hidden", content)} />
 			<Editor category={form.fields.category.value()} bind:content />
 		</div>
 

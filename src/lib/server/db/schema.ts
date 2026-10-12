@@ -1,4 +1,13 @@
-import { boolean, pgEnum, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import {
+	boolean,
+	integer,
+	jsonb,
+	pgEnum,
+	pgTable,
+	serial,
+	text,
+	timestamp,
+} from "drizzle-orm/pg-core";
 
 export const categoryEnum = pgEnum("category", [
 	"dialogue",
@@ -27,6 +36,29 @@ export const posts = pgTable("posts", {
 
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
+
+export interface Track {
+	title: string;
+	duration?: string;
+}
+
+export const reviews = pgTable("reviews", {
+	id: serial().primaryKey(),
+	title: text().notNull(),
+	artist: text().notNull(),
+	year: integer(),
+	slug: text().notNull().unique(),
+	artwork: text().notNull(),
+	tracklist: jsonb().$type<Track[]>().notNull().default([]),
+	content: text().notNull(),
+	status: statusEnum().notNull().default("draft"),
+	publishedAt: timestamp("published_at", { withTimezone: true }),
+	createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export type Review = typeof reviews.$inferSelect;
+export type NewReview = typeof reviews.$inferInsert;
 
 export const quotes = pgTable("quotes", {
 	id: serial().primaryKey(),

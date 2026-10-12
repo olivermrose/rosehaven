@@ -32,9 +32,10 @@
 	interface Props {
 		content?: string;
 		category?: string;
+		components?: boolean;
 	}
 
-	let { content = $bindable(), category }: Props = $props();
+	let { content = $bindable(), category, components = true }: Props = $props();
 
 	// oxlint-disable-next-line no-unassigned-vars
 	let element: HTMLDivElement;
@@ -187,7 +188,7 @@
 				exec: () => editor?.chain().focus().setHorizontalRule().run(),
 			})}
 
-			{#if postComponentNames.length > 0}
+			{#if components && postComponentNames.length > 0}
 				<span role="separator" aria-orientation="vertical"></span>
 
 				<ComponentSelect

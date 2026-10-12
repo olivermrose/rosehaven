@@ -33,6 +33,7 @@
 
 				<nav class="mt-8 flex gap-6" aria-label="Sections" data-stagger>
 					<Link href="/writing">writing</Link>
+					<Link href="/music">music</Link>
 				</nav>
 			</div>
 		</div>
