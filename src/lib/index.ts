@@ -8,3 +8,10 @@ export const expoInOut = cubicBezier(0.65, 0.01, 0.05, 1);
 export function rand(min: number, max: number) {
 	return min + Math.random() * (max - min);
 }
+
+export function slugify(val: string) {
+	return val
+		.replaceAll(" ", "-")
+		.replaceAll(/[^\w-]+/g, "")
+		.toLowerCase();
+}

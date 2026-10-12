@@ -1,15 +1,10 @@
 import { error, redirect } from "@sveltejs/kit";
 import { asc, eq } from "drizzle-orm";
 import z from "zod";
+import { slugify } from "#lib";
 import { command, form, getRequestEvent, query } from "$app/server";
+import { requireAdmin } from "./server/auth";
 import { posts } from "./server/db/schema";
-
-function slugify(val: string) {
-	return val
-		.replaceAll(" ", "-")
-		.replaceAll(/[^\w-]+/g, "")
-		.toLowerCase();
-}
 
 export const getPost = query(z.string(), async (idOrSlug) => {
 	const event = getRequestEvent();
@@ -49,6 +44,7 @@ const postSchema = z.object({
 
 export const createPost = form(postSchema, async (data) => {
 	const event = getRequestEvent();
+	requireAdmin(event.cookies);
 
 	const slug = slugify(data.title);
 	const publishedAt = data.status === "published" ? new Date() : null;
@@ -77,6 +73,8 @@ export const updatePost = form(
 	}),
 	async (data) => {
 		const event = getRequestEvent();
+		requireAdmin(event.cookies);
+
 		const id = Number(event.params.id);
 
 		if (Number.isNaN(id)) {
@@ -122,6 +120,8 @@ export const updatePost = form(
 
 export const deletePost = command(z.number(), async (id) => {
 	const event = getRequestEvent();
+	requireAdmin(event.cookies);
+
 	await event.locals.db.delete(posts).where(eq(posts.id, id));
 
 	return { success: true };

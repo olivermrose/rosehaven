@@ -27,3 +27,16 @@ export const posts = pgTable("posts", {
 
 export type Post = typeof posts.$inferSelect;
 export type NewPost = typeof posts.$inferInsert;
+
+export const quotes = pgTable("quotes", {
+	id: serial().primaryKey(),
+	text: text().notNull(),
+	quotee: text().notNull(),
+	sourceTitle: text("source_title").notNull(),
+	sourceUrl: text("source_url"),
+	createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export type Quote = typeof quotes.$inferSelect;
+export type NewQuote = typeof quotes.$inferInsert;

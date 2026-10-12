@@ -1,5 +1,6 @@
 import { Buffer } from "node:buffer";
 import { createHmac, scrypt, timingSafeEqual } from "node:crypto";
+import { error } from "@sveltejs/kit";
 import type { Cookies } from "@sveltejs/kit";
 import { ADMIN_PASSWORD_HASH } from "$app/env/private";
 
@@ -22,6 +23,12 @@ export function createSession(cookies: Cookies) {
 
 export function verifySession(cookies: Cookies): boolean {
 	return cookies.get(COOKIE_NAME) === getSessionToken();
+}
+
+export function requireAdmin(cookies: Cookies) {
+	if (!verifySession(cookies)) {
+		error(401, "Unauthorized");
+	}
 }
 
 export function destroySession(cookies: Cookies) {
