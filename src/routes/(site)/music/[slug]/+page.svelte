@@ -1,6 +1,8 @@
 <script lang="ts">
 	import dayjs from "dayjs";
+	import Ombre from "#lib/components/Ombre.svelte";
 	import Tracklist from "#lib/components/Tracklist.svelte";
+	import { extractPaletteFromUrl } from "#lib/palette.js";
 
 	const { data } = $props();
 
@@ -44,14 +46,28 @@
 			</p>
 		</header>
 
-		<figure class="relative left-1/2 my-10 w-[min(calc(100vw-2rem),72rem)] -translate-x-1/2">
-			<img
-				class="aspect-video w-full rounded-2xl object-cover outline -outline-offset-1 outline-black/10 sm:rounded-3xl dark:outline-white/10"
-				src={review.artwork}
-				alt="Album artwork for {review.title} by {review.artist}"
-				fetchpriority="high"
-			/>
-		</figure>
+		<div class="relative left-1/2 my-10 w-[min(calc(100vw-2rem),72rem)] -translate-x-1/2">
+			{const palette = await extractPaletteFromUrl(review.artwork)}
+
+			{#if palette}
+				<div class="absolute inset-0 -z-10 overflow-hidden rounded-xl sm:rounded-2xl">
+					<Ombre vibrant={palette.vibrant} muted={palette.muted} />
+
+					<div
+						class="pointer-events-none absolute inset-0 rounded-[inherit] cutout"
+					></div>
+				</div>
+			{/if}
+
+			<figure class="p-6">
+				<img
+					class="aspect-video w-full rounded-lg object-cover shadow outline -outline-offset-1 outline-black/10 sm:rounded-xl dark:outline-white/10"
+					src={review.artwork}
+					alt="Album artwork for {review.title} by {review.artist}"
+					fetchpriority="high"
+				/>
+			</figure>
+		</div>
 
 		{#if review.tracklist.length}
 			<div class="mb-10">
