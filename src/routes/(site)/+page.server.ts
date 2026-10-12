@@ -1,5 +1,15 @@
-export function load() {
+import { sql } from "drizzle-orm";
+import { quotes } from "#lib/server/db/schema.js";
+
+export async function load({ locals }) {
+	const [quote] = await locals.db
+		.select()
+		.from(quotes)
+		.orderBy(sql`random()`)
+		.limit(1);
+
 	return {
+		quote,
 		seo: {
 			path: "/",
 			title: null,

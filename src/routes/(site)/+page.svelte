@@ -1,40 +1,70 @@
 <script lang="ts">
-	import { motion, useScroll, useTransform } from "motion-sv";
-	import Anthology from "#lib/components/Anthology.svelte";
-	import Footer from "#lib/components/Footer.svelte";
-	import Hero from "#lib/components/Hero.svelte";
-	import Petals from "#lib/components/Petals.svelte";
-	import Portrait from "#lib/components/Portrait.svelte";
+	import { animate, stagger } from "motion-sv";
+	import { onMount } from "svelte";
+	import Link from "#lib/components/Link.svelte";
+	import Quote from "#lib/components/Quote.svelte";
 
 	const { data } = $props();
 
-	let marquee = $state<HTMLElement>();
+	onMount(() => {
+		const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+		if (reduced) return;
 
-	const { scrollYProgress: marqueeY } = $derived(
-		useScroll({
-			target: marquee,
-			offset: ["start end", "end start"],
-		}),
-	);
-
-	const marqueeX = $derived(useTransform(marqueeY, [0, 1], ["-15%", "0%"]));
+		animate(
+			[
+				["#panel", { opacity: [0, 1], y: [16, 0], scale: [0.98, 1] }],
+				[
+					"[data-stagger]",
+					{ opacity: [0, 1], y: [12, 0], filter: ["blur(4px)", "blur(0px)"] },
+					{ at: "-0.6", delay: stagger(0.08) },
+				],
+			],
+			{
+				defaultTransition: {
+					duration: 0.9,
+					ease: [0.19, 1, 0.22, 1],
+				},
+			},
+		);
+	});
 </script>
 
-<Petals />
-<Hero />
+<div class="flex min-h-dvh flex-col p-2 pb-4">
+	<section id="panel" class="flex flex-1 items-center rounded-3xl glossy">
+		<div
+			class="mx-auto grid w-full max-w-3xl gap-10 text-fluid-sm sm:grid-cols-[1fr_auto] sm:gap-16"
+		>
+			<div class="max-w-prose space-y-4">
+				<h1 class="font-semibold" data-stagger>Oliver Maelle Rose</h1>
 
-<div class="overflow-hidden py-12 sm:py-20" bind:this={marquee}>
-	<motion.div
-		class="flex w-max items-center gap-x-10 text-[8vw]/none font-extralight tracking-tight uppercase opacity-10 sm:gap-x-20 sm:text-[5vw]/none"
-		style={{ x: marqueeX }}
-	>
-		{#each { length: 5 }}
-			<span class="whitespace-nowrap">Crafting Worlds Through Words</span>
-		{/each}
-	</motion.div>
+				{#if data.quote}
+					<Quote quote={data.quote} />
+				{/if}
+
+				<p data-stagger>
+					Reprehenderit voluptate in aliqua nisi in adipisicing ad labore incididunt
+					aliquip. Ex proident proident occaecat incididunt fugiat sunt Lorem magna quis
+					voluptate sint exercitation.
+				</p>
+
+				<p data-stagger>
+					Deserunt consequat cupidatat fugiat elit ad deserunt. Do anim veniam amet eu
+					aliqua id minim officia non Lorem irure dolor id.
+				</p>
+
+				<nav class="mt-8 flex gap-6" aria-label="Sections" data-stagger>
+					<Link href="/writing">writing</Link>
+				</nav>
+			</div>
+
+			<img
+				class="aspect-3/4 w-28 rounded-2xl object-cover opacity-0 outline -outline-offset-1 outline-black/10 max-sm:-order-1 sm:w-48 dark:outline-white/10"
+				src="https://r2.olivermrose.com/self.jpg"
+				alt="Portrait of Oliver Rose"
+				width="160"
+				height="213"
+				data-stagger
+			/>
+		</div>
+	</section>
 </div>
-
-<Portrait />
-<Anthology posts={data.posts} />
-
-<Footer />

@@ -5,7 +5,6 @@
 	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
 	import { BASE_URL, SITE_NAME } from "#lib";
-	import Cursor from "#lib/components/Cursor.svelte";
 	import Header from "#lib/components/Header.svelte";
 	import LoadingScreen from "#lib/components/LoadingScreen.svelte";
 	import ScrollProgress from "#lib/components/ScrollProgress.svelte";
@@ -16,7 +15,9 @@
 
 	const { seo } = $derived(page.data);
 	const title = $derived(seo.title ? `${seo.title} | ${SITE_NAME}` : SITE_NAME);
-	const image = $derived(seo.image ? BASE_URL + seo.image : null);
+	const image = $derived(
+		seo.image ? (URL.canParse(seo.image) ? seo.image : BASE_URL + seo.image) : null,
+	);
 
 	onMount(() => {
 		const lenis = new Lenis();
@@ -58,8 +59,6 @@
 		<meta name="twitter:image" content={image} />
 	{/if}
 </svelte:head>
-
-<Cursor />
 
 <LoadingScreen>
 	<Header />
