@@ -3,7 +3,18 @@
 	import Link from "#lib/components/Link.svelte";
 
 	const { data } = $props();
+
+	let scrolling = $state(false);
+	let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+
+	function onscroll() {
+		scrolling = true;
+		clearTimeout(scrollTimeout);
+		scrollTimeout = setTimeout(() => (scrolling = false), 100);
+	}
 </script>
+
+<svelte:window {onscroll} />
 
 <div class="mx-auto max-w-6xl px-4 pt-28 pb-20 sm:px-6">
 	<div class="mb-6">
@@ -22,7 +33,7 @@
 		</p>
 	</hgroup>
 
-	<div class="mt-16 space-y-16">
+	<div class="mt-16 space-y-16" data-scrolling={scrolling || undefined}>
 		{#each Object.entries(data.categories) as [category, posts = []] (category)}
 			<section id={category} class="scroll-mt-28">
 				<div class="flex items-baseline justify-between border-b border-border pb-3">

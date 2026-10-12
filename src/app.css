@@ -274,6 +274,10 @@
 	}
 
 	[data-index] {
+		[data-scrolling] & {
+			pointer-events: none;
+		}
+
 		&:has(a:hover) li:not(:hover) {
 			@media (hover: hover) {
 				opacity: 0.45;
