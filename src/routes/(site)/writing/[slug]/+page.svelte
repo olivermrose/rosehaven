@@ -3,6 +3,7 @@
 	import Content from "#lib/components/Content.svelte";
 	import Link from "#lib/components/Link.svelte";
 	import type { Post } from "#lib/server/db/schema.js";
+	import { page } from "$app/state";
 
 	const { data } = $props();
 </script>
@@ -11,7 +12,7 @@
 	<nav class="mb-4 flex items-center justify-between text-sm" aria-label="Post actions">
 		<Link href="/writing#{data.post.category}" back>all</Link>
 
-		{#if data.authenticated}
+		{#if page.data.authenticated}
 			<Link href="/admin/{data.post.id}">edit</Link>
 		{/if}
 	</nav>
@@ -63,7 +64,7 @@
 	{/if}
 </div>
 
-{#snippet navigation(type: "Previous" | "Next", post?: Post)}
+{#snippet navigation(type: "Previous" | "Next", post?: Pick<Post, "slug" | "title">)}
 	{#if post}
 		<div
 			class={[
