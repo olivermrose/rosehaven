@@ -35,21 +35,16 @@
 			class="mx-auto grid w-full max-w-3xl gap-10 text-fluid-sm sm:grid-cols-[1fr_auto] sm:gap-16"
 		>
 			<div class="max-w-prose space-y-4">
-				<h1 class="font-semibold" data-stagger>Oliver Maelle Rose</h1>
+				<h1 class="text-fluid-lg font-semibold" data-stagger>oliver rose.</h1>
 
 				{#if data.quote}
 					<Quote quote={data.quote} />
 				{/if}
 
 				<p data-stagger>
-					Reprehenderit voluptate in aliqua nisi in adipisicing ad labore incididunt
-					aliquip. Ex proident proident occaecat incididunt fugiat sunt Lorem magna quis
-					voluptate sint exercitation.
-				</p>
-
-				<p data-stagger>
-					Deserunt consequat cupidatat fugiat elit ad deserunt. Do anim veniam amet eu
-					aliqua id minim officia non Lorem irure dolor id.
+					I'm a front-end engineer with full-stack experience, currently working at
+					Moncur. I enjoy building web applications, exploring new technologies, and
+					expressing myself through creative writing.
 				</p>
 
 				<nav class="mt-8 flex gap-6" aria-label="Sections" data-stagger>
