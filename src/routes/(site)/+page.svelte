@@ -29,11 +29,18 @@
 	});
 </script>
 
-<div class="flex min-h-dvh flex-col p-2 pb-4">
-	<section id="panel" class="flex flex-1 items-center rounded-3xl glossy">
-		<div
-			class="mx-auto grid w-full max-w-3xl gap-10 text-fluid-sm sm:grid-cols-[1fr_auto] sm:gap-16"
-		>
+<div class="mx-auto flex min-h-dvh flex-col p-4">
+	<section id="home" class="mx-auto flex max-w-3xl flex-1 items-center">
+		<div class="grid gap-6 text-fluid-sm sm:grid-cols-[auto_1fr] sm:gap-8">
+			<img
+				class="aspect-3/4 w-48 shrink-0 rounded-2xl object-cover opacity-0 outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+				src="https://r2.olivermrose.com/self.jpg"
+				alt="Portrait of Oliver Rose"
+				width="160"
+				height="213"
+				data-stagger
+			/>
+
 			<div class="max-w-prose space-y-4">
 				<h1 class="text-fluid-lg font-semibold" data-stagger>oliver rose.</h1>
 
@@ -51,15 +58,6 @@
 					<Link href="/writing">writing</Link>
 				</nav>
 			</div>
-
-			<img
-				class="aspect-3/4 w-28 rounded-2xl object-cover opacity-0 outline -outline-offset-1 outline-black/10 max-sm:-order-1 sm:w-48 dark:outline-white/10"
-				src="https://r2.olivermrose.com/self.jpg"
-				alt="Portrait of Oliver Rose"
-				width="160"
-				height="213"
-				data-stagger
-			/>
 		</div>
 	</section>
 </div>

@@ -145,7 +145,7 @@
 {/if}
 
 <motion.div
-	class="fixed inset-0"
+	class="pointer-events-none fixed inset-0"
 	initial={{ opacity: 0 }}
 	animate={{ opacity: 1 }}
 	transition={{ duration: 0.75 }}

@@ -55,7 +55,7 @@
 </script>
 
 <motion.header
-	class="fixed inset-x-0 top-0 z-50 pt-6 mix-blend-difference"
+	class="fixed inset-x-0 top-0 z-50 px-6 pt-6 mix-blend-difference"
 	initial={{ opacity: 0 }}
 	animate={{ opacity: 1 }}
 	transition={{ duration: 0.75 }}
