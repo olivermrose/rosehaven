@@ -1,21 +1,19 @@
 <script lang="ts">
 	import dayjs from "dayjs";
 	import Content from "#lib/components/Content.svelte";
+	import Link from "#lib/components/Link.svelte";
 	import type { Post } from "#lib/server/db/schema.js";
+	import { page } from "$app/state";
 
 	const { data } = $props();
 </script>
 
 <div class="mx-auto max-w-4xl px-4 pt-28 pb-20 sm:px-6">
 	<nav class="mb-4 flex items-center justify-between text-sm" aria-label="Post actions">
-		<a class="group no-underline" href="/#{data.post.category}">
-			<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
-		</a>
+		<Link href="/writing#{data.post.category}" back>all</Link>
 
-		{#if data.authenticated}
-			<a class="group no-underline" href="/admin/{data.post.id}">
-				Edit <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
-			</a>
+		{#if page.data.authenticated}
+			<Link href="/admin/{data.post.id}">edit</Link>
 		{/if}
 	</nav>
 
@@ -66,7 +64,7 @@
 	{/if}
 </div>
 
-{#snippet navigation(type: "Previous" | "Next", post?: Post)}
+{#snippet navigation(type: "Previous" | "Next", post?: Pick<Post, "slug" | "title">)}
 	{#if post}
 		<div
 			class={[

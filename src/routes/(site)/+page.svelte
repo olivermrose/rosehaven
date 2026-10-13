@@ -1,40 +1,40 @@
 <script lang="ts">
-	import { motion, useScroll, useTransform } from "motion-sv";
-	import Anthology from "#lib/components/Anthology.svelte";
-	import Footer from "#lib/components/Footer.svelte";
-	import Hero from "#lib/components/Hero.svelte";
-	import Petals from "#lib/components/Petals.svelte";
-	import Portrait from "#lib/components/Portrait.svelte";
+	import Link from "#lib/components/Link.svelte";
+	import Quote from "#lib/components/Quote.svelte";
+	import { stagger } from "#lib/motion.js";
 
 	const { data } = $props();
-
-	let marquee = $state<HTMLElement>();
-
-	const { scrollYProgress: marqueeY } = $derived(
-		useScroll({
-			target: marquee,
-			offset: ["start end", "end start"],
-		}),
-	);
-
-	const marqueeX = $derived(useTransform(marqueeY, [0, 1], ["-15%", "0%"]));
 </script>
 
-<Petals />
-<Hero />
+<div class="mx-auto flex min-h-dvh flex-col p-4" {@attach stagger}>
+	<section id="home" class="mx-auto flex max-w-3xl flex-1 items-center">
+		<div class="grid gap-6 text-fluid-sm sm:grid-cols-[auto_1fr] sm:gap-8">
+			<img
+				class="aspect-3/4 w-48 shrink-0 rounded-2xl object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+				src="https://r2.olivermrose.com/self.jpg"
+				alt="Portrait of Oliver Rose"
+				width="160"
+				height="213"
+				data-stagger
+			/>
 
-<div class="overflow-hidden py-12 sm:py-20" bind:this={marquee}>
-	<motion.div
-		class="flex w-max items-center gap-x-10 text-[8vw]/none font-extralight tracking-tight uppercase opacity-10 sm:gap-x-20 sm:text-[5vw]/none"
-		style={{ x: marqueeX }}
-	>
-		{#each { length: 5 }}
-			<span class="whitespace-nowrap">Crafting Worlds Through Words</span>
-		{/each}
-	</motion.div>
+			<div class="max-w-prose space-y-4">
+				<h1 class="text-fluid-lg font-semibold" data-stagger>oliver rose.</h1>
+
+				{#if data.quote}
+					<Quote quote={data.quote} />
+				{/if}
+
+				<p data-stagger>
+					I'm a front-end engineer with full-stack experience, currently working at
+					Moncur. I enjoy building web applications, exploring new technologies, and
+					expressing myself through creative writing.
+				</p>
+
+				<nav class="mt-8 flex gap-6" aria-label="Sections" data-stagger>
+					<Link href="/writing">writing</Link>
+				</nav>
+			</div>
+		</div>
+	</section>
 </div>
-
-<Portrait />
-<Anthology posts={data.posts} />
-
-<Footer />

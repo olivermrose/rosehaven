@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Link from "#lib/components/Link.svelte";
 	import { deletePost, getPost, updatePost } from "#lib/posts.remote.js";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
@@ -12,15 +13,11 @@
 	}
 </script>
 
-<nav class="mb-8 flex items-center justify-between font-medium">
-	<a class="group text-sm no-underline" href="/admin">
-		<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
-	</a>
+<nav class="mb-6 flex items-center justify-between">
+	<Link href="/admin" back>dashboard</Link>
 
 	{#if post.status === "published"}
-		<a class="group text-sm no-underline" href="/writing/{post.slug}" target="_blank">
-			View <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
-		</a>
+		<Link href="/writing/{post.slug}" target="_blank">view</Link>
 	{/if}
 </nav>
 
