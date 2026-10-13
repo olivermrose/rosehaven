@@ -1,4 +1,4 @@
-import { eq, sql, desc } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { posts } from "#lib/server/db/schema.js";
 
 export async function load({ locals }) {
@@ -6,7 +6,7 @@ export async function load({ locals }) {
 		.select()
 		.from(posts)
 		.where(eq(posts.status, "published"))
-		.orderBy(sql`${posts.category}::text`, desc(posts.publishedAt));
+		.orderBy(asc(posts.category), desc(posts.publishedAt), desc(posts.id));
 
 	return {
 		categories: Object.groupBy(result, (p) => p.category),

@@ -6,11 +6,15 @@
 		back?: boolean;
 	}
 
-	const { href, back = false, children, ...rest }: Props = $props();
+	const { class: className, href, back = false, children, ...rest }: Props = $props();
 </script>
 
 <a
-	class={["group inline-flex items-baseline gap-1.5 no-underline", back && "flex-row-reverse"]}
+	class={[
+		"group inline-flex items-baseline gap-1.5 no-underline",
+		back && "flex-row-reverse",
+		className,
+	]}
 	{href}
 	{...rest}
 >

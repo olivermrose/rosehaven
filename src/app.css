@@ -274,13 +274,10 @@
 	}
 
 	[data-index] {
-		[data-scrolling] & {
-			pointer-events: none;
-		}
-
 		&:has(a:hover) li:not(:hover) {
 			@media (hover: hover) {
 				opacity: 0.45;
+				transition-delay: 120ms;
 			}
 		}
 
@@ -308,6 +305,10 @@
 		a:is(:hover, :focus-visible) [data-excerpt] {
 			grid-template-rows: 1fr;
 			opacity: 1;
+		}
+
+		a:hover [data-excerpt] {
+			transition-delay: 120ms;
 		}
 	}
 
@@ -374,7 +375,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-	[data-stagger] {
+	[data-stagger-root]:not([data-stagger-done]) [data-stagger] {
 		opacity: 0;
 	}
 }

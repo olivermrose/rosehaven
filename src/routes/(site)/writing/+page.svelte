@@ -4,18 +4,7 @@
 	import { stagger } from "#lib/motion.js";
 
 	const { data } = $props();
-
-	let scrolling = $state(false);
-	let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
-
-	function onscroll() {
-		scrolling = true;
-		clearTimeout(scrollTimeout);
-		scrollTimeout = setTimeout(() => (scrolling = false), 100);
-	}
 </script>
-
-<svelte:window {onscroll} />
 
 <div class="mx-auto max-w-6xl px-6 pt-28 pb-20" {@attach stagger}>
 	<div class="mb-6">
@@ -23,18 +12,18 @@
 	</div>
 
 	<hgroup class="max-w-prose">
-		<h1 class="reveal text-fluid-3xl/tight" data-stagger>
+		<h1 class="text-fluid-3xl/tight" data-stagger>
 			To write is to discover the essence of what remains
 			<span class="font-serif italic">untold</span>.
 		</h1>
 
-		<p class="reveal mt-2" data-stagger>
+		<p class="mt-2" data-stagger>
 			As I drift off into reverie, I find myself running through a thousand different
 			scenarios of "What if?" My life is not bound by the earth I stand upon.
 		</p>
 	</hgroup>
 
-	<div class="mt-16 space-y-16" data-scrolling={scrolling || undefined}>
+	<div class="mt-16 space-y-16">
 		{#each Object.entries(data.categories) as [category, posts = []] (category)}
 			<section id={category} class="scroll-mt-28" data-stagger>
 				<div class="flex items-baseline justify-between border-b border-border pb-3">
