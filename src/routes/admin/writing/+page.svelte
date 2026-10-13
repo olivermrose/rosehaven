@@ -74,7 +74,7 @@
 	/>
 
 	<div class="flex items-center gap-2">
-		<a href="/admin/new" data-variant="primary">New Post</a>
+		<a href="/admin/writing/new" data-variant="primary">New Post</a>
 
 		<form {...logout}>
 			<button type="submit" data-variant="secondary">Sign Out</button>
@@ -107,7 +107,7 @@
 					<td class="max-w-100">
 						<a
 							class="line-clamp-1 transition-opacity group-hover:opacity-100"
-							href="/admin/{post.id}"
+							href="/admin/writing/{post.id}"
 						>
 							{post.title}
 						</a>

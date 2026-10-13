@@ -1,6 +1,7 @@
 <script lang="ts">
 	import dayjs from "dayjs";
 	import Ombre from "#lib/components/Ombre.svelte";
+	import PageNav from "#lib/components/PageNav.svelte";
 	import Tracklist from "#lib/components/Tracklist.svelte";
 	import { extractPaletteFromUrl } from "#lib/palette.js";
 
@@ -9,18 +10,8 @@
 	const review = $derived(data.review);
 </script>
 
-<div class="mx-auto max-w-4xl px-4 pt-28 pb-20 sm:px-6">
-	<nav class="mb-4 flex items-center justify-between text-sm" aria-label="Review actions">
-		<a class="group no-underline" href="/music">
-			<span class="inline-block duration-300 group-hover:-translate-x-1">&lt;--</span> Back
-		</a>
-
-		{#if data.authenticated}
-			<a class="group no-underline" href="/admin/music/{review.id}">
-				Edit <span class="inline-block duration-300 group-hover:translate-x-1">--&gt;</span>
-			</a>
-		{/if}
-	</nav>
+<div class="mx-auto max-w-4xl px-6 pt-28 pb-20">
+	<PageNav back="/music" edit="/admin/music/{data.review.id}" />
 
 	<article>
 		<header>

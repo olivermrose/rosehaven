@@ -2,7 +2,7 @@
 	import type { Snippet } from "svelte";
 	import { createPost, updatePost } from "#lib/posts.remote.js";
 	import type { Post } from "#lib/server/db/schema.js";
-	import Editor from "./Editor.svelte";
+	import Editor from "../Editor.svelte";
 
 	interface Props {
 		form: typeof createPost | typeof updatePost;

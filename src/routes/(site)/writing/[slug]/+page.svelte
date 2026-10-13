@@ -1,21 +1,14 @@
 <script lang="ts">
 	import dayjs from "dayjs";
 	import Content from "#lib/components/Content.svelte";
-	import Link from "#lib/components/Link.svelte";
+	import PageNav from "#lib/components/PageNav.svelte";
 	import type { Post } from "#lib/server/db/schema.js";
-	import { page } from "$app/state";
 
 	const { data } = $props();
 </script>
 
-<div class="mx-auto max-w-4xl px-4 pt-28 pb-20 sm:px-6">
-	<nav class="mb-4 flex items-center justify-between text-sm" aria-label="Post actions">
-		<Link href="/writing#{data.post.category}" back>all</Link>
-
-		{#if page.data.authenticated}
-			<Link href="/admin/{data.post.id}">edit</Link>
-		{/if}
-	</nav>
+<div class="mx-auto max-w-4xl px-6 pt-28 pb-20">
+	<PageNav back="/writing/{data.post.category}" edit="/admin/writing/{data.post.id}" />
 
 	<article class="max-w-4xl">
 		<header>
