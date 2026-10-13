@@ -372,3 +372,9 @@
 .transitioning .post-title {
 	view-transition-name: none !important;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-stagger] {
+		opacity: 0;
+	}
+}

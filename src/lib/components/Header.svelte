@@ -55,12 +55,12 @@
 </script>
 
 <motion.header
-	class="fixed inset-x-0 top-0 z-50 px-6 pt-6 mix-blend-difference"
+	class="fixed inset-x-0 top-0 z-50 pt-6 mix-blend-difference"
 	initial={{ opacity: 0 }}
 	animate={{ opacity: 1 }}
 	transition={{ duration: 0.75 }}
 >
-	<nav class="mx-auto flex w-full max-w-7xl items-center justify-between">
+	<nav class="mx-auto flex w-full max-w-6xl items-center justify-between px-6">
 		<div class="relative">
 			<a class="absolute inset-0 z-10" href="/">
 				<span class="sr-only">{SITE_NAME}</span>

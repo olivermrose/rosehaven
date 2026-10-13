@@ -1,39 +1,16 @@
 <script lang="ts">
-	import { animate, stagger } from "motion-sv";
-	import { onMount } from "svelte";
 	import Link from "#lib/components/Link.svelte";
 	import Quote from "#lib/components/Quote.svelte";
+	import { stagger } from "#lib/motion.js";
 
 	const { data } = $props();
-
-	onMount(() => {
-		const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-		if (reduced) return;
-
-		animate(
-			[
-				["#panel", { opacity: [0, 1], y: [16, 0], scale: [0.98, 1] }],
-				[
-					"[data-stagger]",
-					{ opacity: [0, 1], y: [12, 0], filter: ["blur(4px)", "blur(0px)"] },
-					{ at: "-0.6", delay: stagger(0.08) },
-				],
-			],
-			{
-				defaultTransition: {
-					duration: 0.9,
-					ease: [0.19, 1, 0.22, 1],
-				},
-			},
-		);
-	});
 </script>
 
-<div class="mx-auto flex min-h-dvh flex-col p-4">
+<div class="mx-auto flex min-h-dvh flex-col p-4" {@attach stagger}>
 	<section id="home" class="mx-auto flex max-w-3xl flex-1 items-center">
 		<div class="grid gap-6 text-fluid-sm sm:grid-cols-[auto_1fr] sm:gap-8">
 			<img
-				class="aspect-3/4 w-48 shrink-0 rounded-2xl object-cover opacity-0 outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+				class="aspect-3/4 w-48 shrink-0 rounded-2xl object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
 				src="https://r2.olivermrose.com/self.jpg"
 				alt="Portrait of Oliver Rose"
 				width="160"
