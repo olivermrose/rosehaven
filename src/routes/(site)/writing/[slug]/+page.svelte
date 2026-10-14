@@ -8,7 +8,7 @@
 </script>
 
 <div class="mx-auto max-w-4xl px-6 pt-28 pb-20">
-	<PageNav back="/writing/{data.post.category}" edit="/admin/writing/{data.post.id}" />
+	<PageNav back="/writing#{data.post.category}" edit="/admin/writing/{data.post.id}" />
 
 	<article class="max-w-4xl">
 		<header>
