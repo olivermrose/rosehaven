@@ -1,6 +1,7 @@
 <script lang="ts">
 	import dayjs from "dayjs";
 	import Link from "#lib/components/Link.svelte";
+	import ArtworkTrail from "./ArtworkTrail.svelte";
 
 	const { data } = $props();
 </script>
@@ -25,7 +26,10 @@
 		<ul class="mt-16 border-t border-border" data-index>
 			{#each data.reviews as review (review.id)}
 				<li class="border-b border-border">
-					<a class="group flex gap-4 py-4 no-underline" href="/music/{review.slug}">
+					<a
+						class="group relative flex gap-4 py-4 no-underline"
+						href="/music/{review.slug}"
+					>
 						<img
 							class="size-14 shrink-0 rounded-lg object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
 							src={review.artwork}
@@ -58,6 +62,8 @@
 								{review.artist}{review.year ? ` · ${review.year}` : ""}
 							</p>
 						</div>
+
+						<ArtworkTrail src={review.artwork} />
 					</a>
 				</li>
 			{/each}
