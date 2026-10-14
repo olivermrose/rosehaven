@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createReview } from "#lib/reviews.remote.js";
-	import ReviewForm from "../ReviewForm.svelte";
+	import Form from "../Form.svelte";
 </script>
 
-<ReviewForm form={createReview} />
+<Form form={createReview} />

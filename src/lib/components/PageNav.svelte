@@ -10,7 +10,7 @@
 	const { back, edit }: Props = $props();
 </script>
 
-<nav class="mb-4 flex items-center justify-between text-sm" aria-label="Actions">
+<nav class="mb-8 flex items-center justify-between text-sm" aria-label="Actions">
 	<Link href={back} back>all</Link>
 
 	{#if page.data.authenticated}
