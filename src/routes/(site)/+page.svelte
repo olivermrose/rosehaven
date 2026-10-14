@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Link from "#lib/components/Link.svelte";
+	import Petals from "#lib/components/Petals.svelte";
 	import Quote from "#lib/components/Quote.svelte";
 	import { stagger } from "#lib/motion.js";
 
@@ -39,3 +40,5 @@
 		</div>
 	</section>
 </div>
+
+<Petals />

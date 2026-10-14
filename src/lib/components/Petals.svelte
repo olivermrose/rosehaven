@@ -145,11 +145,10 @@
 {/if}
 
 <motion.div
-	class="pointer-events-none fixed inset-0"
+	class="pointer-events-none fixed inset-0 -z-10"
 	initial={{ opacity: 0 }}
 	animate={{ opacity: 1 }}
 	transition={{ duration: 0.75 }}
-	style={{ viewTransitionName: "persist" }}
 >
 	{#each { length: 25 }}
 		{@const [main, anti] = generateDiagonals()}
