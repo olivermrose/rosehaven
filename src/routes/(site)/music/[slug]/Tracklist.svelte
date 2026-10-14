@@ -3,9 +3,10 @@
 
 	interface Props {
 		tracks: Track[];
+		open?: boolean;
 	}
 
-	const { tracks }: Props = $props();
+	const { tracks, open = false }: Props = $props();
 
 	const runtime = $derived.by(() => {
 		if (!tracks.length || tracks.some((track) => !track.duration)) return null;
@@ -22,13 +23,13 @@
 	});
 </script>
 
-<details class="tracklist">
+<details class="tracklist" {open}>
 	<summary
 		class="flex cursor-pointer list-none items-baseline justify-between gap-4 border-b border-border pb-3 select-none"
 	>
 		<span class="font-medium">Tracklist</span>
 
-		<span class="flex items-center gap-3 font-mono text-xs text-muted-foreground">
+		<div class="flex items-center gap-3 text-xs text-muted-foreground">
 			<span class="tabular-nums">
 				{tracks.length}
 				{tracks.length === 1 ? "track" : "tracks"}{runtime ? ` · ${runtime}` : ""}
@@ -48,20 +49,20 @@
 					stroke-linejoin="round"
 				/>
 			</svg>
-		</span>
+		</div>
 	</summary>
 
 	<ol>
 		{#each tracks as track, i (i)}
-			<li class="flex items-baseline gap-4 border-b border-border py-3">
-				<span class="w-6 shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
+			<li class="flex items-center gap-4 border-b border-border py-3">
+				<span class="w-6 shrink-0 text-xs text-muted-foreground tabular-nums">
 					{String(i + 1).padStart(2, "0")}
 				</span>
 
 				<span class="min-w-0 flex-1">{track.title}</span>
 
 				{#if track.duration}
-					<span class="font-mono text-xs text-muted-foreground tabular-nums">
+					<span class="text-xs text-muted-foreground tabular-nums">
 						{track.duration}
 					</span>
 				{/if}
