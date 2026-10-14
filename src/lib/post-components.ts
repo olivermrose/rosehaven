@@ -1,4 +1,5 @@
 import type { Component } from "svelte";
+
 import type { Post } from "#lib/server/db/schema.js";
 
 type PostComponent = Component<{ post: Post }>;

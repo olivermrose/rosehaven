@@ -1,5 +1,6 @@
 import { error } from "@sveltejs/kit";
 import { eq, getColumns, sql } from "drizzle-orm";
+
 import { posts } from "#lib/server/db/schema.js";
 
 const order = sql`OVER (

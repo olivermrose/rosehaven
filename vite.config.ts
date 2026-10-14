@@ -42,8 +42,7 @@ export default defineConfig({
 			stylesheet: "./src/app.css",
 		},
 		sortImports: {
-			internalPattern: ["$"],
-			newlinesBetween: false,
+			internalPattern: ["$app/"],
 		},
 		ignorePatterns: ["drizzle/**/*.json", "src/assets/**"],
 		overrides: [

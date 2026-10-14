@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Debounced } from "runed";
+
 	import { findAlbums, getAlbum } from "#lib/reviews.remote.js";
 	import type { Album } from "#lib/server/itunes.js";
 

@@ -4,6 +4,7 @@
 	import Lenis from "lenis";
 	import { frame } from "motion-sv";
 	import { onMount } from "svelte";
+
 	import { BASE_URL, SITE_NAME } from "#lib";
 	import Header from "#lib/components/Header.svelte";
 	import LoadingScreen from "#lib/components/LoadingScreen.svelte";

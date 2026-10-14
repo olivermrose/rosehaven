@@ -1,5 +1,6 @@
 <script lang="ts">
 	import dayjs from "dayjs";
+
 	import Collection from "#lib/components/Collection.svelte";
 
 	const { data } = $props();

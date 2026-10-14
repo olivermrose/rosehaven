@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
+
 	import { stagger } from "#lib/motion.js";
+
 	import Link from "./Link.svelte";
 
 	interface Props {

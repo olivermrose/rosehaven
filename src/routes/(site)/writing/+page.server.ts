@@ -1,4 +1,5 @@
 import { asc, desc, eq } from "drizzle-orm";
+
 import { posts } from "#lib/server/db/schema.js";
 
 export async function load({ locals }) {

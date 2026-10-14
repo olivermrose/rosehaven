@@ -1,9 +1,12 @@
 import { eq } from "drizzle-orm";
 import { render } from "svelte/server";
 import { ImageResponse } from "takumi-js/response";
+
 import { posts } from "#lib/server/db/schema.js";
 import { dev } from "$app/env";
+
 import Template from "./Template.svelte";
+
 import styles from "../../../../../app.css?inline";
 
 export async function GET({ params, locals }) {

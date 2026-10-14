@@ -1,4 +1,5 @@
 import { sql } from "drizzle-orm";
+
 import { quotes } from "#lib/server/db/schema.js";
 
 export async function load({ locals }) {

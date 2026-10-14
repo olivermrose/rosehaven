@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PageNav from "#lib/components/PageNav.svelte";
+
 	import ReviewHeader from "./ReviewHeader.svelte";
 
 	const { data } = $props();

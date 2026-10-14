@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
 	import type { HTMLFormAttributes } from "svelte/elements";
+
 	import type { RemoteFormField, RemoteFormIssue } from "$app/server";
 
 	type Status = "draft" | "published";

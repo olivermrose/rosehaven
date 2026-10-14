@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
+
 	import Link from "./Link.svelte";
 
 	interface Props {

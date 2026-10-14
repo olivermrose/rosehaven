@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
+
 	import { createPost, updatePost } from "#lib/posts.remote.js";
 	import type { Post } from "#lib/server/db/schema.js";
+
 	import Editor from "../Editor.svelte";
 	import FormLayout from "../FormLayout.svelte";
 

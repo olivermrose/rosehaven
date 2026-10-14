@@ -1,7 +1,9 @@
 <script lang="ts">
 	import dayjs from "dayjs";
+
 	import { artworkAt } from "#lib";
 	import Collection from "#lib/components/Collection.svelte";
+
 	import ArtworkTrail from "./ArtworkTrail.svelte";
 
 	const { data } = $props();
