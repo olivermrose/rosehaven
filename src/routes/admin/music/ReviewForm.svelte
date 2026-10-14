@@ -78,19 +78,21 @@
 			</div>
 		</div>
 
-		<div>
-			<label for="artwork">Artwork URL</label>
-			<input
-				id="artwork"
-				placeholder="https://r2.olivermrose.com/..."
-				{...form.fields.artwork.as("url")}
-			/>
+		<div class="flex items-start gap-8">
+			<div class="grow">
+				<label for="artwork">Artwork URL</label>
+				<input
+					id="artwork"
+					placeholder="https://r2.olivermrose.com/..."
+					{...form.fields.artwork.as("url")}
+				/>
+			</div>
 
 			{#if artwork}
 				<img
-					class="mt-4 aspect-video w-full max-w-md rounded-xl object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+					class="mt-4 aspect-square w-full max-w-xs rounded-xl object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
 					src={artwork}
-					alt="Artwork preview (16:9 crop)"
+					alt="Artwork preview"
 				/>
 			{/if}
 		</div>
