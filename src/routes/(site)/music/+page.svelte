@@ -34,8 +34,6 @@
 						<div class="flex items-baseline justify-between gap-6">
 							<h2
 								class="post-title truncate font-medium transition-colors duration-300 group-hover:text-plum-500 dark:group-hover:text-white"
-								style:view-transition-class="post-title"
-								style:view-transition-name="review-{review.id}"
 							>
 								{review.title}
 							</h2>

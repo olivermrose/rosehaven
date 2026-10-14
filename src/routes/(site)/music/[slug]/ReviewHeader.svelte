@@ -25,11 +25,7 @@
 				</time>
 			{/if}
 
-			<h1
-				class="post-title mt-4 w-fit text-fluid-xl/tight font-semibold text-pretty"
-				style:view-transition-class="post-title"
-				style:view-transition-name="review-{review.id}"
-			>
+			<h1 class="post-title mt-4 w-fit text-fluid-xl/tight font-semibold text-pretty">
 				{review.title}
 			</h1>
 

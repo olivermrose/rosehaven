@@ -38,8 +38,6 @@
 								<div class="flex min-w-0 items-center gap-2">
 									<h3
 										class="post-title truncate font-medium transition-colors duration-300 group-hover:text-plum-500 dark:group-hover:text-white"
-										style:view-transition-class="post-title"
-										style:view-transition-name="post-{post.id}"
 									>
 										{post.title}
 									</h3>

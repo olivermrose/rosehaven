@@ -370,19 +370,6 @@
 	mix-blend-mode: normal;
 }
 
-::view-transition-old(.post-title) {
-	display: none;
-}
-
-::view-transition-group(.post-title) {
-	animation-duration: 300ms;
-	mix-blend-mode: normal;
-}
-
-.transitioning .post-title {
-	view-transition-name: none !important;
-}
-
 @media (prefers-reduced-motion: no-preference) {
 	[data-stagger-root]:not([data-stagger-done]) [data-stagger] {
 		opacity: 0;

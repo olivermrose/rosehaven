@@ -28,11 +28,7 @@
 				</div>
 			{/if}
 
-			<h1
-				class="post-title mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty"
-				style:view-transition-class="post-title"
-				style:view-transition-name="post-{data.post.id}"
-			>
+			<h1 class="post-title mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty">
 				{data.post.title}
 			</h1>
 		</header>
