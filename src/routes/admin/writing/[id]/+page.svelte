@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Link from "#lib/components/Link.svelte";
 	import { deletePost, getPost, updatePost } from "#lib/posts.remote.js";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
+	import AdminNav from "../../AdminNav.svelte";
 	import Form from "../Form.svelte";
 
 	const post = $derived(await getPost(page.params.id!));
@@ -13,13 +13,11 @@
 	}
 </script>
 
-<nav class="mb-6 flex items-center justify-between">
-	<Link href="/admin" back>dashboard</Link>
-
-	{#if post.status === "published"}
-		<Link href="/writing/{post.slug}" target="_blank">view</Link>
-	{/if}
-</nav>
+<AdminNav
+	back="/admin/writing"
+	view="/writing/{post.slug}"
+	published={post.status === "published"}
+/>
 
 {#if updatePost.result?.success}
 	<div class="mb-8 text-sm text-aloe-600 uppercase dark:text-aloe-300">saved · post updated</div>

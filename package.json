@@ -41,6 +41,7 @@
 		"node-html-markdown": "^2.0.0",
 		"pg": "^8.23.1",
 		"runed": "^0.37.1",
+		"shaders": "^4.0.4",
 		"takumi-js": "^2.14.0",
 		"tegaki": "^1.1.0",
 		"zod": "^4.6.6"

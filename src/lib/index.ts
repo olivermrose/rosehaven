@@ -11,3 +11,9 @@ export function slugify(val: string) {
 		.replaceAll(/[^\w-]+/g, "")
 		.toLowerCase();
 }
+
+const ITUNES_SIZE = /\/\d+x\d+bb\.jpg$/;
+
+export function artworkAt(url: string, size: number) {
+	return url.replace(ITUNES_SIZE, `/${size}x${size}bb.jpg`);
+}

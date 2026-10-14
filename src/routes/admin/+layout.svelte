@@ -6,6 +6,7 @@
 
 	const sections = [
 		{ href: "/admin", label: "writing" },
+		{ href: "/admin/music", label: "music" },
 		{ href: "/admin/quotes", label: "quotes" },
 	];
 
