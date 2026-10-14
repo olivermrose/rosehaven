@@ -1,4 +1,5 @@
 import chroma from "chroma-js";
+import { artworkAt } from "#lib";
 
 export interface Palette {
 	vibrant: string;
@@ -131,17 +132,22 @@ export function extractPalette(pixels: Uint8ClampedArray): Palette | null {
 }
 
 export async function extractPaletteFromUrl(url: string, size = 64): Promise<Palette | null> {
-	const image = new Image();
-	image.crossOrigin = "anonymous";
-	image.src = url;
-	await image.decode();
+	try {
+		const image = new Image();
+		image.crossOrigin = "anonymous";
+		image.src = artworkAt(url, 100);
 
-	// Downscaling first keeps this fast and averages out noise
-	const canvas = new OffscreenCanvas(size, size);
-	const context = canvas.getContext("2d");
-	if (!context) return null;
+		await image.decode();
 
-	context.drawImage(image, 0, 0, size, size);
+		// Downscaling first keeps this fast and averages out noise
+		const canvas = new OffscreenCanvas(size, size);
+		const context = canvas.getContext("2d");
+		if (!context) return null;
 
-	return extractPalette(context.getImageData(0, 0, size, size).data);
+		context.drawImage(image, 0, 0, size, size);
+
+		return extractPalette(context.getImageData(0, 0, size, size).data);
+	} catch {
+		return null;
+	}
 }

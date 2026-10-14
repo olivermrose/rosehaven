@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
+	import { stagger } from "#lib/motion.js";
 	import Link from "./Link.svelte";
 
 	interface Props {
@@ -13,7 +14,7 @@
 	const { class: className, empty, heading, lead, children }: Props = $props();
 </script>
 
-<div class="mx-auto max-w-6xl px-6 pt-28 pb-20">
+<div class="mx-auto max-w-6xl px-6 pt-28 pb-20" {@attach stagger}>
 	<div class="mb-8">
 		<Link href="/" back>home</Link>
 	</div>

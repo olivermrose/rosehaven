@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Ombre from "#lib/components/Ombre.svelte";
-	import { extractPaletteFromUrl } from "#lib/palette.js";
+	import { extractPaletteFromUrl, type Palette } from "#lib/palette.js";
 	import type { Review } from "#lib/server/db/schema.js";
 
 	interface Props {
@@ -8,11 +8,23 @@
 	}
 
 	const { review }: Props = $props();
+
+	let palette = $state<Palette | null>(null);
+
+	$effect(() => {
+		let stale = false;
+
+		void extractPaletteFromUrl(review.artwork).then((result) => {
+			if (!stale) palette = result;
+		});
+
+		return () => {
+			stale = true;
+		};
+	});
 </script>
 
 <div class="relative w-full md:max-w-md">
-	{const palette = $derived(await extractPaletteFromUrl(review.artwork))}
-
 	{#if palette}
 		<div class="absolute inset-0 -z-10 overflow-hidden rounded-xl sm:rounded-2xl">
 			<Ombre vibrant={palette.vibrant} muted={palette.muted} />

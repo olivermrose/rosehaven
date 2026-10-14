@@ -13,6 +13,7 @@
 	const y = new Spring(0, { stiffness: 0.08, damping: 0.55 });
 
 	let visible = $state(false);
+	let hovered = $state(false);
 
 	// The gap between where the cursor is and where the artwork has caught up to
 	const tilt = $derived(Math.max(-14, Math.min(14, (x.target - x.current) * 0.08)));
@@ -37,6 +38,7 @@
 
 			moveTo(event, !visible);
 			visible = true;
+			hovered = true;
 		}
 
 		function onMove(event: PointerEvent) {
@@ -44,6 +46,7 @@
 
 			moveTo(event, false);
 			visible = true;
+			hovered = true;
 		}
 
 		function onLeave() {
@@ -73,7 +76,7 @@
 			"origin-bottom-left rounded-xl object-cover shadow-2xl outline -outline-offset-1 outline-black/10 transition-[opacity,scale] duration-300 ease-out dark:outline-white/10",
 			visible ? "scale-100 opacity-100" : "scale-75 opacity-0",
 		]}
-		{src}
+		src={hovered ? src : undefined}
 		alt=""
 		decoding="async"
 		style:width="{SIZE}px"

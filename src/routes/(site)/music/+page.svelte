@@ -1,5 +1,6 @@
 <script lang="ts">
 	import dayjs from "dayjs";
+	import { artworkAt } from "#lib";
 	import Collection from "#lib/components/Collection.svelte";
 	import ArtworkTrail from "./ArtworkTrail.svelte";
 
@@ -17,13 +18,13 @@
 		"What if?" My life is not bound by the earth I stand upon.
 	{/snippet}
 
-	<ul data-index>
+	<ul data-index data-stagger>
 		{#each data.reviews as review (review.id)}
 			<li class="border-b border-border">
 				<a class="group relative flex gap-4 py-4 no-underline" href="/music/{review.slug}">
 					<img
 						class="size-14 shrink-0 rounded-lg object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
-						src={review.artwork}
+						src={artworkAt(review.artwork, 120)}
 						alt=""
 						loading="lazy"
 						decoding="async"
@@ -54,7 +55,7 @@
 						</p>
 					</div>
 
-					<ArtworkTrail src={review.artwork} />
+					<ArtworkTrail src={artworkAt(review.artwork, 400)} />
 				</a>
 			</li>
 		{/each}

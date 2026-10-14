@@ -1,7 +1,8 @@
+import { artworkAt } from "#lib";
 import type { Track } from "./db/schema";
 
 const API = "https://itunes.apple.com";
-const ARTWORK_SIZE = 2000;
+const ARTWORK_SIZE = 600;
 
 interface ItunesCollection {
 	wrapperType: "collection";
@@ -99,10 +100,7 @@ export async function lookupAlbum(id: number, country = "us"): Promise<Album | n
 		title: album.collectionName,
 		artist: album.artistName,
 		year: new Date(album.releaseDate).getUTCFullYear(),
-		artwork: album.artworkUrl100.replace(
-			/\/\d+x\d+bb\.jpg$/,
-			`/${ARTWORK_SIZE}x${ARTWORK_SIZE}bb.jpg`,
-		),
+		artwork: artworkAt(album.artworkUrl100, ARTWORK_SIZE),
 		tracklist,
 	};
 }
