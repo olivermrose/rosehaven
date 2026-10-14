@@ -33,7 +33,7 @@
 		{#if !empty}
 			{@render children()}
 		{:else}
-			<p class="mt-16 border-t border-border pt-6 text-sm text-muted-foreground">
+			<p class="border-t border-border pt-6 text-sm text-muted-foreground">
 				Nothing here yet.
 			</p>
 		{/if}
