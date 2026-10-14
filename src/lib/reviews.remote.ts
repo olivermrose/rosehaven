@@ -10,7 +10,7 @@ import { requireAdmin } from "./server/auth";
 import { reviews } from "./server/db/schema";
 import { lookupAlbum, searchAlbums } from "./server/itunes";
 
-export const findAlbums = query(z.string().trim().min(2), async (term) => {
+export const findAlbums = query(z.string().trim().min(2), (term) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 

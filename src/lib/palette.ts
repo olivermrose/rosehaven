@@ -113,7 +113,7 @@ function pick(swatches: Swatch[], target: Target, exclude?: string) {
 
 	// Fall back to the closest color overall when nothing fits the range,
 	// e.g. a black-and-white cover has no vibrant swatch
-	const candidates = inRange.length ? inRange : swatches;
+	const candidates = inRange.length > 0 ? inRange : swatches;
 
 	return candidates.reduce<Swatch | undefined>(
 		(best, swatch) => (!best || score(swatch, target) > score(best, target) ? swatch : best),

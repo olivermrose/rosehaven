@@ -9,7 +9,9 @@
 	const { tracks, open = false }: Props = $props();
 
 	const runtime = $derived.by(() => {
-		if (!tracks.length || tracks.some((track) => !track.duration)) return null;
+		if (tracks.length === 0 || tracks.some((track) => !track.duration)) {
+			return null;
+		}
 
 		const seconds = tracks.reduce((total, track) => {
 			const parts = track.duration!.split(":").map(Number);
