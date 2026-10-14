@@ -26,7 +26,6 @@ export const posts = pgTable("posts", {
 	excerpt: text().notNull(),
 	explicit: boolean().notNull().default(false),
 	content: text().notNull(),
-	commentary: text(),
 	status: statusEnum().notNull().default("draft"),
 	publishedAt: timestamp("published_at", { withTimezone: true }),
 	revisedAt: timestamp("revised_at", { withTimezone: true }),

@@ -37,7 +37,6 @@ const postSchema = z.object({
 	category: z.enum(["dialogue", "poetry", "prose poetry", "short story"]),
 	excerpt: z.string().min(1),
 	content: z.string().min(1),
-	commentary: z.string().optional(),
 	explicit: z.boolean().default(false),
 	status: z.enum(["draft", "published"]).default("draft"),
 });
@@ -58,7 +57,6 @@ export const createPost = form(postSchema, async (data) => {
 			excerpt: data.excerpt,
 			explicit: data.explicit,
 			content: data.content,
-			commentary: data.commentary || null,
 			status: data.status,
 			publishedAt,
 		})
@@ -106,7 +104,6 @@ export const updatePost = form(
 				excerpt: data.excerpt,
 				explicit: data.explicit,
 				content: data.content,
-				commentary: data.commentary || null,
 				status: data.status,
 				publishedAt,
 				revisedAt,

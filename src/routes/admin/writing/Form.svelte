@@ -36,7 +36,6 @@
 			excerpt: post.excerpt,
 			category: post.category,
 			content: post.content,
-			commentary: post.commentary ?? undefined,
 			explicit: post.explicit,
 		});
 	});
@@ -76,19 +75,6 @@
 	<div>
 		<input {...form.fields.content.as("hidden", content)} />
 		<Editor category={form.fields.category.value()} bind:content />
-	</div>
-
-	<div>
-		<label class="flex items-center" for="commentary">
-			Commentary <span class="ml-1.5 text-muted-foreground normal-case">(optional)</span>
-		</label>
-
-		<textarea
-			id="commentary"
-			class="resize-y"
-			placeholder="Additional thoughts"
-			rows="3"
-			{...form.fields.commentary.as("text")}></textarea>
 	</div>
 
 	{#snippet options()}

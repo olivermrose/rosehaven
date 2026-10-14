@@ -34,13 +34,6 @@
 		</header>
 
 		<Content post={data.post} />
-
-		{#if data.post.commentary}
-			<details class="text-sm">
-				<summary>Commentary</summary>
-				<p>{data.post.commentary}</p>
-			</details>
-		{/if}
 	</article>
 
 	{#if data.prev || data.next}
