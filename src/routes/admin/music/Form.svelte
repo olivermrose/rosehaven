@@ -87,6 +87,12 @@
 				src={artwork}
 				alt="Artwork preview"
 			/>
+		{:else}
+			<div
+				class="mt-4 flex aspect-square w-full max-w-xs items-center justify-center rounded-xl border border-dashed border-border bg-muted/30 text-sm text-muted-foreground"
+			>
+				No artwork
+			</div>
 		{/if}
 	</div>
 
