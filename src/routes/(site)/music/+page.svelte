@@ -9,13 +9,13 @@
 
 <Collection empty={data.reviews.length === 0}>
 	{#snippet heading()}
-		To write is to discover the essence of what remains
-		<span class="font-serif italic">untold</span>.
+		There exists a hidden world begging to be
+		<span class="font-serif italic">heard</span>.
 	{/snippet}
 
 	{#snippet lead()}
-		As I drift off into reverie, I find myself running through a thousand different scenarios of
-		"What if?" My life is not bound by the earth I stand upon.
+		Reviews of albums that I have listened to, loved, and lived with. I hope that they resonate
+		with you and that they help you discover new music to experience.
 	{/snippet}
 
 	<ul data-index data-stagger>
