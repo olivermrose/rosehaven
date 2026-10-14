@@ -24,7 +24,10 @@
 	const issues = $derived(form.fields.allIssues());
 
 	$effect(() => {
-		if (!post) return;
+		if (!post) {
+			form.fields.set({});
+			return;
+		}
 
 		content = post.content;
 

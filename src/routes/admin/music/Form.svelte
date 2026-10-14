@@ -33,7 +33,10 @@
 	}
 
 	$effect(() => {
-		if (!review) return;
+		if (!review) {
+			form.fields.set({});
+			return;
+		}
 
 		content = review.content;
 
