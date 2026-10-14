@@ -29,10 +29,6 @@ export default defineConfig({
 			"unicorn/filename-case": ["error", { ignore: ["\\.svelte$"] }],
 			"vite-plus/prefer-vite-plus-imports": "error",
 		},
-		options: {
-			typeAware: true,
-			typeCheck: true,
-		},
 	},
 	fmt: {
 		tabWidth: 4,
