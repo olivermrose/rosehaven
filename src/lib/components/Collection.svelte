@@ -22,7 +22,7 @@
 	</div>
 
 	<hgroup class="mb-12 max-w-prose">
-		<h1 class="text-fluid-3xl/tight" data-stagger>
+		<h1 class="text-fluid-xl/tight" data-stagger>
 			{@render heading()}
 		</h1>
 

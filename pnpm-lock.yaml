@@ -242,6 +242,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^5.20261011.1
         version: 5.20261011.1
+      '@rosehaven/tailwindkit':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@sveltejs/adapter-cloudflare':
         specifier: ^8.0.0
         version: 8.0.0(@sveltejs/kit@3.0.1(@sveltejs/vite-plugin-svelte@7.3.1(@voidzero-dev/vite-plus-core@1.1.0(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(typescript@6.0.3))(svelte@5.57.2))(@voidzero-dev/vite-plus-core@1.1.0(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(typescript@6.0.3))(svelte@5.57.2)(typescript@6.0.3))(wrangler@4.149.0(@cloudflare/workers-types@5.20261011.1)(@types/node@26.6.5))
@@ -1248,6 +1251,9 @@ packages:
 
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
+
+  '@rosehaven/tailwindkit@1.1.0':
+    resolution: {integrity: sha512-mVR9EPlGP0x9S+z2M9I7aPEcPtT9AqhNsCk8I10ZrMeYrTCIJRngIjpd5dqysQ4l2Uju4vbQamL65js4tvZu+g==}
 
   '@sindresorhus/is@7.2.0':
     resolution: {integrity: sha512-P1Cz1dWaFfR4IR+U13mqqiGsLFf1KbayybWwdd2vfctdV6hDpUkgCY0nKOLLTMSoRd/jJNjtbqzf13K8DCCXQw==}
@@ -3949,6 +3955,8 @@ snapshots:
   '@poppinss/exception@1.2.3': {}
 
   '@rolldown/pluginutils@1.0.1': {}
+
+  '@rosehaven/tailwindkit@1.1.0': {}
 
   '@sindresorhus/is@7.2.0': {}
 

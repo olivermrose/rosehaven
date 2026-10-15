@@ -9,7 +9,7 @@
 
 <div class="mx-auto flex min-h-dvh flex-col p-4">
 	<section class="mx-auto flex max-w-3xl flex-1 items-center">
-		<div class="grid gap-6 text-fluid-sm sm:grid-cols-[auto_1fr] sm:gap-8">
+		<div class="grid gap-6 sm:grid-cols-[auto_1fr] sm:gap-8">
 			<img
 				class="aspect-3/4 w-48 shrink-0 rounded-2xl object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
 				src="https://cataas.com/cat"
@@ -19,12 +19,12 @@
 			/>
 
 			<div class="max-w-prose space-y-4">
-				<h1 class="text-fluid-lg font-semibold">{page.status}.</h1>
+				<h1 class="text-fluid-xl font-semibold">{page.status}.</h1>
 				<p>{page.error?.message}</p>
 
-				<nav class="mt-8 flex gap-6">
+				<div class="mt-8 flex gap-6">
 					<Link href="/" back>home</Link>
-				</nav>
+				</div>
 			</div>
 		</div>
 	</section>

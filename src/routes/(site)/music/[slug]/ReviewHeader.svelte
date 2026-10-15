@@ -27,7 +27,7 @@
 				</time>
 			{/if}
 
-			<h1 class="post-title mt-4 w-fit text-fluid-xl/tight font-semibold text-pretty">
+			<h1 class="post-title mt-4 w-fit text-fluid-lg/tight font-semibold text-pretty">
 				{review.title}
 			</h1>
 

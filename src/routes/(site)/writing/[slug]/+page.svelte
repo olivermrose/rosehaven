@@ -29,7 +29,7 @@
 				</div>
 			{/if}
 
-			<h1 class="post-title mt-4 mb-8 w-fit text-fluid-4xl font-semibold text-pretty">
+			<h1 class="post-title mt-4 mb-8 w-fit text-fluid-xl font-semibold text-pretty">
 				{data.post.title}
 			</h1>
 		</header>
@@ -59,10 +59,7 @@
 				&lbrace; {type} &rbrace;
 			</span>
 
-			<a
-				class="mt-2 line-clamp-1 text-fluid-2xl/tight font-light"
-				href="/writing/{post.slug}"
-			>
+			<a class="mt-2 line-clamp-1 text-fluid-lg/tight font-light" href="/writing/{post.slug}">
 				<span
 					class="transition-colors duration-300 group-hover:text-plum-500 dark:group-hover:text-white"
 				>
