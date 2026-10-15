@@ -12,7 +12,7 @@
 		<div class="grid gap-6 sm:grid-cols-[auto_1fr] sm:gap-8">
 			<img
 				class="aspect-3/4 w-48 shrink-0 rounded-2xl object-cover img-outline"
-				src="https://r2.olivermrose.com/self.jpg"
+				src="https://assets.olivermrose.com/self.jpg"
 				alt="Portrait of Oliver Rose"
 				width="160"
 				height="213"
