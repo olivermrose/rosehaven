@@ -27,7 +27,7 @@
 			<li class="border-b border-border">
 				<a class="group relative flex gap-4 py-4 no-underline" href="/music/{review.slug}">
 					<img
-						class="size-14 shrink-0 rounded-lg object-cover outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+						class="size-14 shrink-0 rounded-lg object-cover img-outline"
 						src={artworkAt(review.artwork, 120)}
 						alt=""
 						loading="lazy"

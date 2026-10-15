@@ -73,7 +73,7 @@
 >
 	<img
 		class={[
-			"origin-bottom-left rounded-xl object-cover shadow-2xl outline -outline-offset-1 outline-black/10 transition-[opacity,scale] duration-300 ease-out dark:outline-white/10",
+			"origin-bottom-left rounded-xl object-cover shadow-2xl img-outline transition-[opacity,scale] duration-300 ease-out",
 			visible ? "scale-100 opacity-100" : "scale-75 opacity-0",
 		]}
 		src={hovered ? src : undefined}

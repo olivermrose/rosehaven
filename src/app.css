@@ -314,6 +314,11 @@
 	-webkit-text-fill-color: transparent;
 }
 
+@utility img-outline {
+	outline: 1px solid light-dark(oklch(0 0 0 / 10%), oklch(1 0 0 / 10%));
+	outline-offset: -1px;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
 	animation: none;

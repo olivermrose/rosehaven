@@ -93,7 +93,7 @@
 						onclick={() => select(album.id)}
 					>
 						<img
-							class="size-10 shrink-0 rounded-md outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+							class="size-10 shrink-0 rounded-md img-outline"
 							src={album.thumbnail}
 							alt=""
 							loading="lazy"

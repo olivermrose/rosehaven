@@ -35,7 +35,7 @@
 
 	<figure class="p-4">
 		<img
-			class="aspect-square w-full rounded-lg object-cover shadow outline -outline-offset-1 outline-black/10 dark:outline-white/10"
+			class="aspect-square w-full rounded-lg object-cover shadow img-outline"
 			src={review.artwork}
 			alt="Album artwork for {review.title} by {review.artist}"
 			fetchpriority="high"
