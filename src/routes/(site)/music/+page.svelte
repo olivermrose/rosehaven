@@ -3,6 +3,8 @@
 
 	import { artworkAt } from "#lib";
 	import Collection from "#lib/components/Collection.svelte";
+	import PostDate from "#lib/components/PostDate.svelte";
+	import PostTitle from "#lib/components/PostTitle.svelte";
 
 	import ArtworkTrail from "./ArtworkTrail.svelte";
 
@@ -34,20 +36,11 @@
 
 					<div class="min-w-0 flex-1 self-center">
 						<div class="flex items-baseline justify-between gap-6">
-							<h2
-								class="post-title truncate font-medium transition-colors duration-300 group-hover:text-plum-500 dark:group-hover:text-white"
-							>
+							<PostTitle as="h2" listing>
 								{review.title}
-							</h2>
+							</PostTitle>
 
-							{#if review.publishedAt}
-								<time
-									class="shrink-0 text-xs text-muted-foreground tabular-nums group-hover:text-foreground"
-									datetime={review.publishedAt.toISOString()}
-								>
-									{dayjs(review.publishedAt).format("MMM YYYY")}
-								</time>
-							{/if}
+							<PostDate date={review.publishedAt} listing />
 						</div>
 
 						<p class="truncate text-sm text-muted-foreground">

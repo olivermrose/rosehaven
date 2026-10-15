@@ -3,6 +3,8 @@
 
 	import Content from "#lib/components/Content.svelte";
 	import PageNav from "#lib/components/PageNav.svelte";
+	import PostDate from "#lib/components/PostDate.svelte";
+	import PostTitle from "#lib/components/PostTitle.svelte";
 	import type { Post } from "#lib/server/db/schema.js";
 
 	const { data } = $props();
@@ -11,27 +13,23 @@
 <div class="mx-auto max-w-4xl px-6 pt-28 pb-20">
 	<PageNav back="/writing#{data.post.category}" edit="/admin/writing/{data.post.id}" />
 
-	<article class="max-w-4xl">
-		<header>
-			<time
-				class="font-medium text-denim-500 dark:text-neutral-300"
-				datetime={data.post.publishedAt?.toISOString()}
-			>
-				{dayjs(data.post.publishedAt).format("MMMM D, YYYY")}
-			</time>
+	<article>
+		<header class="mb-8">
+			<PostDate date={data.post.publishedAt} />
 
 			{#if data.post.revisedAt}
 				<div class="text-sm text-muted-foreground">
 					Revised
+
 					<time datetime={data.post.revisedAt.toISOString()}>
 						{dayjs(data.post.revisedAt).format("MMMM D, YYYY")}
 					</time>
 				</div>
 			{/if}
 
-			<h1 class="post-title mt-4 mb-8 w-fit text-fluid-xl font-semibold text-pretty">
+			<PostTitle class="text-fluid-xl">
 				{data.post.title}
-			</h1>
+			</PostTitle>
 		</header>
 
 		<Content post={data.post} />

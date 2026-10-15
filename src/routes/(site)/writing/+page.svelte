@@ -2,6 +2,8 @@
 	import dayjs from "dayjs";
 
 	import Collection from "#lib/components/Collection.svelte";
+	import PostDate from "#lib/components/PostDate.svelte";
+	import PostTitle from "#lib/components/PostTitle.svelte";
 
 	const { data } = $props();
 
@@ -37,11 +39,9 @@
 						<a class="group block py-4 no-underline" href="/writing/{post.slug}">
 							<div class="flex items-baseline justify-between gap-6">
 								<div class="flex min-w-0 items-center gap-2">
-									<h3
-										class="post-title truncate font-medium transition-colors duration-300 group-hover:text-plum-500 dark:group-hover:text-white"
-									>
+									<PostTitle as="h3" listing>
 										{post.title}
-									</h3>
+									</PostTitle>
 
 									{#if post.explicit}
 										<svg
@@ -57,14 +57,7 @@
 									{/if}
 								</div>
 
-								{#if post.publishedAt}
-									<time
-										class="shrink-0 text-xs text-muted-foreground tabular-nums group-hover:text-foreground"
-										datetime={post.publishedAt.toISOString()}
-									>
-										{dayjs(post.publishedAt).format("MMM YYYY")}
-									</time>
-								{/if}
+								<PostDate date={post.publishedAt} listing />
 							</div>
 
 							<div data-excerpt>

@@ -1,7 +1,10 @@
 <script lang="ts">
 	import PageNav from "#lib/components/PageNav.svelte";
+	import PostDate from "#lib/components/PostDate.svelte";
+	import PostTitle from "#lib/components/PostTitle.svelte";
 
-	import ReviewHeader from "./ReviewHeader.svelte";
+	import Artwork from "./Artwork.svelte";
+	import Tracklist from "./Tracklist.svelte";
 
 	const { data } = $props();
 
@@ -12,7 +15,27 @@
 	<PageNav back="/music" edit="/admin/music/{data.review.id}" />
 
 	<article>
-		<ReviewHeader {review} />
+		<header class="my-10 grid items-start gap-8 sm:grid-cols-[minmax(0,20rem)_1fr]">
+			<div class="space-y-6">
+				<Artwork {review} />
+
+				<div>
+					<PostDate date={review.publishedAt} />
+
+					<PostTitle class="text-fluid-lg/tight">
+						{review.title}
+					</PostTitle>
+
+					<p class="text-muted-foreground">
+						{review.artist}{review.year ? ` · ${review.year}` : ""}
+					</p>
+				</div>
+			</div>
+
+			{#if review.tracklist.length}
+				<Tracklist tracks={review.tracklist} open />
+			{/if}
+		</header>
 
 		<div data-content>
 			{@html review.content}
