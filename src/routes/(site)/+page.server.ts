@@ -15,7 +15,7 @@ export async function load({ locals }) {
 			path: "/",
 			title: null,
 			description:
-				'As I drift off into reverie, I find myself running through a thousand different scenarios of "What if?" My life is not bound by the earth I stand upon.',
+				"I'm a front-end engineer with full-stack experience. I enjoy building web applications, exploring new technologies, and expressing myself through creative writing.",
 		},
 	};
 }

@@ -14,6 +14,8 @@ export async function load({ locals }) {
 		seo: {
 			path: "/writing",
 			title: "Writing",
+			description:
+				'As I drift off into reverie, I find myself running through a thousand different scenarios of "What if?" My life is not bound by the earth I stand upon.',
 		},
 	};
 }

@@ -22,6 +22,8 @@ export async function load({ locals }) {
 		seo: {
 			path: "/music",
 			title: "Music",
+			description:
+				"Reviews of albums that I have listened to, loved, and lived with. I hope that they resonate with you and that they help you discover new music to experience.",
 		},
 	};
 }
