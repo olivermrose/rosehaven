@@ -14,7 +14,7 @@
 
 	const { children } = $props();
 
-	const { seo } = $derived(page.data);
+	const { seo, preload } = $derived(page.data);
 	const title = $derived(seo.title ? `${seo.title} | ${SITE_NAME}` : SITE_NAME);
 	const image = $derived(
 		seo.image ? (URL.canParse(seo.image) ? seo.image : BASE_URL + seo.image) : null,
@@ -59,6 +59,10 @@
 		<meta property="og:image" content={image} />
 		<meta name="twitter:image" content={image} />
 	{/if}
+
+	{#each preload ?? [] as href (href)}
+		<link rel="preload" as="image" {href} fetchpriority="high" />
+	{/each}
 </svelte:head>
 
 <LoadingScreen>

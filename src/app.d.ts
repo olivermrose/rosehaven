@@ -19,6 +19,7 @@ declare global {
 		interface PageData {
 			authenticated?: boolean;
 			seo: Seo;
+			preload?: string[];
 		}
 		// interface PageState {}
 		interface Platform {

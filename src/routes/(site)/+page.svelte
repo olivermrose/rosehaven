@@ -16,6 +16,7 @@
 				alt="Portrait of Oliver Rose"
 				width="160"
 				height="213"
+				fetchpriority="high"
 				data-stagger
 			/>
 

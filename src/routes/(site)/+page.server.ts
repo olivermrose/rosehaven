@@ -11,6 +11,7 @@ export async function load({ locals }) {
 
 	return {
 		quote,
+		preload: ["https://assets.olivermrose.com/self.jpg"],
 		seo: {
 			path: "/",
 			title: null,
