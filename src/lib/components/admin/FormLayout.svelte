@@ -11,10 +11,10 @@
 	import type { Snippet } from "svelte";
 	import type { HTMLFormAttributes } from "svelte/elements";
 
+	import type { Status } from "#lib/status.js";
 	import type { RemoteFormField, RemoteFormIssue } from "$app/server";
 
 	import Alert from "./Alert.svelte";
-	import type { Status } from "./status";
 	import StatusBadge from "./StatusBadge.svelte";
 
 	type Intent = "save" | "publish" | "unpublish";

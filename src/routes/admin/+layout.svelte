@@ -1,7 +1,6 @@
 <script lang="ts">
+	import AdminBar from "#lib/components/admin/AdminBar.svelte";
 	import { page } from "$app/state";
-
-	import AdminBar from "./AdminBar.svelte";
 
 	const { data, children } = $props();
 

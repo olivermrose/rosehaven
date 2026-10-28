@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { artworkAt } from "#lib";
-
-	import DataTable, { type Column } from "../DataTable.svelte";
-	import DateCell from "../DateCell.svelte";
-	import ListHeader from "../ListHeader.svelte";
-	import { matchesStatus, statusFilters, summarize, type StatusFilter } from "../status";
-	import StatusBadge from "../StatusBadge.svelte";
-	import TableToolbar from "../TableToolbar.svelte";
+	import DataTable, { type Column } from "#lib/components/admin/DataTable.svelte";
+	import DateCell from "#lib/components/admin/DateCell.svelte";
+	import ListHeader from "#lib/components/admin/ListHeader.svelte";
+	import StatusBadge from "#lib/components/admin/StatusBadge.svelte";
+	import TableToolbar from "#lib/components/admin/TableToolbar.svelte";
+	import { matchesStatus, statusFilters, type StatusFilter } from "#lib/status.js";
 
 	const { data } = $props();
 
@@ -37,12 +36,7 @@
 	const rows = $derived(data.reviews.filter((review) => matchesStatus(review, filter)));
 </script>
 
-<ListHeader
-	title="Music"
-	summary={summarize(data.reviews, "review")}
-	href="/admin/music/new"
-	label="New review"
-/>
+<ListHeader title="Music" href="/admin/music/new" label="New review" />
 
 <TableToolbar
 	filters={statusFilters(data.reviews)}
