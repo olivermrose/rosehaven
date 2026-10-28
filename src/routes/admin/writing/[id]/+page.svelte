@@ -21,7 +21,17 @@
 />
 
 {#if updatePost.result?.success}
-	<div class="mb-8 text-sm text-aloe-600 uppercase dark:text-aloe-300">saved · post updated</div>
+	<div class="mb-8 text-sm text-aloe-600 uppercase dark:text-aloe-300">
+		{#if updatePost.result.intent === "publish"}
+			published · changes are live
+		{:else if updatePost.result.intent === "unpublish"}
+			unpublished · post taken down
+		{:else if post.status === "published"}
+			saved · not yet published
+		{:else}
+			saved · draft updated
+		{/if}
+	</div>
 {/if}
 
 <Form form={updatePost} {post}>

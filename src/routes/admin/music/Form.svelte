@@ -12,7 +12,7 @@
 
 	interface Props {
 		form: typeof createReview | typeof updateReview;
-		review?: Review;
+		review?: Review & { version?: number; pending?: boolean };
 		actions?: Snippet;
 	}
 
@@ -53,7 +53,15 @@
 	});
 </script>
 
-<FormLayout {...form} {issues} status={review?.status} statusField={form.fields.status} {actions}>
+<FormLayout
+	{...form}
+	{issues}
+	status={review?.status}
+	version={review?.version}
+	pending={review?.pending}
+	intentField={form.fields.intent}
+	{actions}
+>
 	<AlbumSearch onselect={fill} />
 
 	<div class="grid gap-8 sm:grid-cols-[1fr_1fr_8rem]">
