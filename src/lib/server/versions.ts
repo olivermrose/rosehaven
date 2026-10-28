@@ -4,6 +4,8 @@ import {
 	eq,
 	getColumns,
 	getTableName,
+	isNull,
+	max,
 	sql,
 	type InferInsertModel,
 	type InferSelectModel,
@@ -121,6 +123,32 @@ export async function findVersioned<T extends VersionedTable>(
 		version: version?.version ?? 0,
 		pending: row.status === "published" && version !== null && !version.publishedAt,
 	};
+}
+
+/**
+ * IDs of published entities whose latest version hasn't been published yet,
+ * matching the `pending` flag from `findVersioned`.
+ */
+export async function withUnpublishedChanges(db: Db, table: PgTable) {
+	const entityType = getTableName(table);
+
+	const latest = db
+		.select({ entityId: versions.entityId, version: max(versions.version).as("latest") })
+		.from(versions)
+		.where(eq(versions.entityType, entityType))
+		.groupBy(versions.entityId)
+		.as("latest");
+
+	const rows = await db
+		.select({ entityId: versions.entityId })
+		.from(versions)
+		.innerJoin(
+			latest,
+			and(eq(versions.entityId, latest.entityId), eq(versions.version, latest.version)),
+		)
+		.where(and(eq(versions.entityType, entityType), isNull(versions.publishedAt)));
+
+	return new Set(rows.map((row) => row.entityId));
 }
 
 export function createVersioned<T extends VersionedTable>(

@@ -1,42 +1,25 @@
 <script lang="ts">
-	import Header from "#lib/components/Header.svelte";
 	import { page } from "$app/state";
+
+	import AdminBar from "./AdminBar.svelte";
 
 	const { data, children } = $props();
 
-	const sections = [
-		{ href: "/admin", label: "writing" },
-		{ href: "/admin/music", label: "music" },
-		{ href: "/admin/quotes", label: "quotes" },
-	];
-
-	const current = $derived(
-		sections.findLast((section) => page.url.pathname.startsWith(section.href))?.href,
-	);
+	const editing = $derived(/\/(\[id\]|new)$/.test(page.route.id ?? ""));
 </script>
 
 <svelte:head>
 	<title>admin | oliver rose.</title>
 </svelte:head>
 
-<Header />
+<div class="min-h-dvh bg-background text-foreground" data-admin>
+	{#if data.authenticated && !editing}
+		<AdminBar />
 
-{#if data.authenticated}
-	<main class="mx-auto max-w-7xl px-6 pt-32 pb-24">
-		<nav class="mb-10 flex gap-6 text-sm" aria-label="Admin sections">
-			{#each sections as section (section.href)}
-				<a
-					class="text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground"
-					href={section.href}
-					aria-current={current === section.href ? "page" : undefined}
-				>
-					{section.label}.
-				</a>
-			{/each}
-		</nav>
-
+		<main class="mx-auto max-w-6xl px-4 pt-10 pb-24 sm:px-6">
+			{@render children?.()}
+		</main>
+	{:else}
 		{@render children?.()}
-	</main>
-{:else}
-	{@render children?.()}
-{/if}
+	{/if}
+</div>

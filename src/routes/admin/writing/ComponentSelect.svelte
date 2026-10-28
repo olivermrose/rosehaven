@@ -22,33 +22,36 @@
 </script>
 
 <button
-	class="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-foreground/10"
+	class="flex size-8 shrink-0 items-center justify-center rounded-lg text-foreground/65 transition-colors hover:bg-foreground/8 hover:text-foreground"
 	type="button"
 	popovertarget={menuId}
 	aria-label="Insert component"
+	title="Insert component"
 	style:anchor-name={anchor}
 >
-	<HugeiconsIcon icon={PuzzleIcon} size={18} strokeWidth={1.5} />
+	<HugeiconsIcon icon={PuzzleIcon} size={17} strokeWidth={1.75} />
 </button>
 
 <div
 	id={menuId}
-	class="fixed m-0 mt-1 min-w-40 overflow-hidden rounded-lg border border-border bg-background p-0 shadow-lg"
+	class="m-0 mt-1.5 min-w-44 rounded-lg border border-border bg-surface p-1 shadow-[0_8px_24px_-6px_rgb(0_0_0/0.18),0_2px_6px_-2px_rgb(0_0_0/0.08)]"
 	popover
 	role="menu"
 	style:position-anchor={anchor}
 	bind:this={menu}
 >
+	<p class="px-2.5 pt-1.5 pb-1 text-xs text-muted-foreground">Insert component</p>
+
 	<ul>
-		{#each names as name}
+		{#each names as name (name)}
 			<li>
 				<button
-					class="block w-full px-3 py-2 text-left font-mono text-xs hover:bg-foreground/10"
+					class="block w-full rounded-md px-2.5 py-1.5 text-left font-mono text-xs transition-colors hover:bg-foreground/7"
 					type="button"
 					role="menuitem"
 					onclick={() => select(name)}
 				>
-					{name}
+					&lt;{name} /&gt;
 				</button>
 			</li>
 		{/each}
@@ -57,6 +60,8 @@
 
 <style>
 	[role="menu"] {
+		position: fixed;
+		inset: auto;
 		position-area: bottom span-right;
 	}
 </style>

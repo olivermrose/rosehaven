@@ -27,6 +27,7 @@
 
 	interface ToolbarItem {
 		icon: IconSvgElement;
+		label: string;
 		active?: string | boolean;
 		exec: () => void;
 	}
@@ -48,16 +49,19 @@
 	const marks: ToolbarItem[] = [
 		{
 			icon: TextBoldIcon,
+			label: "Bold (⌘B)",
 			active: "bold",
 			exec: () => editor?.chain().focus().toggleBold().run(),
 		},
 		{
 			icon: TextItalicIcon,
+			label: "Italic (⌘I)",
 			active: "italic",
 			exec: () => editor?.chain().focus().toggleItalic().run(),
 		},
 		{
 			icon: TextStrikethroughIcon,
+			label: "Strikethrough (⌘⇧S)",
 			active: "strike",
 			exec: () => editor?.chain().focus().toggleStrike().run(),
 		},
@@ -66,26 +70,29 @@
 	const blocks: ToolbarItem[] = [
 		{
 			icon: LeftToRightBlockQuoteIcon,
+			label: "Quote",
 			active: "blockquote",
 			exec: () => editor?.chain().focus().toggleBlockquote().run(),
 		},
 		{
 			icon: LeftToRightListBulletIcon,
+			label: "Bulleted list",
 			active: "bulletList",
 			exec: () => editor?.chain().focus().toggleBulletList().run(),
 		},
 		{
 			icon: LeftToRightListNumberIcon,
+			label: "Numbered list",
 			active: "orderedList",
 			exec: () => editor?.chain().focus().toggleOrderedList().run(),
 		},
 	];
 
 	const aligns = [
-		{ icon: TextAlignLeftIcon, value: "left" },
-		{ icon: TextAlignCenterIcon, value: "center" },
-		{ icon: TextAlignRightIcon, value: "right" },
-		{ icon: TextAlignJustifyCenterIcon, value: "justify" },
+		{ icon: TextAlignLeftIcon, label: "Align left", value: "left" },
+		{ icon: TextAlignCenterIcon, label: "Align center", value: "center" },
+		{ icon: TextAlignRightIcon, label: "Align right", value: "right" },
+		{ icon: TextAlignJustifyCenterIcon, label: "Justify", value: "justify" },
 	];
 
 	onMount(async () => {
@@ -104,7 +111,10 @@
 			content,
 			editorProps: {
 				attributes: {
-					class: "outline-none min-h-80",
+					class: "outline-none min-h-[50vh]",
+					"aria-label": "Body",
+					"aria-multiline": "true",
+					role: "textbox",
 				},
 			},
 			onTransaction(event) {
@@ -140,11 +150,18 @@
 		_editor.view.dispatch(_editor.state.tr);
 	});
 
-	function insertLink() {
-		const url = prompt("URL:");
-		if (!url || !editor) return;
+	function toggleLink() {
+		if (!editor) return;
 
-		editor.chain().focus().setLink({ href: url }).run();
+		if (editor.isActive("link")) {
+			editor.chain().focus().extendMarkRange("link").unsetLink().run();
+			return;
+		}
+
+		const url = prompt("Link URL");
+		if (!url) return;
+
+		editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
 	}
 
 	function isActive(name: string, attrs?: Record<string, unknown>): boolean {
@@ -152,130 +169,146 @@
 	}
 </script>
 
-<div class="overflow-hidden rounded-2xl border border-border bg-background text-foreground">
-	{#if editor}
-		<div class="flex flex-wrap items-center gap-0.5 border-b border-border px-3 py-2">
-			{#each marks as mark}
-				{@render toolbarButton(mark)}
+{#if editor}
+	<div
+		class="sticky top-17 z-30 mx-auto mb-10 flex w-fit max-w-full [scrollbar-width:none] items-center gap-0.5 overflow-x-auto rounded-xl border border-border bg-surface/90 p-1 shadow-[0_6px_20px_-8px_rgb(0_0_0/0.18),0_1px_2px_rgb(0_0_0/0.06)] backdrop-blur-md sm:flex-wrap sm:justify-center sm:overflow-visible"
+		role="toolbar"
+		aria-label="Formatting"
+	>
+		{#each marks as mark (mark.label)}
+			{@render toolbarButton(mark)}
+		{/each}
+
+		<span role="separator" aria-orientation="vertical"></span>
+
+		{#if !isDialogue}
+			{#each blocks as block (block.label)}
+				{@render toolbarButton(block)}
 			{/each}
 
 			<span role="separator" aria-orientation="vertical"></span>
 
-			{#if !isDialogue}
-				{#each blocks as block}
-					{@render toolbarButton(block)}
-				{/each}
+			{#each aligns as align (align.value)}
+				{@render toolbarButton({
+					icon: align.icon,
+					label: align.label,
+					active: editor?.isActive({ textAlign: align.value }),
+					exec: () => editor?.chain().focus().setTextAlign(align.value).run(),
+				})}
+			{/each}
 
-				<span role="separator" aria-orientation="vertical"></span>
+			<span role="separator" aria-orientation="vertical"></span>
+		{/if}
 
-				{#each aligns as align}
-					{@render toolbarButton({
-						icon: align.icon,
-						active: editor?.isActive({ textAlign: align.value }),
-						exec: () => editor?.chain().focus().setTextAlign(align.value).run(),
-					})}
-				{/each}
+		{@render toolbarButton({
+			icon: Link01Icon,
+			label: isActive("link") ? "Remove link" : "Add link",
+			active: isActive("link"),
+			exec: toggleLink,
+		})}
 
-				<span role="separator" aria-orientation="vertical"></span>
-			{/if}
+		{@render toolbarButton({
+			icon: MinusSignIcon,
+			label: "Divider",
+			exec: () => editor?.chain().focus().setHorizontalRule().run(),
+		})}
 
-			{@render toolbarButton({
-				icon: Link01Icon,
-				active: isActive("link"),
-				exec: insertLink,
-			})}
+		{#if components && postComponentNames.length > 0}
+			<span role="separator" aria-orientation="vertical"></span>
 
-			{@render toolbarButton({
-				icon: MinusSignIcon,
-				exec: () => editor?.chain().focus().setHorizontalRule().run(),
-			})}
+			<ComponentSelect
+				names={postComponentNames}
+				onselect={(name) => editor?.chain().focus().insertComponent(name).run()}
+			/>
+		{/if}
 
-			{#if components && postComponentNames.length > 0}
-				<span role="separator" aria-orientation="vertical"></span>
+		{#if isDialogue}
+			<span role="separator" aria-orientation="vertical"></span>
 
-				<ComponentSelect
-					names={postComponentNames}
-					onselect={(name) => editor?.chain().focus().insertComponent(name).run()}
-				/>
-			{/if}
+			<div class="flex shrink-0 items-center gap-2 pr-1 pl-1.5">
+				<span class="text-xs text-muted-foreground">Opens with</span>
 
-			{#if isDialogue}
-				<span role="separator" aria-orientation="vertical"></span>
-
-				<div class="flex items-center gap-2">
-					<span class="font-mono text-[10px] text-muted-foreground uppercase">Start</span>
-
-					<div class="flex overflow-hidden rounded border border-border">
-						<button
-							class={[
-								"flex h-7 w-8 items-center justify-center transition-colors",
-								startLeft
-									? "bg-muted text-foreground"
-									: "text-muted-foreground hover:text-foreground",
-							]}
-							type="button"
-							onclick={() => {
-								if (!startLeft) editor?.commands.toggleSpeaker();
-							}}
-						>
-							<HugeiconsIcon icon={TextAlignLeftIcon} size={14} strokeWidth={1.5} />
-						</button>
-
-						<button
-							class={[
-								"flex h-7 w-8 items-center justify-center border-l border-border transition-colors",
-								!startLeft
-									? "bg-muted text-foreground"
-									: "text-muted-foreground hover:text-foreground",
-							]}
-							type="button"
-							onclick={() => {
-								if (startLeft) editor?.commands.toggleSpeaker();
-							}}
-						>
-							<HugeiconsIcon icon={TextAlignRightIcon} size={14} strokeWidth={1.5} />
-						</button>
-					</div>
+				<div
+					class="flex rounded-md bg-foreground/6 p-0.5"
+					role="radiogroup"
+					aria-label="Opening speaker"
+				>
+					{@render speakerButton("Them", TextAlignLeftIcon, startLeft, false)}
+					{@render speakerButton("You", TextAlignRightIcon, !startLeft, true)}
 				</div>
-			{/if}
-		</div>
-	{/if}
+			</div>
+		{/if}
+	</div>
+{/if}
 
-	<div
-		class="bg-neutral-100 px-5 py-4 dark:bg-neutral-950"
-		data-content
-		data-category={category}
-		bind:this={element}
-	></div>
-</div>
+<div class="min-h-[50vh]" data-content data-category={category} bind:this={element}></div>
 
-{#snippet toolbarButton({ icon, active = false, exec }: ToolbarItem)}
-	{@const isActive = typeof active === "boolean" ? active : editor?.isActive(active)}
+{#snippet speakerButton(label: string, icon: IconSvgElement, selected: boolean, self: boolean)}
+	<button
+		class={[
+			"flex h-6 items-center gap-1 rounded px-1.5 text-xs font-medium transition-colors",
+			selected
+				? "bg-surface text-foreground shadow-[0_1px_2px_rgb(0_0_0/0.1)]"
+				: "text-muted-foreground hover:text-foreground",
+		]}
+		type="button"
+		role="radio"
+		aria-checked={selected}
+		onclick={() => {
+			if (!selected) editor?.commands.toggleSpeaker();
+		}}
+	>
+		{#if !self}
+			<HugeiconsIcon {icon} size={13} strokeWidth={1.75} />
+		{/if}
+
+		{label}
+
+		{#if self}
+			<HugeiconsIcon {icon} size={13} strokeWidth={1.75} />
+		{/if}
+	</button>
+{/snippet}
+
+{#snippet toolbarButton({ icon, label, active = false, exec }: ToolbarItem)}
+	{@const pressed = typeof active === "boolean" ? active : (editor?.isActive(active) ?? false)}
 
 	<button
 		class={[
-			"flex size-9 items-center justify-center rounded-lg transition-colors",
-			"hover:bg-foreground/10 data-[active=true]:bg-foreground/10 data-[active=true]:text-foreground",
+			"flex size-8 shrink-0 items-center justify-center rounded-lg text-foreground/65 transition-colors",
+			"hover:bg-foreground/8 hover:text-foreground",
+			"aria-pressed:bg-foreground aria-pressed:text-background",
 		]}
 		type="button"
+		aria-label={label}
+		aria-pressed={typeof active === "string" || active ? pressed : undefined}
+		title={label}
 		onclick={exec}
-		data-active={isActive}
 	>
-		<HugeiconsIcon {icon} size={18} strokeWidth={1.5} />
+		<HugeiconsIcon {icon} size={17} strokeWidth={1.75} />
 	</button>
 {/snippet}
 
 <style>
 	[role="separator"] {
+		flex-shrink: 0;
 		background-color: var(--color-border);
-		margin-inline: 6px;
+		margin-inline: 4px;
 		width: 1px;
-		height: 20px;
+		height: 18px;
+	}
+
+	[data-content] :global(.ProseMirror > p:only-child:has(> br:only-child)::before) {
+		content: "Start writing…";
+		float: left;
+		height: 0;
+		color: var(--color-muted-foreground);
+		pointer-events: none;
 	}
 
 	[data-content] :global([data-component]) {
-		--bracket: light-dark(#747474, #e6edf3);
-		color: light-dark(#61bc69, #ffa657);
+		--bracket: var(--color-muted-foreground);
+		color: light-dark(var(--color-plum-700), var(--color-plum-300));
 		cursor: pointer;
 
 		&::before {
@@ -290,8 +323,9 @@
 		}
 
 		:global(&.ProseMirror-selectednode) {
-			background-color: --alpha(var(--color-blue-300) / 20%);
-			border: 1px solid var(--color-blue-400);
+			border-style: solid;
+			border-color: var(--color-plum-400);
+			background-color: --alpha(var(--color-plum-400) / 12%);
 		}
 	}
 </style>
