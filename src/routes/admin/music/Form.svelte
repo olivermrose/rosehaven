@@ -3,14 +3,14 @@
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 	import { untrack } from "svelte";
 
+	import Editor from "#lib/components/admin/Editor.svelte";
+	import FormLayout from "#lib/components/admin/FormLayout.svelte";
 	import PostDate from "#lib/components/PostDate.svelte";
 	import { createReview, updateReview } from "#lib/reviews.remote.js";
 	import type { Review } from "#lib/server/db/schema.js";
 	import type { Album } from "#lib/server/itunes.js";
 	import { formatTracklist, parseTracklist } from "#lib/tracklist.js";
 
-	import Editor from "../Editor.svelte";
-	import FormLayout from "../FormLayout.svelte";
 	import { UnsavedChanges } from "../unsaved.svelte";
 	import AlbumSearch from "./AlbumSearch.svelte";
 
@@ -106,7 +106,7 @@
 			/>
 		{:else}
 			<div
-				class="flex aspect-square w-full max-w-60 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-foreground/[0.025] p-6 text-center text-sm text-muted-foreground"
+				class="flex aspect-square w-full max-w-60 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-foreground/2.5 p-6 text-center text-sm text-muted-foreground"
 			>
 				<HugeiconsIcon icon={Image01Icon} size={22} strokeWidth={1.5} />
 

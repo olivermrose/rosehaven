@@ -2,10 +2,9 @@
 	import { Delete02Icon, Loading03Icon } from "@hugeicons/core-free-icons";
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 
+	import Alert from "#lib/components/admin/Alert.svelte";
+	import ListHeader from "#lib/components/admin/ListHeader.svelte";
 	import { createQuote, deleteQuote, getQuotes } from "#lib/quotes.remote.js";
-
-	import Alert from "../Alert.svelte";
-	import ListHeader from "../ListHeader.svelte";
 
 	const quotes = $derived(await getQuotes());
 	const issues = $derived(createQuote.fields.allIssues());
@@ -23,10 +22,7 @@
 	}
 </script>
 
-<ListHeader
-	title="Quotes"
-	summary="{quotes.length} {quotes.length === 1 ? 'quote' : 'quotes'} in rotation"
-/>
+<ListHeader title="Quotes" />
 
 <form
 	class="rounded-xl border border-border bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.04)]"

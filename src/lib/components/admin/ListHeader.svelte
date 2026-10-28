@@ -4,12 +4,11 @@
 
 	interface Props {
 		title: string;
-		summary: string;
 		href?: string;
 		label?: string;
 	}
 
-	const { title, summary, href, label }: Props = $props();
+	const { title, href, label }: Props = $props();
 </script>
 
 <svelte:head>
@@ -17,13 +16,9 @@
 </svelte:head>
 
 <header class="mb-8 flex flex-wrap items-end justify-between gap-4">
-	<div>
-		<h1 class="text-2xl font-semibold tracking-tight">
-			<span class="period">{title}</span>
-		</h1>
-
-		<p class="mt-1 text-sm text-muted-foreground">{summary}</p>
-	</div>
+	<h1 class="text-2xl font-semibold tracking-tight">
+		<span class="period">{title}</span>
+	</h1>
 
 	{#if href && label}
 		<a {href} data-variant="primary">

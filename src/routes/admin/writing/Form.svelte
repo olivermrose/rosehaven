@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
+	import Editor from "#lib/components/admin/Editor.svelte";
+	import FormLayout from "#lib/components/admin/FormLayout.svelte";
+	import Switch from "#lib/components/admin/Switch.svelte";
 	import PostDate from "#lib/components/PostDate.svelte";
 	import { createPost, updatePost } from "#lib/posts.remote.js";
 	import type { Post } from "#lib/server/db/schema.js";
 
-	import Editor from "../Editor.svelte";
-	import FormLayout from "../FormLayout.svelte";
-	import Switch from "../Switch.svelte";
-	import { UnsavedChanges } from "../unsaved.svelte";
+	import { UnsavedChanges } from "../unsaved.svelte.js";
 
 	interface Props {
 		form: typeof createPost | typeof updatePost;
@@ -60,7 +60,6 @@
 	});
 
 	function onTitleKeydown(event: KeyboardEvent) {
-		// Titles are one line; Enter moves on instead of breaking it
 		if (event.key === "Enter") {
 			event.preventDefault();
 			document.getElementById("excerpt")?.focus();

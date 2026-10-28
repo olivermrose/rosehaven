@@ -1,10 +1,10 @@
 <script lang="ts">
-	import DataTable, { type Column } from "../DataTable.svelte";
-	import DateCell from "../DateCell.svelte";
-	import ListHeader from "../ListHeader.svelte";
-	import { matchesStatus, statusFilters, summarize, type StatusFilter } from "../status";
-	import StatusBadge from "../StatusBadge.svelte";
-	import TableToolbar from "../TableToolbar.svelte";
+	import DataTable, { type Column } from "#lib/components/admin/DataTable.svelte";
+	import DateCell from "#lib/components/admin/DateCell.svelte";
+	import ListHeader from "#lib/components/admin/ListHeader.svelte";
+	import StatusBadge from "#lib/components/admin/StatusBadge.svelte";
+	import TableToolbar from "#lib/components/admin/TableToolbar.svelte";
+	import { matchesStatus, statusFilters, type StatusFilter } from "#lib/status.js";
 
 	const { data } = $props();
 
@@ -35,12 +35,7 @@
 	const rows = $derived(data.posts.filter((post) => matchesStatus(post, filter)));
 </script>
 
-<ListHeader
-	title="Writing"
-	summary={summarize(data.posts, "post")}
-	href="/admin/writing/new"
-	label="New post"
-/>
+<ListHeader title="Writing" href="/admin/writing/new" label="New post" />
 
 <TableToolbar
 	filters={statusFilters(data.posts)}
