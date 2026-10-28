@@ -1,28 +1,45 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
+	import { Image01Icon } from "@hugeicons/core-free-icons";
+	import { HugeiconsIcon } from "@hugeicons/svelte";
+	import { untrack } from "svelte";
 
+	import Editor from "#lib/components/admin/Editor.svelte";
+	import FormLayout from "#lib/components/admin/FormLayout.svelte";
+	import PostDate from "#lib/components/PostDate.svelte";
 	import { createReview, updateReview } from "#lib/reviews.remote.js";
 	import type { Review } from "#lib/server/db/schema.js";
 	import type { Album } from "#lib/server/itunes.js";
 	import { formatTracklist, parseTracklist } from "#lib/tracklist.js";
 
-	import Editor from "../Editor.svelte";
-	import FormLayout from "../FormLayout.svelte";
+	import { UnsavedChanges } from "../unsaved.svelte";
 	import AlbumSearch from "./AlbumSearch.svelte";
 
 	interface Props {
 		form: typeof createReview | typeof updateReview;
 		review?: Review & { version?: number; pending?: boolean };
-		actions?: Snippet;
+		ondelete?: () => Promise<void>;
 	}
 
-	const { form, review, actions }: Props = $props();
+	const { form, review, ondelete }: Props = $props();
 
 	let content = $state("");
+	let artworkFailed = $state(false);
 	const issues = $derived(form.fields.allIssues());
 
 	const artwork = $derived(form.fields.artwork.value());
 	const trackCount = $derived(parseTracklist(form.fields.tracklist.value() ?? "").length);
+
+	const unsaved = new UnsavedChanges(
+		() => ({
+			title: form.fields.title.value() ?? "",
+			artist: form.fields.artist.value() ?? "",
+			year: form.fields.year.value() ?? null,
+			artwork: form.fields.artwork.value() ?? "",
+			tracklist: form.fields.tracklist.value() ?? "",
+			content,
+		}),
+		() => form.pending > 0,
+	);
 
 	function fill(album: Album) {
 		form.fields.set({
@@ -35,8 +52,14 @@
 	}
 
 	$effect(() => {
+		void artwork;
+		artworkFailed = false;
+	});
+
+	$effect(() => {
 		if (!review) {
 			form.fields.set({});
+			untrack(() => unsaved.commit());
 			return;
 		}
 
@@ -50,81 +73,130 @@
 			tracklist: formatTracklist(review.tracklist),
 			content: review.content,
 		});
+
+		untrack(() => unsaved.commit());
 	});
 </script>
 
 <FormLayout
 	{...form}
+	noun="review"
+	section={{ href: "/admin/music", label: "Music" }}
+	heading={form.fields.title.value()}
+	view={review && `/music/${review.slug}`}
 	{issues}
 	status={review?.status}
 	version={review?.version}
-	pending={review?.pending}
+	unpublished={review?.pending}
+	dirty={unsaved.dirty}
+	busy={form.pending > 0}
+	result={form === updateReview ? updateReview.result : undefined}
 	intentField={form.fields.intent}
-	{actions}
+	{ondelete}
 >
 	<AlbumSearch onselect={fill} />
 
-	<div class="grid gap-8 sm:grid-cols-[1fr_1fr_8rem]">
-		<div>
-			<label for="title">Album</label>
-			<input id="title" placeholder="Album title" {...form.fields.title.as("text")} />
-		</div>
-
-		<div>
-			<label for="artist">Artist</label>
-			<input id="artist" placeholder="Artist" {...form.fields.artist.as("text")} />
-		</div>
-
-		<div>
-			<label for="year">Year</label>
-			<input id="year" placeholder="2026" {...form.fields.year.as("number")} />
-		</div>
-	</div>
-
-	<div class="flex items-start gap-8">
-		<div class="grow">
-			<label for="artwork">Artwork URL</label>
-			<input
-				id="artwork"
-				placeholder="https://r2.olivermrose.com/..."
-				{...form.fields.artwork.as("url")}
-			/>
-		</div>
-
-		{#if artwork}
+	<header class="mt-10 grid items-start gap-8 sm:grid-cols-[minmax(0,15rem)_1fr]">
+		{#if artwork && !artworkFailed}
 			<img
-				class="mt-4 aspect-square w-full max-w-xs rounded-xl object-cover img-outline"
+				class="aspect-square w-full max-w-60 rounded-lg bg-muted object-cover shadow img-outline"
 				src={artwork}
 				alt="Artwork preview"
+				onerror={() => (artworkFailed = true)}
 			/>
 		{:else}
 			<div
-				class="mt-4 flex aspect-square w-full max-w-xs items-center justify-center rounded-xl border border-dashed border-border bg-muted/30 text-sm text-muted-foreground"
+				class="flex aspect-square w-full max-w-60 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-border bg-foreground/2.5 p-6 text-center text-sm text-muted-foreground"
 			>
-				No artwork
+				<HugeiconsIcon icon={Image01Icon} size={22} strokeWidth={1.5} />
+
+				{artworkFailed
+					? "Couldn't load that image"
+					: "Pick an album or paste an artwork URL"}
 			</div>
 		{/if}
-	</div>
 
-	<div>
-		<label class="flex items-center" for="tracklist">
-			Tracklist
-			<span class="ml-1.5 text-muted-foreground normal-case">
-				· one per line, optional trailing duration (e.g. "Song Title 3:45") ·
+		<div class="min-w-0">
+			{#if review?.publishedAt}
+				<PostDate date={review.publishedAt} />
+			{:else}
+				<span class="text-sm font-medium text-muted-foreground">Not yet published</span>
+			{/if}
+
+			<label class="sr-only" for="title">Album</label>
+			<textarea
+				id="title"
+				class="field-bare mt-3 field-sizing-content resize-none py-1 text-fluid-lg/tight font-semibold text-pretty"
+				placeholder="Album title"
+				rows="1"
+				{...form.fields.title.as("text")}></textarea>
+
+			<label class="sr-only" for="artist">Artist</label>
+			<input
+				id="artist"
+				class="field-bare py-1 text-base text-muted-foreground focus-visible:text-foreground"
+				placeholder="Artist"
+				{...form.fields.artist.as("text")}
+			/>
+
+			<dl class="mt-6 divide-y divide-border border-y border-border">
+				<div class="grid gap-x-6 gap-y-1 py-2 sm:grid-cols-[6rem_1fr] sm:items-center">
+					<dt><label class="mb-0 text-muted-foreground" for="year">Year</label></dt>
+
+					<dd>
+						<input
+							id="year"
+							class="field-bare w-28! tabular-nums"
+							placeholder="2026"
+							{...form.fields.year.as("number")}
+						/>
+					</dd>
+				</div>
+
+				<div class="grid gap-x-6 gap-y-1 py-2 sm:grid-cols-[6rem_1fr] sm:items-center">
+					<dt><label class="mb-0 text-muted-foreground" for="artwork">Artwork</label></dt>
+
+					<dd>
+						<input
+							id="artwork"
+							class="field-bare truncate"
+							placeholder="https://r2.olivermrose.com/…"
+							{...form.fields.artwork.as("url")}
+						/>
+					</dd>
+				</div>
+			</dl>
+		</div>
+	</header>
+
+	<details class="group mt-10" open={!review}>
+		<summary
+			class="flex cursor-pointer list-none items-baseline justify-between gap-4 border-b border-border pb-3 select-none"
+		>
+			<span class="font-medium">Tracklist</span>
+
+			<span class="text-xs text-muted-foreground tabular-nums">
 				{trackCount}
 				{trackCount === 1 ? "track" : "tracks"}
 			</span>
-		</label>
+		</summary>
 
-		<textarea
-			id="tracklist"
-			class="resize-y font-mono text-sm"
-			placeholder="Opening Track 4:12"
-			rows="8"
-			{...form.fields.tracklist.as("text")}></textarea>
-	</div>
+		<div class="pt-4">
+			<label class="sr-only" for="tracklist">Tracklist</label>
+			<textarea
+				id="tracklist"
+				class="resize-y font-mono text-[0.8125rem]/6"
+				placeholder="Opening Track 4:12"
+				rows="8"
+				{...form.fields.tracklist.as("text")}></textarea>
 
-	<div>
+			<p class="mt-2 text-xs text-muted-foreground">
+				One track per line, with an optional trailing duration like “Song Title 3:45”.
+			</p>
+		</div>
+	</details>
+
+	<div class="mt-12">
 		<input {...form.fields.content.as("hidden", content)} />
 		<Editor components={false} bind:content />
 	</div>

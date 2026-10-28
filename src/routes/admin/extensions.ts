@@ -154,7 +154,7 @@ export const CustomComponent = Node.create({
 			const dom = document.createElement("div");
 
 			dom.className =
-				"my-2 rounded-lg border border-dashed border-border bg-muted/30 px-4 py-3 font-mono text-sm select-none";
+				"my-4 rounded-lg border border-dashed border-border bg-foreground/[0.03] px-4 py-3 font-mono text-[0.8125rem] select-none";
 			dom.contentEditable = "false";
 			dom.dataset.component = node.attrs.name;
 			dom.textContent = node.attrs.name;

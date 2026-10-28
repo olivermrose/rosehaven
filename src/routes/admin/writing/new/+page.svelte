@@ -4,4 +4,8 @@
 	import Form from "../Form.svelte";
 </script>
 
+<svelte:head>
+	<title>New post | admin</title>
+</svelte:head>
+
 <Form form={createPost} />

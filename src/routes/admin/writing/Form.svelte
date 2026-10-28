@@ -1,19 +1,22 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
+	import { untrack } from "svelte";
 
+	import Editor from "#lib/components/admin/Editor.svelte";
+	import FormLayout from "#lib/components/admin/FormLayout.svelte";
+	import Switch from "#lib/components/admin/Switch.svelte";
+	import PostDate from "#lib/components/PostDate.svelte";
 	import { createPost, updatePost } from "#lib/posts.remote.js";
 	import type { Post } from "#lib/server/db/schema.js";
 
-	import Editor from "../Editor.svelte";
-	import FormLayout from "../FormLayout.svelte";
+	import { UnsavedChanges } from "../unsaved.svelte.js";
 
 	interface Props {
 		form: typeof createPost | typeof updatePost;
 		post?: Post & { version?: number; pending?: boolean };
-		actions?: Snippet;
+		ondelete?: () => Promise<void>;
 	}
 
-	const { form, post, actions }: Props = $props();
+	const { form, post, ondelete }: Props = $props();
 
 	const categories = [
 		{ label: "Dialogue", value: "dialogue" },
@@ -25,9 +28,21 @@
 	let content = $state("");
 	const issues = $derived(form.fields.allIssues());
 
+	const unsaved = new UnsavedChanges(
+		() => ({
+			title: form.fields.title.value() ?? "",
+			excerpt: form.fields.excerpt.value() ?? "",
+			category: form.fields.category.value() ?? "",
+			explicit: form.fields.explicit.value() ?? false,
+			content,
+		}),
+		() => form.pending > 0,
+	);
+
 	$effect(() => {
 		if (!post) {
 			form.fields.set({});
+			untrack(() => unsaved.commit());
 			return;
 		}
 
@@ -40,84 +55,121 @@
 			content: post.content,
 			explicit: post.explicit,
 		});
+
+		untrack(() => unsaved.commit());
 	});
+
+	function onTitleKeydown(event: KeyboardEvent) {
+		if (event.key === "Enter") {
+			event.preventDefault();
+			document.getElementById("excerpt")?.focus();
+		}
+	}
 </script>
 
 <FormLayout
 	{...form}
+	noun="post"
+	section={{ href: "/admin/writing", label: "Writing" }}
+	heading={form.fields.title.value()}
+	view={post && `/writing/${post.slug}`}
 	{issues}
 	status={post?.status}
 	version={post?.version}
-	pending={post?.pending}
+	unpublished={post?.pending}
+	dirty={unsaved.dirty}
+	busy={form.pending > 0}
+	result={form === updatePost ? updatePost.result : undefined}
 	intentField={form.fields.intent}
-	{actions}
+	{ondelete}
 >
-	<div>
-		<label for="title">Title</label>
-		<input id="title" placeholder="Post title" {...form.fields.title.as("text")} />
-	</div>
+	<header>
+		<div class="flex flex-wrap items-baseline gap-x-3 text-sm">
+			{#if post?.publishedAt}
+				<PostDate date={post.publishedAt} />
+			{:else}
+				<span class="font-medium text-muted-foreground">Not yet published</span>
+			{/if}
 
-	<div class="grid gap-8 sm:grid-cols-2">
-		<div>
-			<label for="excerpt">Excerpt</label>
-			<input id="excerpt" placeholder="Brief preview" {...form.fields.excerpt.as("text")} />
+			{#if post?.revisedAt}
+				<span class="text-muted-foreground">
+					Revised <PostDate date={post.revisedAt} listing />
+				</span>
+			{/if}
 		</div>
 
-		<div>
-			<label for="category">Category</label>
+		<label class="sr-only" for="title">Title</label>
+		<textarea
+			id="title"
+			class="field-bare mt-3 field-sizing-content resize-none py-1 text-fluid-xl/tight font-semibold text-pretty"
+			placeholder="Untitled"
+			rows="1"
+			onkeydown={onTitleKeydown}
+			{...form.fields.title.as("text")}></textarea>
+	</header>
 
-			<select
-				id="category"
-				class="has-[option:disabled:checked]:text-muted-foreground"
-				{...form.fields.category.as("select")}
-			>
-				<option value="" disabled selected>Select category</option>
+	<dl class="mt-8 divide-y divide-border border-y border-border">
+		<div class="grid gap-x-6 gap-y-1 py-2 sm:grid-cols-[7rem_1fr] sm:items-center">
+			<dt>
+				<label class="mb-0 text-muted-foreground" for="category">Category</label>
+			</dt>
 
-				{#each categories as cat}
-					<option value={cat.value} selected={post?.category === cat.value}>
-						{cat.label}
-					</option>
-				{/each}
-			</select>
+			<dd>
+				<select
+					id="category"
+					class="field-bare w-auto! has-[option:disabled:checked]:text-muted-foreground"
+					{...form.fields.category.as("select")}
+					value={form.fields.category.value() ?? ""}
+				>
+					<option value="" disabled selected>Choose a category</option>
+
+					{#each categories as cat (cat.value)}
+						<option value={cat.value} selected={post?.category === cat.value}>
+							{cat.label}
+						</option>
+					{/each}
+				</select>
+			</dd>
 		</div>
-	</div>
 
-	<div>
+		<div class="grid gap-x-6 gap-y-1 py-2 sm:grid-cols-[7rem_1fr] sm:items-start">
+			<dt class="sm:pt-2">
+				<label class="mb-0 text-muted-foreground" for="excerpt">Excerpt</label>
+			</dt>
+
+			<dd>
+				<textarea
+					id="excerpt"
+					class="field-bare field-sizing-content resize-none"
+					placeholder="A line or two shown under the title in the index"
+					rows="1"
+					{...form.fields.excerpt.as("text")}></textarea>
+			</dd>
+		</div>
+
+		<div class="grid gap-x-6 gap-y-2 py-3 sm:grid-cols-[7rem_1fr] sm:items-center">
+			<dt class="text-[0.8125rem] font-medium text-muted-foreground">Options</dt>
+
+			<dd class="flex flex-wrap items-center gap-x-6 gap-y-3">
+				<Switch label="Explicit" {...form.fields.explicit.as("checkbox")} />
+
+				{#if post?.status === "published" && form === updatePost}
+					<span class="inline-flex items-center gap-2">
+						<Switch
+							label="Mark as revised"
+							{...updatePost.fields.revision.as("checkbox")}
+						/>
+						<span class="text-xs text-muted-foreground max-sm:hidden">
+							on next publish
+						</span>
+					</span>
+				{/if}
+			</dd>
+		</div>
+	</dl>
+
+	<div class="mt-10">
 		<input {...form.fields.content.as("hidden", content)} />
 		<Editor category={form.fields.category.value()} bind:content />
 	</div>
-
-	{#snippet options()}
-		<label class="mb-0 flex cursor-pointer items-center gap-3">
-			<div class="relative">
-				<input class="peer sr-only" {...form.fields.explicit.as("checkbox")} />
-
-				<div
-					class="h-5 w-9 rounded-full border border-foreground/30 transition-colors peer-checked:border-foreground peer-checked:bg-foreground"
-				></div>
-				<div
-					class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-foreground/40 transition-all peer-checked:left-4.5 peer-checked:bg-background"
-				></div>
-			</div>
-
-			<span>Explicit</span>
-		</label>
-
-		{#if post?.status === "published" && form === updatePost}
-			<label class="mb-0 flex cursor-pointer items-center gap-3">
-				<div class="relative">
-					<input class="peer sr-only" {...updatePost.fields.revision.as("checkbox")} />
-
-					<div
-						class="h-5 w-9 rounded-full border border-foreground/30 transition-colors peer-checked:border-foreground peer-checked:bg-foreground"
-					></div>
-					<div
-						class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-foreground/40 transition-all peer-checked:left-4.5 peer-checked:bg-background"
-					></div>
-				</div>
-
-				<span>Revision</span>
-			</label>
-		{/if}
-	{/snippet}
 </FormLayout>
