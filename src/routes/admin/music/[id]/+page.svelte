@@ -22,7 +22,15 @@
 
 {#if updateReview.result?.success}
 	<div class="mb-8 text-sm text-aloe-600 uppercase dark:text-aloe-300">
-		saved · review updated
+		{#if updateReview.result.intent === "publish"}
+			published · changes are live
+		{:else if updateReview.result.intent === "unpublish"}
+			unpublished · review taken down
+		{:else if review.status === "published"}
+			saved · not yet published
+		{:else}
+			saved · draft updated
+		{/if}
 	</div>
 {/if}
 

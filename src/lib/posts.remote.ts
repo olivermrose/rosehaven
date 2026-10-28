@@ -7,9 +7,12 @@ import { command, form, getRequestEvent, query } from "$app/server";
 
 import { requireAdmin } from "./server/auth";
 import { posts } from "./server/db/schema";
+import { createVersion, deleteVersions, withLatestVersion } from "./server/versions";
 
 export const getPost = query(z.string(), async (idOrSlug) => {
 	const event = getRequestEvent();
+	requireAdmin(event.cookies);
+
 	const id = Number(idOrSlug);
 
 	const [post] = await event.locals.db
@@ -21,7 +24,7 @@ export const getPost = query(z.string(), async (idOrSlug) => {
 		error(404, "Post not found");
 	}
 
-	return post;
+	return withLatestVersion(event.locals.db, posts, post);
 });
 
 export const getPosts = query(() => {
@@ -40,38 +43,39 @@ const postSchema = z.object({
 	excerpt: z.string().min(1),
 	content: z.string().min(1),
 	explicit: z.boolean().default(false),
-	status: z.enum(["draft", "published"]).default("draft"),
+	intent: z.enum(["save", "publish", "unpublish"]).default("save"),
 });
 
-export const createPost = form(postSchema, async (data) => {
+export const createPost = form(postSchema, async ({ intent, ...fields }) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	const slug = slugify(data.title);
-	const publishedAt = data.status === "published" ? new Date() : null;
+	const publishedAt = intent === "publish" ? new Date() : null;
 
-	const [post] = await event.locals.db
-		.insert(posts)
-		.values({
-			title: data.title,
-			slug,
-			category: data.category,
-			excerpt: data.excerpt,
-			explicit: data.explicit,
-			content: data.content,
-			status: data.status,
-			publishedAt,
-		})
-		.returning({ id: posts.id });
+	const id = await event.locals.db.transaction(async (tx) => {
+		const [post] = await tx
+			.insert(posts)
+			.values({
+				...fields,
+				slug: slugify(fields.title),
+				status: publishedAt ? "published" : "draft",
+				publishedAt,
+			})
+			.returning({ id: posts.id });
 
-	redirect(303, `/admin/writing/${post.id}`);
+		await createVersion(tx, posts, post.id, fields, publishedAt);
+
+		return post.id;
+	});
+
+	redirect(303, `/admin/writing/${id}`);
 });
 
 export const updatePost = form(
-	postSchema.partial().extend({
+	postSchema.extend({
 		revision: z.boolean().default(false),
 	}),
-	async (data) => {
+	async ({ intent, revision, ...fields }) => {
 		const event = getRequestEvent();
 		requireAdmin(event.cookies);
 
@@ -82,38 +86,48 @@ export const updatePost = form(
 		}
 
 		const [existing] = await event.locals.db
-			.select({ publishedAt: posts.publishedAt, revisedAt: posts.revisedAt })
+			.select({
+				status: posts.status,
+				publishedAt: posts.publishedAt,
+				revisedAt: posts.revisedAt,
+			})
 			.from(posts)
 			.where(eq(posts.id, id));
 
-		const slug = data.title ? slugify(data.title) : undefined;
+		if (!existing) {
+			error(404, "Post not found");
+		}
+
 		const now = new Date();
 
-		const publishedAt =
-			data.status === "published" && !existing?.publishedAt ? now : existing?.publishedAt;
+		await event.locals.db.transaction(async (tx) => {
+			// saving a published post only records a version; the live row stays
+			// untouched until the changes are published
+			if (intent === "save" && existing.status === "published") {
+				await tx.update(posts).set({ updatedAt: now }).where(eq(posts.id, id));
+				await createVersion(tx, posts, id, fields);
+				return;
+			}
 
-		const revisedAt =
-			data.revision && data.status === "published" && existing?.publishedAt
-				? now
-				: existing?.revisedAt;
+			const publish = intent === "publish";
 
-		await event.locals.db
-			.update(posts)
-			.set({
-				title: data.title,
-				slug,
-				category: data.category,
-				excerpt: data.excerpt,
-				explicit: data.explicit,
-				content: data.content,
-				status: data.status,
-				publishedAt,
-				revisedAt,
-				updatedAt: now,
-			})
-			.where(eq(posts.id, id));
+			await tx
+				.update(posts)
+				.set({
+					...fields,
+					slug: slugify(fields.title),
+					status: publish ? "published" : "draft",
+					publishedAt: publish ? (existing.publishedAt ?? now) : existing.publishedAt,
+					revisedAt:
+						publish && revision && existing.publishedAt ? now : existing.revisedAt,
+					updatedAt: now,
+				})
+				.where(eq(posts.id, id));
 
-		return { success: true };
+			await createVersion(tx, posts, id, fields, publish ? now : null);
+		});
+
+		return { success: true, intent };
 	},
 );
 
@@ -121,7 +135,10 @@ export const deletePost = command(z.number(), async (id) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	await event.locals.db.delete(posts).where(eq(posts.id, id));
+	await event.locals.db.transaction(async (tx) => {
+		await tx.delete(posts).where(eq(posts.id, id));
+		await deleteVersions(tx, posts, id);
+	});
 
 	return { success: true };
 });
