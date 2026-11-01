@@ -152,7 +152,7 @@
 	transition={{ duration: 0.75 }}
 >
 	{#each { length: 25 }}
-		{@const [main, anti] = generateDiagonals()}
+		{const [main, anti] = generateDiagonals()}
 
 		<div
 			class="petal absolute size-3 bg-linear-to-br/oklch from-(--petal-from) to-(--petal-to)"

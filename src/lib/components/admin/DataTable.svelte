@@ -31,7 +31,6 @@
 		data: T[];
 		columns: Column<T>[];
 		globalFilter?: string;
-		/** Extra classes per column id, e.g. to hide a column on small screens */
 		columnClass?: Record<string, string>;
 		row: Snippet<[T]>;
 		empty?: Snippet;
@@ -82,11 +81,11 @@
 
 <div class="overflow-hidden rounded-xl border border-border bg-surface">
 	<table class="w-full text-left">
-		<thead class="bg-foreground/[0.025]">
+		<thead class="bg-foreground/2.5">
 			{#each table.getHeaderGroups() as group (group.id)}
 				<tr class="border-b border-border">
 					{#each group.headers as header (header.id)}
-						{@const sort = getSort(header.column.id)}
+						{const sort = $derived(getSort(header.column.id))}
 
 						<th
 							class={[
@@ -102,18 +101,20 @@
 							>
 								{header.column.columnDef.header}
 
-								<HugeiconsIcon
-									class="transition-opacity {sort
-										? ''
-										: 'opacity-0 group-hover/sort:opacity-60'}"
-									icon={sort === "ascending"
-										? ArrowUp01Icon
-										: sort === "descending"
-											? ArrowDown01Icon
-											: ArrowUpDownIcon}
-									size={13}
-									strokeWidth={2}
-								/>
+								{#key sort}
+									<HugeiconsIcon
+										class="transition-opacity {sort
+											? ''
+											: 'opacity-0 group-hover/sort:opacity-60'}"
+										icon={sort === "ascending"
+											? ArrowUp01Icon
+											: sort === "descending"
+												? ArrowDown01Icon
+												: ArrowUpDownIcon}
+										size={13}
+										strokeWidth={2}
+									/>
+								{/key}
 							</button>
 						</th>
 					{/each}

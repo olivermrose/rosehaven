@@ -271,7 +271,9 @@
 {/snippet}
 
 {#snippet toolbarButton({ icon, label, active = false, exec }: ToolbarItem)}
-	{@const pressed = typeof active === "boolean" ? active : (editor?.isActive(active) ?? false)}
+	{const pressed = $derived(
+		typeof active === "boolean" ? active : (editor?.isActive(active) ?? false),
+	)}
 
 	<button
 		class={[

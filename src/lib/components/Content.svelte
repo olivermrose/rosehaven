@@ -47,7 +47,7 @@
 
 <div data-content data-category={post.category}>
 	{#each fragments as fragment (fragment.id)}
-		{@const Component = postComponents[fragment.component ?? "_null"]}
+		{const Component = $derived(postComponents[fragment.component ?? "_null"])}
 
 		{#if fragment.html}
 			{@html fragment.html}
