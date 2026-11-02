@@ -80,7 +80,7 @@
 
 <FormLayout
 	{...form}
-	noun="review"
+	entity="review"
 	section={{ href: "/admin/music", label: "Music" }}
 	heading={form.fields.title.value()}
 	view={review && `/music/${review.slug}`}

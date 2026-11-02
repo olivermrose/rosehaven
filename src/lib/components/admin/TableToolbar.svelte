@@ -2,7 +2,7 @@
 	import { Cancel01Icon, Search01Icon } from "@hugeicons/core-free-icons";
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 
-	import type { StatusFilter } from "./status";
+	import type { StatusFilter } from "#lib/status.js";
 
 	interface Props {
 		search: string;

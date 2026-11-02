@@ -1,11 +1,13 @@
 <script lang="ts">
 	import {
 		ArrowLeft01Icon,
+		ArrowTurnBackwardIcon,
 		CheckmarkCircle02Icon,
 		Delete02Icon,
+		FloppyDiskIcon,
 		LinkSquare02Icon,
 		Loading03Icon,
-		MoreHorizontalIcon,
+		SentIcon,
 	} from "@hugeicons/core-free-icons";
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 	import type { Snippet } from "svelte";
@@ -14,13 +16,14 @@
 	import type { Status } from "#lib/status.js";
 	import type { RemoteFormField, RemoteFormIssue } from "$app/server";
 
-	import Alert from "./Alert.svelte";
+	import SplitButton from "../SplitButton.svelte";
+	import Issues from "./Issues.svelte";
 	import StatusBadge from "./StatusBadge.svelte";
 
 	type Intent = "save" | "publish" | "unpublish";
 
 	interface Props extends HTMLFormAttributes {
-		noun: string;
+		entity: string;
 		section: { href: string; label: string };
 		heading?: string;
 		view?: string;
@@ -37,7 +40,7 @@
 	}
 
 	const {
-		noun,
+		entity,
 		section,
 		heading,
 		view,
@@ -54,16 +57,11 @@
 		...rest
 	}: Props = $props();
 
-	const id = $props.id();
-	const menuId = `actions-${id}`;
-	const anchor = `--actions-${id}`;
-
 	const published = $derived(status === "published");
 
 	let intent = $state<Intent>();
 	let deleting = $state(false);
 	let save = $state<HTMLButtonElement>();
-	let menu = $state<HTMLDivElement>();
 
 	const notice = $derived.by(() => {
 		if (!result?.success) return null;
@@ -72,7 +70,7 @@
 			case "publish":
 				return "Published · changes are live";
 			case "unpublish":
-				return `Unpublished · ${noun} taken down`;
+				return `Unpublished · ${entity} taken down`;
 			default:
 				return published ? "Saved · not yet published" : "Draft saved";
 		}
@@ -90,7 +88,6 @@
 	}
 
 	async function remove() {
-		menu?.hidePopover();
 		deleting = true;
 
 		try {
@@ -126,7 +123,7 @@
 				<span class="text-muted-foreground/50 max-sm:hidden" aria-hidden="true">/</span>
 
 				<span class="truncate font-medium" aria-current="page">
-					{heading || `Untitled ${noun}`}
+					{heading || `Untitled ${entity}`}
 				</span>
 			</nav>
 
@@ -173,73 +170,80 @@
 						data-variant="ghost"
 						class="max-sm:hidden"
 						data-size="icon"
-						aria-label="View live {noun}"
-						title="View live {noun}"
+						aria-label="View live {entity}"
+						title="View live {entity}"
 					>
 						<HugeiconsIcon icon={LinkSquare02Icon} size={17} strokeWidth={1.75} />
 					</a>
 				{/if}
 
-				{#if published || ondelete}
-					<button
-						type="button"
-						data-variant="ghost"
-						data-size="icon"
-						aria-label="More actions"
-						popovertarget={menuId}
-						style:anchor-name={anchor}
-					>
-						<HugeiconsIcon icon={MoreHorizontalIcon} size={18} strokeWidth={1.75} />
-					</button>
+				<SplitButton
+					disabled={busy}
+					aria-busy={busy && intent === "publish"}
+					onclick={() => (intent = "publish")}
+					{...intentField.as("submit", "publish")}
+				>
+					<HugeiconsIcon
+						class={busy && intent === "publish" ? "animate-spin" : ""}
+						icon={busy && intent === "publish" ? Loading03Icon : SentIcon}
+						size={15}
+						strokeWidth={1.75}
+					/>
 
-					<div
-						id={menuId}
-						class="m-0 min-w-48 rounded-lg border border-border bg-surface p-1 text-sm shadow-[0_8px_24px_-6px_rgb(0_0_0/0.18),0_2px_6px_-2px_rgb(0_0_0/0.08)]"
-						popover
-						role="menu"
-						style:position-anchor={anchor}
-						bind:this={menu}
-					>
+					Publish
+
+					{#snippet menu()}
 						{#if view && published}
-							<a
-								class="menu-item sm:hidden"
-								href={view}
-								target="_blank"
-								role="menuitem"
-							>
-								View live {noun}
-								<HugeiconsIcon
-									class="text-muted-foreground"
-									icon={LinkSquare02Icon}
-									size={15}
-									strokeWidth={1.75}
-								/>
+							<a class="sm:hidden" href={view} target="_blank" role="menuitem">
+								<span class="flex items-center gap-2">
+									<HugeiconsIcon
+										icon={LinkSquare02Icon}
+										size={15}
+										strokeWidth={1.75}
+									/>
+									View live {entity}
+								</span>
 							</a>
 						{/if}
 
+						<button
+							role="menuitem"
+							disabled={busy}
+							onclick={() => (intent = "save")}
+							{...intentField.as("submit", "save")}
+							bind:this={save}
+						>
+							<span class="flex items-center gap-2">
+								<HugeiconsIcon icon={FloppyDiskIcon} size={15} strokeWidth={1.75} />
+								{published ? "Save" : "Save draft"}
+							</span>
+							<kbd>⌘S</kbd>
+						</button>
+
 						{#if published}
 							<button
-								class="menu-item"
 								role="menuitem"
 								disabled={busy}
+								onclick={() => (intent = "unpublish")}
 								{...intentField.as("submit", "unpublish")}
-								onclick={() => {
-									intent = "unpublish";
-									menu?.hidePopover();
-								}}
 							>
-								Unpublish
+								<span class="flex items-center gap-2">
+									<HugeiconsIcon
+										icon={ArrowTurnBackwardIcon}
+										size={15}
+										strokeWidth={1.75}
+									/>
+									Unpublish
+								</span>
 								<span class="text-xs text-muted-foreground">Back to draft</span>
 							</button>
 						{/if}
 
 						{#if ondelete}
-							{#if published}
-								<div class="-mx-1 my-1 h-px bg-border" role="separator"></div>
-							{/if}
+							<div role="separator"></div>
 
 							<button
-								class="menu-item text-error hover:bg-error/10!"
+								class="text-error hover:bg-error/10!"
 								type="button"
 								role="menuitem"
 								disabled={deleting}
@@ -251,106 +255,19 @@
 										size={15}
 										strokeWidth={1.75}
 									/>
-									Delete {noun}
+									Delete {entity}
 								</span>
 							</button>
 						{/if}
-					</div>
-				{/if}
-
-				<button
-					data-variant="secondary"
-					disabled={busy}
-					aria-busy={busy && intent === "save"}
-					title="Save (⌘S)"
-					bind:this={save}
-					{...intentField.as("submit", "save")}
-					onclick={() => (intent = "save")}
-				>
-					{published ? "Save" : "Save draft"}
-				</button>
-
-				<button
-					data-variant="primary"
-					disabled={busy}
-					aria-busy={busy && intent === "publish"}
-					{...intentField.as("submit", "publish")}
-					onclick={() => (intent = "publish")}
-				>
-					{#if busy && intent === "publish"}
-						<HugeiconsIcon
-							class="animate-spin"
-							icon={Loading03Icon}
-							size={14}
-							strokeWidth={2}
-						/>
-					{/if}
-
-					{#if published}
-						Publish<span class="max-sm:hidden">&nbsp;changes</span>
-					{:else}
-						Publish
-					{/if}
-				</button>
+					{/snippet}
+				</SplitButton>
 			</div>
 		</div>
 	</header>
 
 	<div class="mx-auto max-w-4xl px-6 pt-12 pb-40">
-		{#if issues?.length}
-			<div class="mb-10">
-				<Alert
-					tone="error"
-					title={issues.length === 1
-						? `This ${noun} couldn't be saved`
-						: `${issues.length} problems kept this ${noun} from saving`}
-				>
-					<ul class="space-y-0.5">
-						{#each issues as issue, i (i)}
-							<li>
-								{#if issue.path.length}
-									<span class="font-medium capitalize"
-										>{issue.path.join(".")}</span
-									>:
-								{/if}
-
-								{issue.message}
-							</li>
-						{/each}
-					</ul>
-				</Alert>
-			</div>
-		{/if}
+		<Issues {entity} {issues} />
 
 		{@render children()}
 	</div>
 </form>
-
-<style>
-	[role="menu"] {
-		position: fixed;
-		inset: auto;
-		margin-top: 0.375rem;
-		position-area: bottom span-left;
-	}
-
-	.menu-item {
-		display: flex;
-		width: 100%;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		border-radius: var(--radius-md);
-		padding: 0.4375rem 0.625rem;
-		text-align: left;
-		transition: background-color 150ms ease;
-
-		&:hover:not(:disabled) {
-			background-color: --alpha(var(--foreground) / 7%);
-		}
-
-		&:disabled {
-			opacity: 0.5;
-		}
-	}
-</style>

@@ -69,7 +69,7 @@
 
 <FormLayout
 	{...form}
-	noun="post"
+	entity="post"
 	section={{ href: "/admin/writing", label: "Writing" }}
 	heading={form.fields.title.value()}
 	view={post && `/writing/${post.slug}`}
