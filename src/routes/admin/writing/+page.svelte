@@ -1,7 +1,6 @@
 <script lang="ts">
 	import DataTable, { type Column } from "#lib/components/admin/DataTable.svelte";
 	import DateCell from "#lib/components/admin/DateCell.svelte";
-	import ListHeader from "#lib/components/admin/ListHeader.svelte";
 	import StatusBadge from "#lib/components/admin/StatusBadge.svelte";
 	import TableToolbar from "#lib/components/admin/TableToolbar.svelte";
 	import { matchesStatus, statusFilters, type StatusFilter } from "#lib/status.js";
@@ -35,11 +34,14 @@
 	const rows = $derived(data.posts.filter((post) => matchesStatus(post, filter)));
 </script>
 
-<ListHeader title="Writing" href="/admin/writing/new" label="New post" />
+<svelte:head>
+	<title>Writing | admin</title>
+</svelte:head>
 
 <TableToolbar
 	filters={statusFilters(data.posts)}
 	placeholder="Search posts"
+	action={{ href: "/admin/writing/new", label: "New post" }}
 	bind:search
 	bind:filter
 />
@@ -49,7 +51,7 @@
 		<td class="w-full max-w-0">
 			<div class="flex min-w-0 items-center gap-2">
 				<a
-					class="truncate font-medium outline-none after:absolute after:inset-0 focus-visible:after:rounded-sm focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-foreground/60"
+					class="truncate outline-none after:absolute after:inset-0 focus-visible:after:rounded-sm focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-foreground/60"
 					href="/admin/writing/{post.id}"
 				>
 					{post.title}
@@ -57,7 +59,7 @@
 
 				{#if post.explicit}
 					<span
-						class="shrink-0 rounded-sm border border-border px-1 text-[0.6875rem]/4 font-medium text-muted-foreground"
+						class="shrink-0 rounded-sm bg-foreground/8 px-1 text-[0.6875rem]/4 font-medium text-muted-foreground"
 						title="Explicit"
 					>
 						E

@@ -116,10 +116,8 @@
 	--background: light-dark(var(--color-off-white), var(--color-off-black));
 	--foreground: light-dark(var(--color-off-black), var(--color-off-white));
 
-	/* Raised layer for panels, toolbars and fields; a step off the page ground */
 	--surface: light-dark(oklch(0.985 0.004 93.57), oklch(0.2178 0 0));
 
-	/* Semantic states stay outside the site palette so they read as status, not decoration */
 	--success: light-dark(var(--color-green-700), var(--color-green-400));
 	--warning: light-dark(var(--color-amber-700), var(--color-amber-400));
 	--error: light-dark(var(--color-red-600), var(--color-red-400));
@@ -165,7 +163,7 @@
 	:is(input:not([type="checkbox"], [type="radio"], [type="hidden"]), select, textarea) {
 		width: 100%;
 		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-xl);
 		background-color: var(--color-surface);
 		padding: --spacing(2) --spacing(3);
 		font-family: var(--font-sans);
@@ -221,11 +219,11 @@
 		flex-shrink: 0;
 		align-items: center;
 		justify-content: center;
-		gap: --spacing(1.5);
+		gap: --spacing(2);
 		height: var(--btn-height);
 		padding-inline: --spacing(3);
 		border: 1px solid transparent;
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-xl);
 		font-size: var(--text-sm);
 		font-weight: 500;
 		line-height: 1;
@@ -236,7 +234,6 @@
 			background-color 150ms ease,
 			color 150ms ease,
 			border-color 150ms ease,
-			box-shadow 150ms ease,
 			translate 100ms ease;
 
 		&:focus-visible {
@@ -274,14 +271,9 @@
 			padding-inline: 0;
 		}
 
-		/* Ink on paper: the page's own foreground, with a faint top light so it reads pressed-in */
 		&[data-variant="primary"] {
 			background-color: var(--foreground);
 			color: var(--background);
-			box-shadow:
-				inset 0 1px 0 --alpha(var(--background) / 14%),
-				0 1px 2px --alpha(var(--color-black) / 18%),
-				0 2px 6px -2px --alpha(var(--color-black) / 20%);
 
 			&:hover:not(:disabled, [aria-disabled="true"]) {
 				background-color: --alpha(var(--foreground) / 86%);
@@ -292,7 +284,6 @@
 			background-color: var(--color-surface);
 			color: var(--foreground);
 			border-color: var(--color-border);
-			box-shadow: 0 1px 2px --alpha(var(--color-black) / 6%);
 
 			&:hover:not(:disabled, [aria-disabled="true"]) {
 				border-color: --alpha(var(--foreground) / 28%);
@@ -319,7 +310,6 @@
 		}
 	}
 
-	/* A field that sits in running text: no box until it's hovered or focused */
 	.field-bare:is(input, textarea, select) {
 		border-color: transparent;
 		background-color: transparent;
@@ -355,7 +345,7 @@
 		padding-inline: --spacing(1);
 		border: 1px solid var(--color-border);
 		border-bottom-width: 2px;
-		border-radius: var(--radius-xs);
+		border-radius: var(--radius-sm);
 		font-family: var(--font-sans);
 		font-size: 0.6875rem;
 		font-weight: 500;

@@ -3,7 +3,6 @@
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 
 	import Alert from "#lib/components/admin/Alert.svelte";
-	import ListHeader from "#lib/components/admin/ListHeader.svelte";
 	import { createQuote, deleteQuote, getQuotes } from "#lib/quotes.remote.js";
 
 	const quotes = $derived(await getQuotes());
@@ -22,7 +21,9 @@
 	}
 </script>
 
-<ListHeader title="Quotes" />
+<svelte:head>
+	<title>Quotes | admin</title>
+</svelte:head>
 
 <form
 	class="rounded-xl border border-border bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.04)]"

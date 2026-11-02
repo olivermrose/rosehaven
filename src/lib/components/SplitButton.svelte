@@ -73,6 +73,7 @@
 			0 2px 6px -2px rgb(0 0 0 / 0.08);
 		margin-top: 0.375rem;
 		position-area: bottom span-left;
+		position-try-fallbacks: flip-block;
 
 		:global([role="menuitem"]) {
 			display: flex;

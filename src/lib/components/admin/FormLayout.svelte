@@ -101,8 +101,10 @@
 <svelte:window {onkeydown} />
 
 <form class="min-h-dvh" {...rest}>
-	<header class="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
-		<div class="mx-auto flex h-14 max-w-6xl items-center gap-2 px-3 sm:gap-3 sm:px-6">
+	<div class="fixed inset-x-0 bottom-4 z-40 px-4 sm:bottom-6">
+		<div
+			class="mx-auto flex max-w-4xl items-center gap-2 rounded-2xl border border-border bg-surface/90 p-1.5 shadow-[0_6px_20px_-8px_rgb(0_0_0/0.18),0_1px_2px_rgb(0_0_0/0.06)] backdrop-blur-md sm:gap-3"
+		>
 			<a
 				href={section.href}
 				data-variant="ghost"
@@ -263,9 +265,9 @@
 				</SplitButton>
 			</div>
 		</div>
-	</header>
+	</div>
 
-	<div class="mx-auto max-w-4xl px-6 pt-12 pb-40">
+	<div class="mx-auto max-w-4xl px-6 pt-28 pb-40">
 		<Issues {entity} {issues} />
 
 		{@render children()}

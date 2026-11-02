@@ -89,7 +89,7 @@
 
 						<th
 							class={[
-								"h-10 px-4 text-xs font-medium whitespace-nowrap text-muted-foreground",
+								"h-10 px-4 text-sm font-medium whitespace-nowrap text-muted-foreground",
 								columnClass[header.column.id],
 							]}
 							aria-sort={sort ?? "none"}

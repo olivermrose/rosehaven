@@ -2,7 +2,6 @@
 	import { artworkAt } from "#lib";
 	import DataTable, { type Column } from "#lib/components/admin/DataTable.svelte";
 	import DateCell from "#lib/components/admin/DateCell.svelte";
-	import ListHeader from "#lib/components/admin/ListHeader.svelte";
 	import StatusBadge from "#lib/components/admin/StatusBadge.svelte";
 	import TableToolbar from "#lib/components/admin/TableToolbar.svelte";
 	import { matchesStatus, statusFilters, type StatusFilter } from "#lib/status.js";
@@ -36,11 +35,14 @@
 	const rows = $derived(data.reviews.filter((review) => matchesStatus(review, filter)));
 </script>
 
-<ListHeader title="Music" href="/admin/music/new" label="New review" />
+<svelte:head>
+	<title>Music | admin</title>
+</svelte:head>
 
 <TableToolbar
 	filters={statusFilters(data.reviews)}
 	placeholder="Search albums or artists"
+	action={{ href: "/admin/music/new", label: "New review" }}
 	bind:search
 	bind:filter
 />

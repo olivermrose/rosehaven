@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AdminBar from "#lib/components/admin/AdminBar.svelte";
+	import Header from "#lib/components/Header.svelte";
 	import { page } from "$app/state";
 
 	const { data, children } = $props();
@@ -11,11 +11,11 @@
 	<title>admin | oliver rose.</title>
 </svelte:head>
 
+<Header />
+
 <div class="min-h-dvh bg-background text-foreground" data-admin>
 	{#if data.authenticated && !editing}
-		<AdminBar />
-
-		<main class="mx-auto max-w-6xl px-4 pt-10 pb-24 sm:px-6">
+		<main class="mx-auto max-w-6xl px-6 pt-28 pb-20">
 			{@render children?.()}
 		</main>
 	{:else}

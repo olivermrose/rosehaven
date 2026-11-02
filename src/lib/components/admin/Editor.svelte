@@ -171,7 +171,7 @@
 
 {#if editor}
 	<div
-		class="sticky top-17 z-30 mx-auto mb-10 flex w-fit max-w-full scrollbar-none items-center gap-0.5 overflow-x-auto rounded-xl border border-border bg-surface/90 p-1 shadow-[0_6px_20px_-8px_rgb(0_0_0/0.18),0_1px_2px_rgb(0_0_0/0.06)] backdrop-blur-md sm:flex-wrap sm:justify-center sm:overflow-visible"
+		class="sticky top-24 z-30 mx-auto mb-10 flex w-fit max-w-full scrollbar-none items-center gap-0.5 overflow-x-auto rounded-xl border border-border bg-surface/90 p-1 shadow-[0_6px_20px_-8px_rgb(0_0_0/0.18),0_1px_2px_rgb(0_0_0/0.06)] backdrop-blur-md sm:flex-wrap sm:justify-center sm:overflow-visible"
 		role="toolbar"
 		aria-label="Formatting"
 	>
