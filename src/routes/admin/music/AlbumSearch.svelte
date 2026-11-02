@@ -81,7 +81,7 @@
 
 		<input
 			id="album-search"
-			class="h-10 pl-9 [&::-webkit-search-cancel-button]:hidden"
+			class="h-10 pl-9"
 			type="search"
 			autocomplete="off"
 			placeholder="Search Apple Music or paste an album link"
@@ -93,7 +93,7 @@
 		/>
 	</div>
 
-	<div id="album-search-status" aria-live="polite">
+	<div id="album-search-status" class="relative" aria-live="polite">
 		{#if loading}
 			<p class="mt-2 text-sm text-muted-foreground">Loading album…</p>
 		{:else if failed || results?.error}
@@ -105,7 +105,7 @@
 			</p>
 		{:else if results?.current}
 			<ul
-				class="mt-2 max-h-80 divide-y divide-border overflow-y-auto rounded-lg border border-border bg-surface shadow-[0_8px_24px_-8px_rgb(0_0_0/0.15)]"
+				class="absolute inset-x-0 top-0 z-35 mt-2 max-h-80 divide-y divide-border overflow-y-auto rounded-2xl border border-border bg-surface shadow-[0_8px_24px_-8px_rgb(0_0_0/0.15)]"
 			>
 				{#each results.current as album, i (album.id)}
 					<li>

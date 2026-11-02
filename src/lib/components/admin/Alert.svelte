@@ -33,7 +33,7 @@
 
 <div
 	class={[
-		"flex gap-3 rounded-lg border px-4 py-3 text-sm",
+		"flex gap-3 rounded-2xl border px-4 py-3 text-sm",
 		tone === "success" && "border-success/25 bg-success/6",
 		tone === "warning" && "border-warning/25 bg-warning/6",
 		tone === "error" && "border-error/25 bg-error/6",
