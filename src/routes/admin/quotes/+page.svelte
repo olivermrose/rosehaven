@@ -3,6 +3,7 @@
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 
 	import Alert from "#lib/components/admin/Alert.svelte";
+	import Quote from "#lib/components/Quote.svelte";
 	import { createQuote, deleteQuote, getQuotes } from "#lib/quotes.remote.js";
 
 	const quotes = $derived(await getQuotes());
@@ -25,10 +26,7 @@
 	<title>Quotes | admin</title>
 </svelte:head>
 
-<form
-	class="rounded-xl border border-border bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.04)]"
-	{...createQuote}
->
+<form class="rounded-xl border border-border bg-surface" {...createQuote}>
 	<div class="space-y-5 p-5">
 		{#if issues?.length}
 			<Alert tone="error" title="This quote couldn't be added">
@@ -101,36 +99,16 @@
 <ul class="mt-10 divide-y divide-border border-y border-border">
 	{#each quotes as quote (quote.id)}
 		<li class="group flex items-start justify-between gap-6 py-5">
-			<figure class="min-w-0">
-				<blockquote class="whitespace-pre-wrap" cite={quote.sourceUrl}>
-					<p class="text-pretty">“{quote.text}”</p>
-				</blockquote>
-
-				<figcaption class="mt-2 text-sm text-muted-foreground">
-					&mdash; {quote.quotee}{quote.sourceTitle ? ", " : ""}
-
-					{#if quote.sourceUrl}
-						<a
-							class="underline decoration-border underline-offset-2 transition-colors hover:text-foreground hover:decoration-current"
-							href={quote.sourceUrl}
-							target="_blank"
-						>
-							<cite>{quote.sourceTitle}</cite>
-						</a>
-					{:else}
-						<cite>{quote.sourceTitle}</cite>
-					{/if}
-				</figcaption>
-			</figure>
+			<Quote {quote} />
 
 			<button
+				title="Delete quote"
 				class="transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-fine:opacity-0"
 				type="button"
+				disabled={deleting === quote.id}
+				aria-label="Delete quote by {quote.quotee}"
 				data-variant="destructive"
 				data-size="icon-sm"
-				aria-label="Delete quote by {quote.quotee}"
-				title="Delete quote"
-				disabled={deleting === quote.id}
 				onclick={() => remove(quote.id)}
 			>
 				<HugeiconsIcon
