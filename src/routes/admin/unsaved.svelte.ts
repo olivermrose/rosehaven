@@ -10,9 +10,11 @@ export class UnsavedChanges {
 	#snapshot: () => unknown;
 	#baseline = $state<string>();
 
-	readonly dirty = $derived(this.#baseline !== undefined && this.#serialize() !== this.#baseline);
+	public readonly dirty = $derived(
+		this.#baseline !== undefined && this.#serialize() !== this.#baseline,
+	);
 
-	constructor(snapshot: () => unknown, busy: () => boolean) {
+	public constructor(snapshot: () => unknown, busy: () => boolean) {
 		this.#snapshot = snapshot;
 
 		beforeNavigate(({ cancel, type }) => {
@@ -28,12 +30,14 @@ export class UnsavedChanges {
 		});
 	}
 
-	#serialize() {
-		return JSON.stringify(this.#snapshot());
+	/**
+	 * Marks the current values as the saved state.
+	 */
+	public commit() {
+		this.#baseline = untrack(() => this.#serialize());
 	}
 
-	/** Marks the current values as the saved state */
-	commit() {
-		this.#baseline = untrack(() => this.#serialize());
+	#serialize() {
+		return JSON.stringify(this.#snapshot());
 	}
 }
