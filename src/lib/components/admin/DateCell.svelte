@@ -10,12 +10,14 @@
 	}
 
 	const { value, relative = false }: Props = $props();
+
+	const date = $derived(dayjs(value));
 </script>
 
 <time
 	class="text-sm whitespace-nowrap text-muted-foreground tabular-nums"
 	datetime={value.toISOString()}
-	title={dayjs(value).format("MMMM D, YYYY [at] h:mm A")}
+	title={date.format("MMMM D, YYYY [at] h:mm A")}
 >
-	{relative ? dayjs(value).fromNow() : dayjs(value).format("MMM D, YYYY")}
+	{relative ? date.fromNow() : date.format("MMM D, YYYY")}
 </time>
