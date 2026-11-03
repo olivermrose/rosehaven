@@ -9,7 +9,7 @@ import { command, form, getRequestEvent, query } from "$app/server";
 import { requireAdmin } from "./server/auth";
 import { reviews } from "./server/db/schema";
 import { lookupAlbum, searchAlbums } from "./server/itunes";
-import { createVersion, deleteVersions, withLatestVersion } from "./server/versions";
+import { createVersioned, deleteVersions, findVersioned, saveVersioned } from "./server/versions";
 
 export const findAlbums = query(z.string().trim().min(2), (term) => {
 	const event = getRequestEvent();
@@ -38,13 +38,13 @@ export const getReview = query(z.number(), async (id) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	const [review] = await event.locals.db.select().from(reviews).where(eq(reviews.id, id));
+	const review = await findVersioned(event.locals.db, reviews, eq(reviews.id, id));
 
 	if (!review) {
 		error(404, "Review not found");
 	}
 
-	return withLatestVersion(event.locals.db, reviews, review);
+	return review;
 });
 
 const reviewSchema = z.object({
@@ -66,23 +66,17 @@ export const createReview = form(reviewSchema, async ({ intent, ...data }) => {
 	requireAdmin(event.cookies);
 
 	const fields = toFields(data);
-	const publishedAt = intent === "publish" ? new Date() : null;
 
-	const id = await event.locals.db.transaction(async (tx) => {
-		const [review] = await tx
-			.insert(reviews)
-			.values({
-				...fields,
-				slug: slugify(`${fields.artist} ${fields.title}`),
-				status: publishedAt ? "published" : "draft",
-				publishedAt,
-			})
-			.returning({ id: reviews.id });
-
-		await createVersion(tx, reviews, review.id, fields, publishedAt);
-
-		return review.id;
-	});
+	const id = await createVersioned(
+		event.locals.db,
+		reviews,
+		intent,
+		{
+			...fields,
+			slug: slugify(`${fields.artist} ${fields.title}`),
+		},
+		fields,
+	);
 
 	redirect(303, `/admin/music/${id}`);
 });
@@ -97,42 +91,16 @@ export const updateReview = form(reviewSchema, async ({ intent, ...data }) => {
 		error(400, "Invalid review ID");
 	}
 
-	const [existing] = await event.locals.db
-		.select({ status: reviews.status, publishedAt: reviews.publishedAt })
-		.from(reviews)
-		.where(eq(reviews.id, id));
+	const fields = toFields(data);
 
-	if (!existing) {
+	const found = await saveVersioned(event.locals.db, reviews, id, intent, fields, () => ({
+		...fields,
+		slug: slugify(`${fields.artist} ${fields.title}`),
+	}));
+
+	if (!found) {
 		error(404, "Review not found");
 	}
-
-	const fields = toFields(data);
-	const now = new Date();
-
-	await event.locals.db.transaction(async (tx) => {
-		// saving a published review only records a version; the live row stays
-		// untouched until the changes are published
-		if (intent === "save" && existing.status === "published") {
-			await tx.update(reviews).set({ updatedAt: now }).where(eq(reviews.id, id));
-			await createVersion(tx, reviews, id, fields);
-			return;
-		}
-
-		const publish = intent === "publish";
-
-		await tx
-			.update(reviews)
-			.set({
-				...fields,
-				slug: slugify(`${fields.artist} ${fields.title}`),
-				status: publish ? "published" : "draft",
-				publishedAt: publish ? (existing.publishedAt ?? now) : existing.publishedAt,
-				updatedAt: now,
-			})
-			.where(eq(reviews.id, id));
-
-		await createVersion(tx, reviews, id, fields, publish ? now : null);
-	});
 
 	return { success: true, intent };
 });
