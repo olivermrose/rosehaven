@@ -7,12 +7,13 @@
 	import FormLayout from "#lib/components/admin/FormLayout.svelte";
 	import PostDate from "#lib/components/PostDate.svelte";
 	import { createReview, updateReview } from "#lib/reviews.remote.js";
-	import type { Review } from "#lib/server/db/schema.js";
+	import type { Review, Track } from "#lib/server/db/schema.js";
 	import type { Album } from "#lib/server/itunes.js";
-	import { formatTracklist, parseTracklist } from "#lib/tracklist.js";
+	import { formatTracklist } from "#lib/tracklist.js";
 
 	import { UnsavedChanges } from "../unsaved.svelte";
 	import AlbumSearch from "./AlbumSearch.svelte";
+	import TracklistTable from "./TracklistTable.svelte";
 
 	interface Props {
 		form: typeof createReview | typeof updateReview;
@@ -24,10 +25,21 @@
 
 	let content = $state("");
 	let artworkFailed = $state(false);
-	const issues = $derived(form.fields.allIssues());
+	let tracks = $state<Track[]>([]);
 
+	const issues = $derived(form.fields.allIssues());
 	const artwork = $derived(form.fields.artwork.value());
-	const trackCount = $derived(parseTracklist(form.fields.tracklist.value() ?? "").length);
+
+	// Rows without a title are dropped, matching what the server would store.
+	const tracklist = $derived(
+		formatTracklist(
+			tracks
+				.map((track) => ({ title: track.title.trim(), duration: track.duration?.trim() }))
+				.filter((track) => track.title),
+		),
+	);
+
+	const trackCount = $derived(tracks.filter((track) => track.title.trim()).length);
 
 	const unsaved = new UnsavedChanges(
 		() => ({
@@ -35,13 +47,15 @@
 			artist: form.fields.artist.value() ?? "",
 			year: form.fields.year.value() ?? null,
 			artwork: form.fields.artwork.value() ?? "",
-			tracklist: form.fields.tracklist.value() ?? "",
+			tracklist,
 			content,
 		}),
 		() => form.pending > 0,
 	);
 
 	function fill(album: Album) {
+		tracks = album.tracklist.map((track) => ({ ...track }));
+
 		form.fields.set({
 			title: album.title,
 			artist: album.artist,
@@ -58,12 +72,14 @@
 
 	$effect(() => {
 		if (!review) {
+			tracks = [];
 			form.fields.set({});
 			untrack(() => unsaved.commit());
 			return;
 		}
 
 		content = review.content;
+		tracks = review.tracklist.map((track) => ({ ...track }));
 
 		form.fields.set({
 			title: review.title,
@@ -139,7 +155,7 @@
 				{...form.fields.artist.as("text")}
 			/>
 
-			<dl class="mt-6 divide-y divide-border border-y border-border">
+			<dl class="mt-2 divide-y divide-border border-y border-border">
 				<div class="grid gap-x-6 gap-y-1 py-2 sm:grid-cols-[6rem_1fr] sm:items-center">
 					<dt><label class="mb-0 text-muted-foreground" for="year">Year</label></dt>
 
@@ -181,18 +197,9 @@
 			</span>
 		</summary>
 
-		<div class="pt-4">
-			<label class="sr-only" for="tracklist">Tracklist</label>
-			<textarea
-				id="tracklist"
-				class="resize-y font-mono text-[0.8125rem]/6"
-				placeholder="Opening Track 4:12"
-				rows="8"
-				{...form.fields.tracklist.as("text")}></textarea>
-
-			<p class="mt-2 text-xs text-muted-foreground">
-				One track per line, with an optional trailing duration like “Song Title 3:45”.
-			</p>
+		<div class="pt-2">
+			<input {...form.fields.tracklist.as("hidden", tracklist)} />
+			<TracklistTable bind:tracks />
 		</div>
 	</details>
 
