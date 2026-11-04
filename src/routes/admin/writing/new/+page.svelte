@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createPost } from "#lib/posts.remote.js";
+	import { createPost } from "#lib/remote/posts.remote.js";
 
 	import Form from "../Form.svelte";
 </script>

@@ -3,8 +3,8 @@ import z from "zod";
 
 import { command, form, getRequestEvent, query } from "$app/server";
 
-import { requireAdmin } from "./server/auth";
-import { quotes } from "./server/db/schema";
+import { requireAdmin } from "../server/auth";
+import { quotes } from "../server/db/schema";
 
 export const getQuotes = query(() => {
 	const event = getRequestEvent();

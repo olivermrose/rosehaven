@@ -6,7 +6,7 @@
 	import { TegakiRenderer } from "tegaki/svelte";
 
 	import { SITE_NAME } from "#lib";
-	import { logout } from "#lib/admin.remote.js";
+	import { logout } from "#lib/remote/admin.remote.js";
 	import { page } from "$app/state";
 
 	import bundle from "../../assets/brittany-signature-script/bundle";

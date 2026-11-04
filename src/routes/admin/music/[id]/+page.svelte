@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { deleteReview, getReview, updateReview } from "#lib/reviews.remote.js";
+	import { deleteReview, getReview, updateReview } from "#lib/remote/reviews.remote.js";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 

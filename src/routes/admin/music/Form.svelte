@@ -6,7 +6,7 @@
 	import Editor from "#lib/components/admin/Editor.svelte";
 	import FormLayout from "#lib/components/admin/FormLayout.svelte";
 	import PostDate from "#lib/components/PostDate.svelte";
-	import { createReview, updateReview } from "#lib/reviews.remote.js";
+	import { createReview, updateReview } from "#lib/remote/reviews.remote.js";
 	import type { Review, Track } from "#lib/server/db/schema.js";
 	import type { Album } from "#lib/server/itunes.js";
 	import { formatTracklist } from "#lib/tracklist.js";

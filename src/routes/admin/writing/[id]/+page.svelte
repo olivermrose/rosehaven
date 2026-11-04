@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { deletePost, getPost, updatePost } from "#lib/posts.remote.js";
+	import { deletePost, getPost, updatePost } from "#lib/remote/posts.remote.js";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 

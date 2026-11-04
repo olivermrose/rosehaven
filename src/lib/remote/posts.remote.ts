@@ -5,9 +5,9 @@ import z from "zod";
 import { slugify } from "#lib";
 import { command, form, getRequestEvent, query } from "$app/server";
 
-import { requireAdmin } from "./server/auth";
-import { posts } from "./server/db/schema";
-import { createVersioned, deleteVersions, findVersioned, saveVersioned } from "./server/versions";
+import { requireAdmin } from "../server/auth";
+import { posts } from "../server/db/schema";
+import { createVersioned, deleteVersions, findVersioned, saveVersioned } from "../server/versions";
 
 export const getPost = query(z.string(), async (idOrSlug) => {
 	const event = getRequestEvent();

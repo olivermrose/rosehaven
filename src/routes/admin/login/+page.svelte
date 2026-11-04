@@ -3,7 +3,7 @@
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 
 	import { SITE_NAME } from "#lib";
-	import { login } from "#lib/admin.remote.js";
+	import { login } from "#lib/remote/admin.remote.js";
 
 	const issues = $derived(login.fields.password.issues());
 </script>

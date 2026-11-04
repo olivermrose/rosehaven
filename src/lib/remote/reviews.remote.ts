@@ -6,10 +6,10 @@ import { slugify } from "#lib";
 import { parseTracklist } from "#lib/tracklist.js";
 import { command, form, getRequestEvent, query } from "$app/server";
 
-import { requireAdmin } from "./server/auth";
-import { reviews } from "./server/db/schema";
-import { lookupAlbum, searchAlbums } from "./server/itunes";
-import { createVersioned, deleteVersions, findVersioned, saveVersioned } from "./server/versions";
+import { requireAdmin } from "../server/auth";
+import { reviews } from "../server/db/schema";
+import { lookupAlbum, searchAlbums } from "../server/itunes";
+import { createVersioned, deleteVersions, findVersioned, saveVersioned } from "../server/versions";
 
 export const findAlbums = query(z.string().trim().min(2), (term) => {
 	const event = getRequestEvent();

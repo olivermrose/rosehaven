@@ -4,7 +4,7 @@
 
 	import Alert from "#lib/components/admin/Alert.svelte";
 	import Quote from "#lib/components/Quote.svelte";
-	import { createQuote, deleteQuote, getQuotes } from "#lib/quotes.remote.js";
+	import { createQuote, deleteQuote, getQuotes } from "#lib/remote/quotes.remote.js";
 
 	const quotes = $derived(await getQuotes());
 	const issues = $derived(createQuote.fields.allIssues());

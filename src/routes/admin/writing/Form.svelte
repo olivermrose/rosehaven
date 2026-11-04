@@ -5,7 +5,7 @@
 	import FormLayout from "#lib/components/admin/FormLayout.svelte";
 	import Switch from "#lib/components/admin/Switch.svelte";
 	import PostDate from "#lib/components/PostDate.svelte";
-	import { createPost, updatePost } from "#lib/posts.remote.js";
+	import { createPost, updatePost } from "#lib/remote/posts.remote.js";
 	import type { Post } from "#lib/server/db/schema.js";
 
 	import { UnsavedChanges } from "../unsaved.svelte.js";

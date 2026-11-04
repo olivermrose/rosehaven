@@ -3,7 +3,7 @@
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 	import { Debounced } from "runed";
 
-	import { findAlbums, getAlbum } from "#lib/reviews.remote.js";
+	import { findAlbums, getAlbum } from "#lib/remote/reviews.remote.js";
 	import type { Album } from "#lib/server/itunes.js";
 
 	interface Props {

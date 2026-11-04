@@ -3,7 +3,7 @@ import z from "zod";
 
 import { form, getRequestEvent } from "$app/server";
 
-import { createSession, destroySession, verifyPassword } from "./server/auth";
+import { createSession, destroySession, verifyPassword } from "../server/auth";
 
 export const login = form(z.object({ password: z.string() }), async (data, issue) => {
 	const event = getRequestEvent();
