@@ -15,19 +15,17 @@
 
 	<figcaption class="mt-2 text-sm text-muted-foreground">
 		<span>
-			&mdash; {quote.quotee + (quote.sourceTitle ? ", " : "")}
+			&mdash; {quote.quotee},
 		</span>
 
-		{#if quote.sourceTitle}
-			<cite>
-				{#if quote.sourceUrl}
-					<a class="underline" href={quote.sourceUrl}>
-						{quote.sourceTitle}
-					</a>
-				{:else}
+		<cite>
+			{#if quote.sourceUrl}
+				<a class="underline" href={quote.sourceUrl}>
 					{quote.sourceTitle}
-				{/if}
-			</cite>
-		{/if}
+				</a>
+			{:else}
+				{quote.sourceTitle}
+			{/if}
+		</cite>
 	</figcaption>
 </figure>
