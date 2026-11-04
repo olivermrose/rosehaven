@@ -352,6 +352,21 @@
 		color: var(--color-muted-foreground);
 	}
 
+	[role="menu"] {
+		box-shadow:
+			0 8px 24px -6px rgb(0 0 0 / 0.18),
+			0 2px 6px -2px rgb(0 0 0 / 0.08);
+		margin-top: 0.375rem;
+		position-area: bottom span-left;
+		position-try-fallbacks: flip-block;
+
+		[role="separator"] {
+			height: 1px;
+			margin: 0.25rem -0.25rem;
+			background-color: var(--color-border);
+		}
+	}
+
 	[data-admin] {
 		scrollbar-color: --alpha(var(--foreground) / 22%) transparent;
 		caret-color: var(--color-plum-500);

@@ -29,7 +29,7 @@
 	}
 </script>
 
-<div class="split flex" role="group">
+<div class="split-btn flex" role="group">
 	<button class="rounded-r-none" data-variant="primary" {...rest}>
 		{@render children()}
 	</button>
@@ -67,38 +67,23 @@
 </div>
 
 <style>
-	[role="menu"] {
-		box-shadow:
-			0 8px 24px -6px rgb(0 0 0 / 0.18),
-			0 2px 6px -2px rgb(0 0 0 / 0.08);
-		margin-top: 0.375rem;
-		position-area: bottom span-left;
-		position-try-fallbacks: flip-block;
+	.split-btn :global([role="menuitem"]) {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		border-radius: var(--radius-xl);
+		padding: 0.4375rem 0.625rem;
+		text-align: left;
+		transition: background-color 150ms ease;
 
-		:global([role="menuitem"]) {
-			display: flex;
-			width: 100%;
-			align-items: center;
-			justify-content: space-between;
-			gap: 1rem;
-			border-radius: var(--radius-xl);
-			padding: 0.4375rem 0.625rem;
-			text-align: left;
-			transition: background-color 150ms ease;
-
-			&:hover:not(:disabled) {
-				background-color: --alpha(var(--foreground) / 7%);
-			}
-
-			&:disabled {
-				opacity: 0.5;
-			}
+		&:hover:not(:disabled) {
+			background-color: --alpha(var(--foreground) / 7%);
 		}
 
-		:global([role="separator"]) {
-			height: 1px;
-			margin: 0.25rem -0.25rem;
-			background-color: var(--color-border);
+		&:disabled {
+			opacity: 0.5;
 		}
 	}
 </style>

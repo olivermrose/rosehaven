@@ -2,6 +2,7 @@
 	import { mode } from "mode-watcher";
 	import { toggleMode } from "mode-watcher";
 	import { motion } from "motion-sv";
+	import { on } from "svelte/events";
 	import { TegakiRenderer } from "tegaki/svelte";
 
 	import { SITE_NAME } from "#lib";
@@ -17,6 +18,15 @@
 	];
 
 	let toggle = $state<HTMLButtonElement>();
+	let menuOpen = $state(false);
+
+	function dismiss(node: HTMLDivElement) {
+		return on(node, "click", (event) => {
+			if ((event.target as Element).closest('[role="menuitem"]')) {
+				node.hidePopover();
+			}
+		});
+	}
 
 	const isAdmin = $derived(page.url.pathname.startsWith("/admin"));
 	const current = $derived(
@@ -89,7 +99,7 @@
 		</div>
 
 		{#if page.data.authenticated && isAdmin}
-			<div class="space-x-4" aria-label="Admin sections" role="group">
+			<div class="hidden space-x-4 md:block" aria-label="Admin sections" role="group">
 				{#each sections as section (section.href)}
 					<a
 						class="blended transition-colors hover:underline aria-[current=page]:text-foreground aria-[current=page]:underline"
@@ -104,11 +114,48 @@
 
 		<div class="ml-auto flex items-center gap-x-4">
 			{#if page.data.authenticated}
-				<a class="blended hover:underline" href="/admin">admin.</a>
+				<a class="hidden blended hover:underline md:inline" href="/admin">admin.</a>
 
-				<form {...logout}>
+				<form class="hidden md:block" {...logout.for("desktop")}>
 					<button class="blended hover:underline" type="submit">sign out.</button>
 				</form>
+
+				<button
+					class="blended hover:underline md:hidden"
+					type="button"
+					aria-haspopup="menu"
+					aria-expanded={menuOpen}
+					popovertarget="admin-menu"
+					style:anchor-name="--admin-menu"
+				>
+					admin.
+				</button>
+
+				<div
+					id="admin-menu"
+					class="fixed inset-auto m-0 min-w-44 rounded-2xl border border-border bg-surface p-1 text-sm text-foreground md:hidden"
+					popover
+					role="menu"
+					style:position-anchor="--admin-menu"
+					ontoggle={(event) => (menuOpen = event.newState === "open")}
+					{@attach dismiss}
+				>
+					{#each sections as section (section.href)}
+						<a
+							href={section.href}
+							role="menuitem"
+							aria-current={current === section.href ? "page" : undefined}
+						>
+							{section.label}
+						</a>
+					{/each}
+
+					<div role="separator"></div>
+
+					<form {...logout.for("menu")}>
+						<button type="submit" role="menuitem">sign out.</button>
+					</form>
+				</div>
 			{/if}
 
 			<button type="button" onclick={transitionMode} bind:this={toggle}>
@@ -120,3 +167,19 @@
 		</div>
 	</nav>
 </motion.header>
+
+<style>
+	[role="menuitem"] {
+		display: block;
+		width: 100%;
+		border-radius: var(--radius-xl);
+		padding: 0.4375rem 0.625rem;
+		text-align: left;
+		transition: background-color 150ms ease;
+
+		&:hover,
+		&[aria-current="page"] {
+			background-color: --alpha(var(--foreground) / 7%);
+		}
+	}
+</style>
