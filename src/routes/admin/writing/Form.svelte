@@ -108,7 +108,7 @@
 			{...form.fields.title.as("text")}></textarea>
 	</header>
 
-	<dl class="mt-8 divide-y divide-border border-y border-border">
+	<dl class="mt-4 divide-y divide-border border-y border-border">
 		<div class="grid gap-x-6 gap-y-1 py-2 sm:grid-cols-[7rem_1fr] sm:items-center">
 			<dt>
 				<label class="mb-0 text-muted-foreground" for="category">Category</label>
@@ -138,12 +138,12 @@
 			</dt>
 
 			<dd>
-				<textarea
+				<input
 					id="excerpt"
-					class="field-bare field-sizing-content resize-none"
-					placeholder="A line or two shown under the title in the index"
-					rows="1"
-					{...form.fields.excerpt.as("text")}></textarea>
+					class="field-bare"
+					placeholder="A short line shown under the title in the index"
+					{...form.fields.excerpt.as("text")}
+				/>
 			</dd>
 		</div>
 
