@@ -1,5 +1,5 @@
 import { error, redirect } from "@sveltejs/kit";
-import { asc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import z from "zod";
 
 import { slugify } from "#lib";
@@ -7,15 +7,19 @@ import { command, form, getRequestEvent, query } from "$app/server";
 
 import { requireAdmin } from "./server/auth";
 import { posts } from "./server/db/schema";
+import { createVersioned, deleteVersions, findVersioned, saveVersioned } from "./server/versions";
 
 export const getPost = query(z.string(), async (idOrSlug) => {
 	const event = getRequestEvent();
+	requireAdmin(event.cookies);
+
 	const id = Number(idOrSlug);
 
-	const [post] = await event.locals.db
-		.select()
-		.from(posts)
-		.where(Number.isNaN(id) ? eq(posts.slug, idOrSlug) : eq(posts.id, id));
+	const post = await findVersioned(
+		event.locals.db,
+		posts,
+		Number.isNaN(id) ? eq(posts.slug, idOrSlug) : eq(posts.id, id),
+	);
 
 	if (!post) {
 		error(404, "Post not found");
@@ -24,54 +28,35 @@ export const getPost = query(z.string(), async (idOrSlug) => {
 	return post;
 });
 
-export const getPosts = query(() => {
-	const event = getRequestEvent();
-
-	return event.locals.db
-		.select()
-		.from(posts)
-		.where(eq(posts.status, "published"))
-		.orderBy(asc(posts.category), asc(posts.slug));
-});
-
 const postSchema = z.object({
 	title: z.string().min(1),
 	category: z.enum(["dialogue", "poetry", "prose poetry", "short story"]),
 	excerpt: z.string().min(1),
 	content: z.string().min(1),
 	explicit: z.boolean().default(false),
-	status: z.enum(["draft", "published"]).default("draft"),
+	intent: z.enum(["save", "publish", "unpublish"]).default("save"),
 });
 
-export const createPost = form(postSchema, async (data) => {
+export const createPost = form(postSchema, async ({ intent, ...fields }) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	const slug = slugify(data.title);
-	const publishedAt = data.status === "published" ? new Date() : null;
+	const id = await createVersioned(
+		event.locals.db,
+		posts,
+		intent,
+		{ ...fields, slug: slugify(fields.title) },
+		fields,
+	);
 
-	const [post] = await event.locals.db
-		.insert(posts)
-		.values({
-			title: data.title,
-			slug,
-			category: data.category,
-			excerpt: data.excerpt,
-			explicit: data.explicit,
-			content: data.content,
-			status: data.status,
-			publishedAt,
-		})
-		.returning({ id: posts.id });
-
-	redirect(303, `/admin/writing/${post.id}`);
+	redirect(303, `/admin/writing/${id}`);
 });
 
 export const updatePost = form(
-	postSchema.partial().extend({
+	postSchema.extend({
 		revision: z.boolean().default(false),
 	}),
-	async (data) => {
+	async ({ intent, revision, ...fields }) => {
 		const event = getRequestEvent();
 		requireAdmin(event.cookies);
 
@@ -81,39 +66,17 @@ export const updatePost = form(
 			error(400, "Invalid post ID");
 		}
 
-		const [existing] = await event.locals.db
-			.select({ publishedAt: posts.publishedAt, revisedAt: posts.revisedAt })
-			.from(posts)
-			.where(eq(posts.id, id));
+		const found = await saveVersioned(event.locals.db, posts, id, intent, fields, (ctx) => ({
+			...fields,
+			slug: slugify(fields.title),
+			revisedAt: ctx.publish && revision && ctx.existing.publishedAt ? ctx.now : undefined,
+		}));
 
-		const slug = data.title ? slugify(data.title) : undefined;
-		const now = new Date();
+		if (!found) {
+			error(404, "Post not found");
+		}
 
-		const publishedAt =
-			data.status === "published" && !existing?.publishedAt ? now : existing?.publishedAt;
-
-		const revisedAt =
-			data.revision && data.status === "published" && existing?.publishedAt
-				? now
-				: existing?.revisedAt;
-
-		await event.locals.db
-			.update(posts)
-			.set({
-				title: data.title,
-				slug,
-				category: data.category,
-				excerpt: data.excerpt,
-				explicit: data.explicit,
-				content: data.content,
-				status: data.status,
-				publishedAt,
-				revisedAt,
-				updatedAt: now,
-			})
-			.where(eq(posts.id, id));
-
-		return { success: true };
+		return { success: true, intent };
 	},
 );
 
@@ -121,7 +84,10 @@ export const deletePost = command(z.number(), async (id) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	await event.locals.db.delete(posts).where(eq(posts.id, id));
+	await event.locals.db.transaction(async (tx) => {
+		await tx.delete(posts).where(eq(posts.id, id));
+		await deleteVersions(tx, posts, id);
+	});
 
 	return { success: true };
 });

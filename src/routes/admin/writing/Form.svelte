@@ -9,7 +9,7 @@
 
 	interface Props {
 		form: typeof createPost | typeof updatePost;
-		post?: Post;
+		post?: Post & { version?: number; pending?: boolean };
 		actions?: Snippet;
 	}
 
@@ -43,7 +43,15 @@
 	});
 </script>
 
-<FormLayout {...form} {issues} status={post?.status} statusField={form.fields.status} {actions}>
+<FormLayout
+	{...form}
+	{issues}
+	status={post?.status}
+	version={post?.version}
+	pending={post?.pending}
+	intentField={form.fields.intent}
+	{actions}
+>
 	<div>
 		<label for="title">Title</label>
 		<input id="title" placeholder="Post title" {...form.fields.title.as("text")} />

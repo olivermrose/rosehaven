@@ -5,17 +5,30 @@
 	import type { RemoteFormField, RemoteFormIssue } from "$app/server";
 
 	type Status = "draft" | "published";
+	type Intent = "save" | "publish" | "unpublish";
 
 	interface Props extends HTMLFormAttributes {
 		issues?: RemoteFormIssue[];
 		status?: Status;
-		statusField: RemoteFormField<Status>;
+		version?: number;
+		pending?: boolean;
+		intentField: RemoteFormField<Intent>;
 		children: Snippet;
 		options?: Snippet;
 		actions?: Snippet;
 	}
 
-	const { issues, status, statusField, children, options, actions, ...rest }: Props = $props();
+	const {
+		issues,
+		status,
+		version,
+		pending,
+		intentField,
+		children,
+		options,
+		actions,
+		...rest
+	}: Props = $props();
 </script>
 
 <form class="flex items-start gap-8 max-lg:flex-col" {...rest}>
@@ -45,16 +58,26 @@
 		<div class={[!options && "max-lg:col-span-2"]}>
 			<span class="mb-2 block">Status</span>
 
-			<div
-				class={[
-					"inline-block rounded-full px-2 py-1 text-xs uppercase",
-					status === "published"
-						? "bg-aloe-500/40 text-aloe-700 dark:text-aloe-300"
-						: "bg-denim-500/40 text-denim-700 dark:text-denim-300",
-				]}
-			>
-				{status ?? "draft"}
+			<div class="flex items-center gap-2">
+				<div
+					class={[
+						"inline-block rounded-full px-2 py-1 text-xs uppercase",
+						status === "published"
+							? "bg-aloe-500/40 text-aloe-700 dark:text-aloe-300"
+							: "bg-denim-500/40 text-denim-700 dark:text-denim-300",
+					]}
+				>
+					{status ?? "draft"}
+				</div>
+
+				{#if version}
+					<span class="text-xs text-muted-foreground">v{version}</span>
+				{/if}
 			</div>
+
+			{#if pending}
+				<p class="mt-2 text-xs text-muted-foreground">Unpublished changes</p>
+			{/if}
 		</div>
 
 		{#if options}
@@ -66,17 +89,23 @@
 		<div
 			class="flex flex-col gap-2 max-lg:col-span-2 max-sm:flex-col sm:max-lg:flex-row lg:flex-col"
 		>
-			<button class="w-full" data-variant="secondary" {...statusField.as("submit", "draft")}>
-				Save Draft
+			<button class="w-full" data-variant="secondary" {...intentField.as("submit", "save")}>
+				{status === "published" ? "Save" : "Save Draft"}
 			</button>
 
-			<button
-				class="w-full"
-				data-variant="primary"
-				{...statusField.as("submit", "published")}
-			>
-				{status === "published" ? "Update" : "Publish"}
+			<button class="w-full" data-variant="primary" {...intentField.as("submit", "publish")}>
+				{status === "published" ? "Publish Changes" : "Publish"}
 			</button>
+
+			{#if status === "published"}
+				<button
+					class="w-full"
+					data-variant="secondary"
+					{...intentField.as("submit", "unpublish")}
+				>
+					Unpublish
+				</button>
+			{/if}
 		</div>
 
 		{#if actions}

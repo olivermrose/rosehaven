@@ -9,6 +9,7 @@ import { command, form, getRequestEvent, query } from "$app/server";
 import { requireAdmin } from "./server/auth";
 import { reviews } from "./server/db/schema";
 import { lookupAlbum, searchAlbums } from "./server/itunes";
+import { createVersioned, deleteVersions, findVersioned, saveVersioned } from "./server/versions";
 
 export const findAlbums = query(z.string().trim().min(2), (term) => {
 	const event = getRequestEvent();
@@ -37,7 +38,7 @@ export const getReview = query(z.number(), async (id) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	const [review] = await event.locals.db.select().from(reviews).where(eq(reviews.id, id));
+	const review = await findVersioned(event.locals.db, reviews, eq(reviews.id, id));
 
 	if (!review) {
 		error(404, "Review not found");
@@ -53,27 +54,34 @@ const reviewSchema = z.object({
 	artwork: z.url(),
 	tracklist: z.string().default(""),
 	content: z.string().min(1),
-	status: z.enum(["draft", "published"]).default("draft"),
+	intent: z.enum(["save", "publish", "unpublish"]).default("save"),
 });
 
-export const createReview = form(reviewSchema, async (data) => {
+function toFields({ year, tracklist, ...rest }: Omit<z.infer<typeof reviewSchema>, "intent">) {
+	return { ...rest, year: year ?? null, tracklist: parseTracklist(tracklist) };
+}
+
+export const createReview = form(reviewSchema, async ({ intent, ...data }) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	const [review] = await event.locals.db
-		.insert(reviews)
-		.values({
-			...data,
-			slug: slugify(`${data.artist} ${data.title}`),
-			tracklist: parseTracklist(data.tracklist),
-			publishedAt: data.status === "published" ? new Date() : null,
-		})
-		.returning({ id: reviews.id });
+	const fields = toFields(data);
 
-	redirect(303, `/admin/music/${review.id}`);
+	const id = await createVersioned(
+		event.locals.db,
+		reviews,
+		intent,
+		{
+			...fields,
+			slug: slugify(`${fields.artist} ${fields.title}`),
+		},
+		fields,
+	);
+
+	redirect(303, `/admin/music/${id}`);
 });
 
-export const updateReview = form(reviewSchema, async (data) => {
+export const updateReview = form(reviewSchema, async ({ intent, ...data }) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
@@ -83,34 +91,28 @@ export const updateReview = form(reviewSchema, async (data) => {
 		error(400, "Invalid review ID");
 	}
 
-	const [existing] = await event.locals.db
-		.select({ publishedAt: reviews.publishedAt })
-		.from(reviews)
-		.where(eq(reviews.id, id));
+	const fields = toFields(data);
 
-	const now = new Date();
+	const found = await saveVersioned(event.locals.db, reviews, id, intent, fields, () => ({
+		...fields,
+		slug: slugify(`${fields.artist} ${fields.title}`),
+	}));
 
-	await event.locals.db
-		.update(reviews)
-		.set({
-			...data,
-			year: data.year ?? null,
-			slug: slugify(`${data.artist} ${data.title}`),
-			tracklist: parseTracklist(data.tracklist),
-			publishedAt:
-				data.status === "published" && !existing?.publishedAt ? now : existing?.publishedAt,
-			updatedAt: now,
-		})
-		.where(eq(reviews.id, id));
+	if (!found) {
+		error(404, "Review not found");
+	}
 
-	return { success: true };
+	return { success: true, intent };
 });
 
 export const deleteReview = command(z.number(), async (id) => {
 	const event = getRequestEvent();
 	requireAdmin(event.cookies);
 
-	await event.locals.db.delete(reviews).where(eq(reviews.id, id));
+	await event.locals.db.transaction(async (tx) => {
+		await tx.delete(reviews).where(eq(reviews.id, id));
+		await deleteVersions(tx, reviews, id);
+	});
 
 	return { success: true };
 });

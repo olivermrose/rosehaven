@@ -7,6 +7,7 @@ import {
 	serial,
 	text,
 	timestamp,
+	unique,
 } from "drizzle-orm/pg-core";
 
 export const categoryEnum = pgEnum("category", [
@@ -71,3 +72,21 @@ export const quotes = pgTable("quotes", {
 
 export type Quote = typeof quotes.$inferSelect;
 export type NewQuote = typeof quotes.$inferInsert;
+
+export const versions = pgTable(
+	"versions",
+	{
+		id: serial().primaryKey(),
+		entityType: text("entity_type").notNull(),
+		entityId: integer("entity_id").notNull(),
+		version: integer().notNull(),
+		content: text().notNull(),
+		metadata: jsonb().$type<Record<string, unknown>>().notNull().default({}),
+		publishedAt: timestamp("published_at", { withTimezone: true }),
+		createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+	},
+	(t) => [unique().on(t.entityType, t.entityId, t.version)],
+);
+
+export type Version = typeof versions.$inferSelect;
+export type NewVersion = typeof versions.$inferInsert;
