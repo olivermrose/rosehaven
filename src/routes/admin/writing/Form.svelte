@@ -68,7 +68,9 @@
 </script>
 
 <FormLayout
-	{...form}
+	{...form.enhance(async ({ submit }) => {
+		await submit();
+	})}
 	entity="post"
 	section={{ href: "/admin/writing", label: "Writing" }}
 	heading={form.fields.title.value()}
