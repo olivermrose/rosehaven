@@ -15,6 +15,7 @@ export async function load({ locals, params }) {
 
 	return {
 		review,
+		preload: [review.artwork],
 		seo: {
 			path: `/music/${review.slug}`,
 			title: `${review.title} by ${review.artist}`,
