@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Delete02Icon, Loading03Icon } from "@hugeicons/core-free-icons";
+	import { Add01Icon, Delete02Icon, Link01Icon, Loading03Icon } from "@hugeicons/core-free-icons";
 	import { HugeiconsIcon } from "@hugeicons/svelte";
 
 	import Alert from "#lib/components/admin/Alert.svelte";
@@ -8,16 +8,20 @@
 
 	const quotes = $derived(await getQuotes());
 	const issues = $derived(createQuote.fields.allIssues());
+	const hasSourceUrl = $derived(!!createQuote.fields.sourceUrl.value());
 
-	let deleting = $state<number>();
+	const captionField =
+		"field-bare field-sizing-content w-auto! min-w-8 py-0.5 text-sm text-inherit focus-visible:text-foreground";
+
+	let deleteTarget = $state<number>();
 
 	async function remove(id: number) {
-		deleting = id;
+		deleteTarget = id;
 
 		try {
 			await deleteQuote(id);
 		} finally {
-			deleting = undefined;
+			deleteTarget = undefined;
 		}
 	}
 </script>
@@ -26,8 +30,8 @@
 	<title>Quotes | admin</title>
 </svelte:head>
 
-<form class="rounded-xl border border-border bg-surface" {...createQuote}>
-	<div class="space-y-5 p-5">
+<form class="flex items-start justify-between py-5" {...createQuote}>
+	<div class="space-y-5">
 		{#if issues?.length}
 			<Alert tone="error" title="This quote couldn't be added">
 				<ul class="space-y-0.5">
@@ -38,82 +42,92 @@
 			</Alert>
 		{/if}
 
-		<div>
-			<label class="sr-only" for="text">Quote</label>
-			<textarea
-				id="text"
-				class="field-bare field-sizing-content resize-none text-base/7"
-				placeholder="Add a quote…"
-				rows="2"
-				{...createQuote.fields.text.as("text")}></textarea>
-		</div>
+		<div class="py-2">
+			<div class="border-l-2 border-l-muted pl-3">
+				<label class="sr-only" for="text">Quote</label>
+				<textarea
+					id="text"
+					class="field-bare field-sizing-content resize-none py-0.5 text-base"
+					placeholder="Add a quote…"
+					rows="2"
+					{...createQuote.fields.text.as("text")}></textarea>
+			</div>
 
-		<div class="grid gap-4 sm:grid-cols-3">
-			<div>
-				<label for="quotee">Quotee</label>
+			<div class="mt-2 flex flex-wrap items-baseline text-sm text-muted-foreground">
+				<span aria-hidden="true">&mdash;&nbsp;</span>
+
+				<label class="sr-only" for="quotee">Quotee</label>
 				<input
 					id="quotee"
+					class={captionField}
 					placeholder="Who said it"
 					{...createQuote.fields.quotee.as("text")}
 				/>
-			</div>
 
-			<div>
-				<label for="sourceTitle">Source</label>
+				<span aria-hidden="true">,&nbsp;</span>
+
+				<label class="sr-only" for="sourceTitle">Source</label>
 				<input
 					id="sourceTitle"
-					placeholder="Book, film, song"
+					class={[captionField, "italic", hasSourceUrl && "underline"]}
+					placeholder="Source"
 					{...createQuote.fields.sourceTitle.as("text")}
 				/>
 			</div>
 
-			<div>
-				<label for="sourceUrl">
-					Source link <span class="font-normal text-muted-foreground">(optional)</span>
-				</label>
+			<div class="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+				<HugeiconsIcon class="shrink-0" icon={Link01Icon} size={14} strokeWidth={1.75} />
+
+				<label class="sr-only" for="sourceUrl">Source link (optional)</label>
 				<input
 					id="sourceUrl"
-					placeholder="https://"
+					class={captionField}
+					placeholder="Source link (optional)"
 					{...createQuote.fields.sourceUrl.as("url")}
 				/>
 			</div>
 		</div>
 	</div>
 
-	<div class="flex justify-end border-t border-border px-5 py-3">
-		<button data-variant="primary" type="submit" disabled={createQuote.pending > 0}>
-			{#if createQuote.pending}
-				<HugeiconsIcon
-					class="animate-spin"
-					icon={Loading03Icon}
-					size={14}
-					strokeWidth={2}
-				/>
-			{/if}
+	<div>
+		{const creating = $derived(createQuote.pending > 0)}
 
-			Add quote
+		<button
+			title="Add quote"
+			type="submit"
+			data-variant="ghost"
+			data-size="icon-sm"
+			disabled={creating}
+		>
+			<HugeiconsIcon
+				class={creating ? "animate-spin" : ""}
+				icon={creating ? Loading03Icon : Add01Icon}
+				size={16}
+				strokeWidth={2}
+			/>
 		</button>
 	</div>
 </form>
 
-<ul class="mt-10 divide-y divide-border border-y border-border">
+<ul class="divide-y divide-border border-y border-border">
 	{#each quotes as quote (quote.id)}
-		<li class="group flex items-start justify-between gap-6 py-5">
+		{const deleting = $derived(deleteTarget === quote.id)}
+
+		<li class="flex items-start justify-between gap-6 py-5">
 			<Quote {quote} />
 
 			<button
 				title="Delete quote"
-				class="transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-fine:opacity-0"
 				type="button"
-				disabled={deleting === quote.id}
+				disabled={deleting}
 				aria-label="Delete quote by {quote.quotee}"
 				data-variant="destructive"
 				data-size="icon-sm"
 				onclick={() => remove(quote.id)}
 			>
 				<HugeiconsIcon
-					class={deleting === quote.id ? "animate-spin" : ""}
-					icon={deleting === quote.id ? Loading03Icon : Delete02Icon}
+					class={deleting ? "animate-spin" : ""}
+					icon={deleting ? Loading03Icon : Delete02Icon}
 					size={16}
 					strokeWidth={1.75}
 				/>
