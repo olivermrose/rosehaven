@@ -4,15 +4,7 @@
 
 	const { data, children } = $props();
 
-	const sections = [
-		{ href: "/admin", label: "writing" },
-		{ href: "/admin/music", label: "music" },
-		{ href: "/admin/quotes", label: "quotes" },
-	];
-
-	const current = $derived(
-		sections.findLast((section) => page.url.pathname.startsWith(section.href))?.href,
-	);
+	const editing = $derived(/\/(\[id\]|new)$/.test(page.route.id ?? ""));
 </script>
 
 <svelte:head>
@@ -21,22 +13,12 @@
 
 <Header />
 
-{#if data.authenticated}
-	<main class="mx-auto max-w-7xl px-6 pt-32 pb-24">
-		<nav class="mb-10 flex gap-6 text-sm" aria-label="Admin sections">
-			{#each sections as section (section.href)}
-				<a
-					class="text-muted-foreground transition-colors hover:text-foreground aria-[current=page]:text-foreground"
-					href={section.href}
-					aria-current={current === section.href ? "page" : undefined}
-				>
-					{section.label}.
-				</a>
-			{/each}
-		</nav>
-
+<div class="min-h-dvh bg-background text-foreground" data-admin>
+	{#if data.authenticated && !editing}
+		<main class="mx-auto max-w-6xl px-6 pt-28 pb-20">
+			{@render children?.()}
+		</main>
+	{:else}
 		{@render children?.()}
-	</main>
-{:else}
-	{@render children?.()}
-{/if}
+	{/if}
+</div>

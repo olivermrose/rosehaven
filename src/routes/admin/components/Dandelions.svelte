@@ -73,7 +73,7 @@
 	style={{ viewTransitionName: "persist" }}
 >
 	{#each { length: 25 }}
-		{@const size = rand(10, 18)}
+		{const size = rand(10, 18)}
 
 		<div
 			class="dandelion absolute overflow-visible before:absolute before:inset-0 before:rounded-full"
