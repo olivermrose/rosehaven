@@ -9,12 +9,20 @@ import { ADMIN_PASSWORD_HASH } from "$app/env/private";
 const SEVEN_DAYS = 60 * 60 * 24 * 7;
 const COOKIE_NAME = "admin_session";
 
-function getSessionToken(): string {
-	return createHmac("sha256", ADMIN_PASSWORD_HASH).update("rosehaven-admin").digest("hex");
+function now(): number {
+	return Math.floor(Date.now() / 1000);
+}
+
+function sign(issuedAt: number): string {
+	return createHmac("sha256", ADMIN_PASSWORD_HASH)
+		.update(`rosehaven-admin:${issuedAt}`)
+		.digest("hex");
 }
 
 export function createSession(cookies: Cookies) {
-	cookies.set(COOKIE_NAME, getSessionToken(), {
+	const issuedAt = now();
+
+	cookies.set(COOKIE_NAME, `${issuedAt}.${sign(issuedAt)}`, {
 		path: "/",
 		httpOnly: true,
 		secure: true,
@@ -24,7 +32,26 @@ export function createSession(cookies: Cookies) {
 }
 
 export function verifySession(cookies: Cookies): boolean {
-	return cookies.get(COOKIE_NAME) === getSessionToken();
+	const token = cookies.get(COOKIE_NAME);
+	if (!token) return false;
+
+	const [issuedAtRaw, signature] = token.split(".");
+
+	if (!issuedAtRaw || !signature || !/^\d+$/.test(issuedAtRaw)) {
+		return false;
+	}
+
+	const issuedAt = Number(issuedAtRaw);
+	const age = now() - issuedAt;
+
+	if (age < 0 || age > SEVEN_DAYS) {
+		return false;
+	}
+
+	const expected = Buffer.from(sign(issuedAt), "hex");
+	const actual = Buffer.from(signature, "hex");
+
+	return actual.length === expected.length && timingSafeEqual(actual, expected);
 }
 
 export function requireAdmin(cookies: Cookies) {
@@ -43,7 +70,10 @@ export function verifyPassword(password: string): Promise<boolean> {
 		const hashBuffer = Buffer.from(hash, "hex");
 
 		scrypt(password, salt, 64, (err, derivedKey) => {
-			if (err) reject(err);
+			if (err) {
+				reject(err);
+				return;
+			}
 
 			const match = timingSafeEqual(hashBuffer, derivedKey);
 			resolve(match);
