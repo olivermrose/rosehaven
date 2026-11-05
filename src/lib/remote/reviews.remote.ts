@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import z from "zod";
 
 import { slugify } from "#lib";
-import { parseTracklist } from "#lib/tracklist.js";
+import { RATING_MAX } from "#lib/tracklist.js";
 import { command, form, getRequestEvent, query } from "$app/server";
 
 import { requireAdmin } from "../server/auth";
@@ -47,18 +47,44 @@ export const getReview = query(z.number(), async (id) => {
 	return review;
 });
 
+const trackSchema = z.object({
+	title: z.string().trim().min(1),
+	duration: z
+		.string()
+		.trim()
+		.regex(/^\d{1,2}(?::\d{2}){1,2}$/, "Durations look like 3:45")
+		.optional(),
+	rating: z
+		.number()
+		.int("Ratings must be whole numbers")
+		.min(1, "Ratings start at 1")
+		.max(RATING_MAX, `Ratings go up to ${RATING_MAX}`)
+		.optional(),
+});
+
 const reviewSchema = z.object({
 	title: z.string().min(1),
 	artist: z.string().min(1),
 	year: z.number().int().optional(),
 	artwork: z.url(),
-	tracklist: z.string().default(""),
+	tracklist: z
+		.string()
+		.default("[]")
+		.transform((value, ctx) => {
+			try {
+				return JSON.parse(value) as unknown;
+			} catch {
+				ctx.addIssue({ code: "custom", message: "Tracklist is malformed" });
+				return z.NEVER;
+			}
+		})
+		.pipe(z.array(trackSchema)),
 	content: z.string().min(1),
 	intent: z.enum(["save", "publish", "unpublish"]).default("save"),
 });
 
-function toFields({ year, tracklist, ...rest }: Omit<z.infer<typeof reviewSchema>, "intent">) {
-	return { ...rest, year: year ?? null, tracklist: parseTracklist(tracklist) };
+function toFields({ year, ...rest }: Omit<z.infer<typeof reviewSchema>, "intent">) {
+	return { ...rest, year: year ?? null };
 }
 
 export const createReview = form(reviewSchema, async ({ intent, ...data }) => {

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Track } from "#lib/server/db/schema.js";
+	import { RATING_MAX } from "#lib/tracklist.js";
 
 	interface Props {
 		tracks: Track[];
@@ -63,8 +64,17 @@
 
 				<span class="min-w-0 flex-1">{track.title}</span>
 
+				{#if track.rating}
+					<span class="min-w-[5ch] shrink-0 text-right text-xs tabular-nums">
+						<span aria-hidden="true">
+							{track.rating}<span class="text-muted-foreground">/{RATING_MAX}</span>
+						</span>
+						<span class="sr-only">Rated {track.rating} out of {RATING_MAX}</span>
+					</span>
+				{/if}
+
 				{#if track.duration}
-					<span class="text-xs text-muted-foreground tabular-nums">
+					<span class="min-w-[5ch] text-right text-xs text-muted-foreground tabular-nums">
 						{track.duration}
 					</span>
 				{/if}

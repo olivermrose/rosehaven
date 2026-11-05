@@ -1,23 +1,13 @@
 import type { Track } from "./server/db/schema";
 
-export function parseTracklist(value: string): Track[] {
-	return value
-		.split(/\r?\n/)
-		.map((line) => line.trim())
-		.filter(Boolean)
-		.map((line) => {
-			const match = /^(.*?)\s*[-–—|]?\s*(\d{1,2}(?::\d{2}){1,2})$/.exec(line);
+export const RATING_MAX = 10;
 
-			if (match?.[1]) {
-				return { title: match[1], duration: match[2] };
-			}
-
-			return { title: line };
-		});
-}
-
-export function formatTracklist(tracks: Track[]) {
+export function normalizeTracklist(tracks: Track[]): Track[] {
 	return tracks
-		.map((track) => (track.duration ? `${track.title} ${track.duration}` : track.title))
-		.join("\n");
+		.map((track) => ({
+			title: track.title.trim(),
+			duration: track.duration?.trim() || undefined,
+			rating: track.rating,
+		}))
+		.filter((track) => track.title);
 }

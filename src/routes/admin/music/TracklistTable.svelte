@@ -4,6 +4,7 @@
 	import { tick } from "svelte";
 
 	import type { Track } from "#lib/server/db/schema.js";
+	import { RATING_MAX } from "#lib/tracklist.js";
 
 	interface Props {
 		tracks: Track[];
@@ -17,14 +18,18 @@
 	const rows = $derived(showBlank ? [...tracks, { title: "" }] : tracks);
 
 	function isFilled(track: Track) {
-		return track.title.trim() !== "" || (track.duration ?? "").trim() !== "";
+		return (
+			track.title.trim() !== "" ||
+			(track.duration ?? "").trim() !== "" ||
+			track.rating !== undefined
+		);
 	}
 
-	function update(index: number, key: keyof Track, value: string) {
+	function update(index: number, patch: Partial<Track>) {
 		if (index === tracks.length) {
-			tracks.push({ title: "", [key]: value });
+			tracks.push({ title: "", ...patch });
 		} else {
-			tracks[index][key] = value;
+			Object.assign(tracks[index], patch);
 		}
 	}
 
@@ -45,6 +50,7 @@
 		<tr>
 			<th scope="col">Title</th>
 			<th scope="col">Duration</th>
+			<th scope="col">Rating</th>
 			<th scope="col">Actions</th>
 		</tr>
 	</thead>
@@ -61,21 +67,39 @@
 						placeholder={index === 0 ? "Track title" : ""}
 						aria-label="Track {index + 1} title"
 						data-track-title
-						oninput={(event) => update(index, "title", event.currentTarget.value)}
+						oninput={(event) => update(index, { title: event.currentTarget.value })}
 					/>
 				</td>
 
-				<td class="w-24 p-0">
+				<td class="w-20 border-r border-border p-0">
 					<input
-						class="rounded-none border-0 bg-transparent px-3 py-2 font-mono text-[0.8125rem] tabular-nums focus-visible:shadow-none"
+						class="rounded-none border-0 bg-transparent px-3 py-2 text-center font-mono text-[0.8125rem] tabular-nums focus-visible:shadow-none"
 						value={track.duration ?? ""}
 						placeholder={index === 0 ? "3:45" : ""}
 						aria-label="Track {index + 1} duration"
-						oninput={(event) => update(index, "duration", event.currentTarget.value)}
+						oninput={(event) => update(index, { duration: event.currentTarget.value })}
 					/>
 				</td>
 
-				<td class="w-px p-0 pl-2 whitespace-nowrap">
+				<td class="w-16 p-0">
+					<input
+						class="[appearance:textfield] rounded-none border-0 bg-transparent px-3 py-2 text-center font-mono text-[0.8125rem] tabular-nums focus-visible:shadow-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+						type="number"
+						inputmode="numeric"
+						min="1"
+						max={RATING_MAX}
+						step="1"
+						value={track.rating ?? ""}
+						placeholder={index === 0 ? "4" : ""}
+						aria-label="Track {index + 1} rating out of {RATING_MAX}"
+						oninput={(event) => {
+							const rating = event.currentTarget.valueAsNumber;
+							update(index, { rating: Number.isNaN(rating) ? undefined : rating });
+						}}
+					/>
+				</td>
+
+				<td class="w-px p-0 whitespace-nowrap">
 					<div
 						class="flex gap-0.5 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 pointer-fine:opacity-0"
 					>
