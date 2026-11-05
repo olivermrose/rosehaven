@@ -9,7 +9,7 @@
 	import { createReview, updateReview } from "#lib/remote/reviews.remote.js";
 	import type { Review, Track } from "#lib/server/db/schema.js";
 	import type { Album } from "#lib/server/itunes.js";
-	import { formatTracklist } from "#lib/tracklist.js";
+	import { normalizeTracklist } from "#lib/tracklist.js";
 
 	import { UnsavedChanges } from "../unsaved.svelte";
 	import AlbumSearch from "./AlbumSearch.svelte";
@@ -30,15 +30,7 @@
 	const issues = $derived(form.fields.allIssues());
 	const artwork = $derived(form.fields.artwork.value());
 
-	// Rows without a title are dropped, matching what the server would store.
-	const tracklist = $derived(
-		formatTracklist(
-			tracks
-				.map((track) => ({ title: track.title.trim(), duration: track.duration?.trim() }))
-				.filter((track) => track.title),
-		),
-	);
-
+	const tracklist = $derived(JSON.stringify(normalizeTracklist(tracks)));
 	const trackCount = $derived(tracks.filter((track) => track.title.trim()).length);
 
 	const unsaved = new UnsavedChanges(
@@ -61,7 +53,7 @@
 			artist: album.artist,
 			year: album.year,
 			artwork: album.artwork,
-			tracklist: formatTracklist(album.tracklist),
+			tracklist: JSON.stringify(normalizeTracklist(album.tracklist)),
 		});
 	}
 
@@ -86,7 +78,7 @@
 			artist: review.artist,
 			year: review.year ?? undefined,
 			artwork: review.artwork,
-			tracklist: formatTracklist(review.tracklist),
+			tracklist: JSON.stringify(normalizeTracklist(review.tracklist)),
 			content: review.content,
 		});
 

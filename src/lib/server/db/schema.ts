@@ -40,6 +40,7 @@ export type NewPost = typeof posts.$inferInsert;
 export interface Track {
 	title: string;
 	duration?: string;
+	rating?: number;
 }
 
 export const reviews = pgTable("reviews", {
